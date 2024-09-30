@@ -14,9 +14,9 @@ jQuery(document).ready(function ($) {
         $(document).on('keydown', function (e) {
             if (!$('.woo-orders-tracking-edit-tracking-container').hasClass('woo-orders-tracking-hidden')) {
                 if (e.keyCode == 13) {
-                    $('.woo-orders-tracking-edit-tracking-button-save').click();
+                    $('.woo-orders-tracking-edit-tracking-button-save').trigger('click');
                 } else if (e.keyCode == 27) {
-                    $('.woo-orders-tracking-edit-tracking-button-cancel').click();
+                    $('.woo-orders-tracking-edit-tracking-button-cancel').trigger('click');
                 }
             }
         });
@@ -66,7 +66,6 @@ jQuery(document).ready(function ($) {
         });
     });
     $(document).on('click', '.woo-orders-tracking-button-edit', function () {
-        console.log(active_carriers)
         $(this).addClass('woo-orders-tracking-button-editing');
         $('.woo-orders-tracking-edit-tracking-button-save').addClass('woo-orders-tracking-edit-tracking-save-only-one-item');
         vi_wotg_edit_tracking_show();
@@ -139,7 +138,7 @@ jQuery(document).ready(function ($) {
     $(document).on('click', '.woo-orders-tracking-button-edit-all-tracking-number', function () {
         wotv_get_shipping_carriers_html(active_carriers, true);
         if ($('.woo-orders-tracking-button-edit').length === 1) {
-            $('.woo-orders-tracking-button-edit').click();
+            $('.woo-orders-tracking-button-edit').trigger('click');
         } else {
             $('.woo-orders-tracking-edit-tracking-button-save').addClass('woo-orders-tracking-edit-tracking-save-all-item');
             vi_wotg_edit_tracking_show();

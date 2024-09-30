@@ -1498,26 +1498,26 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 			}
 			wp_dequeue_script( 'select-js' );//Causes select2 error, from ThemeHunk MegaMenu Plus plugin
 			wp_dequeue_style( 'eopa-admin-css' );
-			wp_enqueue_script( 'semantic-ui-form', VI_WOO_ORDERS_TRACKING_JS . 'form.min.js', array( 'jquery' ) );
-			wp_enqueue_style( 'semantic-ui-form', VI_WOO_ORDERS_TRACKING_CSS . 'form.min.css' );
-			wp_enqueue_script( 'semantic-ui-progress', VI_WOO_ORDERS_TRACKING_JS . 'progress.min.js', array( 'jquery' ) );
-			wp_enqueue_style( 'semantic-ui-progress', VI_WOO_ORDERS_TRACKING_CSS . 'progress.min.css' );
-			wp_enqueue_script( 'semantic-ui-checkbox', VI_WOO_ORDERS_TRACKING_JS . 'checkbox.min.js', array( 'jquery' ) );
-			wp_enqueue_style( 'semantic-ui-checkbox', VI_WOO_ORDERS_TRACKING_CSS . 'checkbox.min.css' );
-			wp_enqueue_style( 'semantic-ui-input', VI_WOO_ORDERS_TRACKING_CSS . 'input.min.css' );
-			wp_enqueue_style( 'semantic-ui-table', VI_WOO_ORDERS_TRACKING_CSS . 'table.min.css' );
-			wp_enqueue_style( 'semantic-ui-segment', VI_WOO_ORDERS_TRACKING_CSS . 'segment.min.css' );
-			wp_enqueue_style( 'semantic-ui-label', VI_WOO_ORDERS_TRACKING_CSS . 'label.min.css' );
-			wp_enqueue_style( 'semantic-ui-menu', VI_WOO_ORDERS_TRACKING_CSS . 'menu.min.css' );
-			wp_enqueue_style( 'semantic-ui-button', VI_WOO_ORDERS_TRACKING_CSS . 'button.min.css' );
-			wp_enqueue_style( 'semantic-ui-dropdown', VI_WOO_ORDERS_TRACKING_CSS . 'dropdown.min.css' );
-			wp_enqueue_style( 'semantic-ui-message', VI_WOO_ORDERS_TRACKING_CSS . 'message.min.css' );
-			wp_enqueue_style( 'semantic-ui-icon', VI_WOO_ORDERS_TRACKING_CSS . 'icon.min.css' );
+			wp_enqueue_script( 'semantic-ui-form', VI_WOO_ORDERS_TRACKING_JS . 'form.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false );
+			wp_enqueue_style( 'semantic-ui-form', VI_WOO_ORDERS_TRACKING_CSS . 'form.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION  );
+			wp_enqueue_script( 'semantic-ui-progress', VI_WOO_ORDERS_TRACKING_JS . 'progress.min.js', array( 'jquery' ) , VI_WOO_ORDERS_TRACKING_VERSION , false);
+			wp_enqueue_style( 'semantic-ui-progress', VI_WOO_ORDERS_TRACKING_CSS . 'progress.min.css','', VI_WOO_ORDERS_TRACKING_VERSION  );
+			wp_enqueue_script( 'semantic-ui-checkbox', VI_WOO_ORDERS_TRACKING_JS . 'checkbox.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false );
+			wp_enqueue_style( 'semantic-ui-checkbox', VI_WOO_ORDERS_TRACKING_CSS . 'checkbox.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
+			wp_enqueue_style( 'semantic-ui-input', VI_WOO_ORDERS_TRACKING_CSS . 'input.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION  );
+			wp_enqueue_style( 'semantic-ui-table', VI_WOO_ORDERS_TRACKING_CSS . 'table.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION  );
+			wp_enqueue_style( 'semantic-ui-segment', VI_WOO_ORDERS_TRACKING_CSS . 'segment.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION  );
+			wp_enqueue_style( 'semantic-ui-label', VI_WOO_ORDERS_TRACKING_CSS . 'label.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION  );
+			wp_enqueue_style( 'semantic-ui-menu', VI_WOO_ORDERS_TRACKING_CSS . 'menu.min.css' , '', VI_WOO_ORDERS_TRACKING_VERSION );
+			wp_enqueue_style( 'semantic-ui-button', VI_WOO_ORDERS_TRACKING_CSS . 'button.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION  );
+			wp_enqueue_style( 'semantic-ui-dropdown', VI_WOO_ORDERS_TRACKING_CSS . 'dropdown.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION  );
+			wp_enqueue_style( 'semantic-ui-message', VI_WOO_ORDERS_TRACKING_CSS . 'message.min.css' , '', VI_WOO_ORDERS_TRACKING_VERSION );
+			wp_enqueue_style( 'semantic-ui-icon', VI_WOO_ORDERS_TRACKING_CSS . 'icon.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION  );
 			if ( ! wp_script_is( 'select2' ) ) {
-				wp_enqueue_script( 'select2', VI_WOO_ORDERS_TRACKING_JS . 'select2.js', array( 'jquery' ) );
-				wp_enqueue_style( 'select2', VI_WOO_ORDERS_TRACKING_CSS . 'select2.min.css' );
+				wp_enqueue_script( 'select2', VI_WOO_ORDERS_TRACKING_JS . 'select2.js', array( 'jquery' ) , VI_WOO_ORDERS_TRACKING_VERSION , false);
+				wp_enqueue_style( 'select2', VI_WOO_ORDERS_TRACKING_CSS . 'select2.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION  );
 			}
-			wp_enqueue_style( 'semantic-ui-step', VI_WOO_ORDERS_TRACKING_CSS . 'step.min.css' );
+			wp_enqueue_style( 'semantic-ui-step', VI_WOO_ORDERS_TRACKING_CSS . 'step.min.css' , '', VI_WOO_ORDERS_TRACKING_VERSION );
 			/*Color picker*/
 			wp_enqueue_style( 'wp-color-picker' );
 			wp_enqueue_script( 'wp-color-picker' );
@@ -1526,13 +1526,13 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 				'jquery-ui-draggable',
 				'jquery-ui-slider',
 				'jquery-touch-punch'
-			), false, 1 );
+			), VI_WOO_ORDERS_TRACKING_VERSION, true );
 			if ( ! wp_script_is( 'transition' ) ) {
-				wp_enqueue_style( 'transition', VI_WOO_ORDERS_TRACKING_CSS . 'transition.min.css' );
-				wp_enqueue_script( 'transition', VI_WOO_ORDERS_TRACKING_JS . 'transition.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION );
+				wp_enqueue_style( 'transition', VI_WOO_ORDERS_TRACKING_CSS . 'transition.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION  );
+				wp_enqueue_script( 'transition', VI_WOO_ORDERS_TRACKING_JS . 'transition.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
 			}
-			wp_enqueue_script( 'woo-orders-tracking-dropdown', VI_WOO_ORDERS_TRACKING_JS . 'dropdown.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION );
-			wp_enqueue_script( 'woo-orders-tracking-import', VI_WOO_ORDERS_TRACKING_JS . 'import-csv.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION );
+			wp_enqueue_script( 'woo-orders-tracking-dropdown', VI_WOO_ORDERS_TRACKING_JS . 'dropdown.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
+			wp_enqueue_script( 'woo-orders-tracking-import', VI_WOO_ORDERS_TRACKING_JS . 'import-csv.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
 			wp_enqueue_style( 'woo-orders-tracking-import', VI_WOO_ORDERS_TRACKING_CSS . 'import-csv.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
             $params = [
 	            'url'                => admin_url( 'admin-ajax.php' ),

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Orders Tracking for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-09 01:29+0000\n"
+"POT-Creation-Date: 2024-09-19 04:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -16,7 +16,11 @@ msgstr ""
 "X-Loco-Version: 2.6.2; wp-6.0.1\n"
 "X-Domain: woo-orders-tracking"
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:907
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:914
+msgid " - Beta"
+msgstr ""
+
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:910
 msgid " - Premium only"
 msgstr ""
 
@@ -352,7 +356,7 @@ msgstr ""
 msgid "[Rest of the World]"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1292
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1311
 msgid "Accept terms of service and click Register button"
 msgstr ""
 
@@ -364,11 +368,11 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1937
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1956
 msgid "Active"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1240
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1259
 msgid "Add"
 msgstr ""
 
@@ -381,21 +385,21 @@ msgstr ""
 msgid "Add condition"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1800
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1819
 msgid "Add custom shipping carrier"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1856
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1875
 msgid "Add New"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:825
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:841
 msgid "Add new"
 msgstr ""
 
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:308
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:569
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:1069
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:577
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:1085
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-track-info.php:243
 msgid "Add this tracking number to PayPal"
 msgstr ""
@@ -404,7 +408,7 @@ msgstr ""
 msgid "Add to PayPal"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:946
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:965
 msgid "Add tracking if not exist"
 msgstr ""
 
@@ -418,7 +422,7 @@ msgstr ""
 msgid "Add tracking number %1$s to PayPal for order #%2$s successfully. "
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:945
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:961
 msgid "Add tracking number to PayPal. "
 msgstr ""
 
@@ -463,11 +467,11 @@ msgstr ""
 msgid "All Countries "
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:923
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:930
 msgid "API key"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1933
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1952
 msgid "Are you sure you want to delete this carrier?"
 msgstr ""
 
@@ -510,7 +514,7 @@ msgstr ""
 msgid "Bulk refresh tracking"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:1139
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:1155
 msgid "Bulk set tracking number"
 msgstr ""
 
@@ -520,7 +524,7 @@ msgid ""
 "your site's locale"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1017
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1036
 msgid "Cache request"
 msgstr ""
 
@@ -539,9 +543,9 @@ msgstr ""
 msgid "Can not open file: <strong>%s</strong>"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:961
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1791
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1860
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:977
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1810
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1879
 msgid "Cancel"
 msgstr ""
 
@@ -552,21 +556,21 @@ msgstr ""
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:68
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:102
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:298
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:559
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:567
 msgid "Cannot add tracking to PayPal"
 msgstr ""
 
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/import_csv.php:249
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1740
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1759
 msgid "Carrier Name"
 msgstr ""
 
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/import_csv.php:2088
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:848
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:864
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:402
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:521
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:686
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1611
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1630
 msgid "Carrier name"
 msgstr ""
 
@@ -578,7 +582,7 @@ msgstr ""
 msgid "Carrier name of first found Tracking number"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1806
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1825
 msgid "Carrier Name(required)"
 msgstr ""
 
@@ -594,16 +598,16 @@ msgstr ""
 msgid "Carrier Slug"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1810
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1829
 msgid "Carrier slug"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:878
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:894
 msgid "Carrier Tracking url"
 msgstr ""
 
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:522
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1769
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1788
 msgid "Carrier URL"
 msgstr ""
 
@@ -629,7 +633,7 @@ msgstr ""
 msgid "Center"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1036
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1055
 msgid "Change Order Status"
 msgstr ""
 
@@ -637,12 +641,12 @@ msgstr ""
 msgid "Change order status"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:900
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:916
 msgid "Change order status to: "
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1764
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1834
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1783
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1853
 msgid ""
 "Check if this is a Digital Delivery carrier. Tracking number is not required "
 "for this kind of carrier"
@@ -667,11 +671,11 @@ msgstr ""
 msgid "Click on Create App button"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1935
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1954
 msgid "Click to copy"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1001
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1020
 msgid "Click to customize your tracking page"
 msgstr ""
 
@@ -687,7 +691,7 @@ msgstr ""
 msgid "Client Secret"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1060
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1079
 msgid "Cloud Translation API key"
 msgstr ""
 
@@ -703,7 +707,7 @@ msgstr ""
 msgid "Completed Date"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1265
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1284
 msgid "Content"
 msgstr ""
 
@@ -711,15 +715,15 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1936
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1955
 msgid "Copied to clipboard!"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1963
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1982
 msgid "Copy"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1293
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1312
 msgid "Copy and paste the site key and secret key into respective fields"
 msgstr ""
 
@@ -778,7 +782,7 @@ msgstr ""
 msgid "Customer Note"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:990
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1009
 msgid "Customize Tracking page"
 msgstr ""
 
@@ -786,7 +790,7 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/export-orders-tracking.php:869
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/export-orders-tracking.php:864
 msgid "Date Form mustn't be greater than Today"
 msgstr ""
 
@@ -802,13 +806,13 @@ msgstr ""
 msgid "Date To"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/export-orders-tracking.php:868
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/export-orders-tracking.php:863
 msgid "Date To must be greater than Date From"
 msgstr ""
 
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/export-orders-tracking.php:78
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:457
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1178
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1197
 msgid "Day"
 msgstr ""
 
@@ -821,12 +825,12 @@ msgstr ""
 msgid "Debug"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1085
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1104
 msgid "Default track info"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1252
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1275
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1271
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1294
 msgid "Default tracking number"
 msgstr ""
 
@@ -854,7 +858,7 @@ msgstr ""
 msgid "Descending"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1117
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1136
 msgid "Description"
 msgstr ""
 
@@ -903,17 +907,17 @@ msgid ""
 "and send email notifications to customers."
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1734
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1753
 msgid "Edit shipping carrier"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:795
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:1055
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:811
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:1071
 msgid "Edit tracking"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1778
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1848
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1797
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1867
 msgid ""
 "eg: https://www.dhl.com/en/express/tracking.html?AWB={tracking_number}"
 "&brand=DHL"
@@ -965,7 +969,7 @@ msgstr ""
 msgid "Enable Debug"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1301
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1320
 msgid "Enable reCAPTCHA"
 msgstr ""
 
@@ -1003,15 +1007,15 @@ msgstr ""
 msgid "Error: Start at row must be smaller than "
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:465
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:469
 msgid "Estimated Delivery Date: "
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:824
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:840
 msgid "Existing Carriers"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1951
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1970
 msgid "Explanation"
 msgstr ""
 
@@ -1062,7 +1066,7 @@ msgstr ""
 msgid "File not exists: <strong>%s</strong>"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1291
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1310
 msgid "Fill in authorized domains"
 msgstr ""
 
@@ -1091,10 +1095,10 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:862
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:878
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:212
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1748
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1818
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1767
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1837
 msgid "Global"
 msgstr ""
 
@@ -1113,22 +1117,22 @@ msgstr ""
 msgid "Go to My Apps & Credentials and select the <strong>Live</strong> tab"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1286
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1305
 msgid "Google reCAPTCHA for tracking form"
 msgstr ""
 
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/cron-update-tracking.php:90
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/export-orders-tracking.php:79
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:458
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1186
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1205
 msgid "Hour"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1029
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1048
 msgid "Hour(s)"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1070
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1089
 msgid "How to get Google Cloud Translation API key?"
 msgstr ""
 
@@ -1153,7 +1157,7 @@ msgstr ""
 msgid "Identical"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1258
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1277
 msgid ""
 "If an order does not have a tracking number, default tracking number will be "
 "displayed on Order received page, My account/orders and in emails that you "
@@ -1265,7 +1269,7 @@ msgid "Import tracking successfully for order #%s"
 msgstr ""
 
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/data.php:1187
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1202
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1221
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/templates/customize.php:88
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/templates/customize.php:170
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/templates/customize.php:253
@@ -1330,7 +1334,7 @@ msgstr ""
 msgid "Last update: %s. Click to refresh."
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:471
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:475
 msgid "Last Updated: "
 msgstr ""
 
@@ -1354,7 +1358,7 @@ msgstr ""
 msgid "Map to field"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1271
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1290
 msgid ""
 "Message including default tracking number which will be displayed on Order "
 "received page or WooCommerce email."
@@ -1371,7 +1375,7 @@ msgstr ""
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/cron-update-tracking.php:100
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/export-orders-tracking.php:80
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:459
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1194
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1213
 msgid "Minute"
 msgstr ""
 
@@ -1416,11 +1420,11 @@ msgstr ""
 msgid "No result found for this tracking number."
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:850
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:1017
 msgid "No tracking number found"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1113
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1132
 msgid "No."
 msgstr ""
 
@@ -1429,15 +1433,15 @@ msgid "Not available"
 msgstr ""
 
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/import_csv.php:1778
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:904
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:920
 msgid "Not Change"
 msgstr ""
 
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:194
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:505
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:540
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1358
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1432
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:513
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:548
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1377
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1451
 msgid "Not enough information"
 msgstr ""
 
@@ -1470,7 +1474,7 @@ msgstr ""
 msgid "Open tracking link"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/design.php:752
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/design.php:697
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/import_csv.php:156
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/import_csv.php:282
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/import_csv.php:1541
@@ -1482,7 +1486,7 @@ msgstr ""
 msgid "Order id"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/design.php:753
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/design.php:698
 msgid "Order ID(*Required)"
 msgstr ""
 
@@ -1492,7 +1496,7 @@ msgstr ""
 msgid "Order Item ID"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:744
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:760
 msgid "Order items not matched"
 msgstr ""
 
@@ -1524,7 +1528,7 @@ msgstr ""
 msgid "Orders per step"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/woo-orders-tracking.php:111
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/woo-orders-tracking.php:117
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:38
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/widget.php:12
 msgid "Orders Tracking"
@@ -1560,12 +1564,12 @@ msgid "PayPal method not found"
 msgstr ""
 
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/import_csv.php:1097
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:767
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:783
 msgid "PayPal payment method not supported or missing API credentials"
 msgstr ""
 
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/data.php:1186
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1201
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1220
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/templates/customize.php:95
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/templates/customize.php:177
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/templates/customize.php:260
@@ -1574,7 +1578,7 @@ msgid "Pending"
 msgstr ""
 
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/data.php:1188
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1203
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1222
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/templates/customize.php:81
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/templates/customize.php:163
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/templates/customize.php:246
@@ -1594,38 +1598,39 @@ msgstr ""
 msgid "Pickup icon color"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1950
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1969
 msgid "Placeholder"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:64
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:330
 msgid "Please click button Track to track your order."
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1501
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1520
 msgid "Please enter all required fields"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:292
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:954
+#, php-format
+msgid ""
+"Please enter your %s api key. If you don't have an account, <a href=\"%s\" "
+"target=\"_blank\"><strong>click here</strong></a> to create one and generate "
+"api key"
+msgstr ""
+
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:266
 msgid "Please enter your order info to track"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:626
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:630
 msgid "Please enter your tracking number to track your order."
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:332
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:306
 msgid "Please enter your tracking number to track."
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:938
-msgid ""
-"Please enter your TrackingMore api key. If you don't have an account, <a "
-"href=\"https://my.trackingmore.com/get_apikey.php\" target=\"_blank\">"
-"<strong>click here</strong></a> to create one and generate api key"
-msgstr ""
-
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1932
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1951
 msgid "Please fill full information for carrier"
 msgstr ""
 
@@ -1637,7 +1642,7 @@ msgstr ""
 msgid "Please follow these steps to get PayPal API Credentials"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1006
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1025
 msgid "Please select a Tracking page and save settings to use this feature"
 msgstr ""
 
@@ -1649,7 +1654,7 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1519
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1538
 msgid "Preview emails"
 msgstr ""
 
@@ -1658,7 +1663,7 @@ msgid "Processing"
 msgstr ""
 
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/import_csv.php:2086
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1602
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1621
 msgid "Product title"
 msgstr ""
 
@@ -1666,11 +1671,11 @@ msgstr ""
 msgid "Refunded"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1225
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1244
 msgid "Remove"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1934
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1953
 msgid "Remove this item?"
 msgstr ""
 
@@ -1682,7 +1687,7 @@ msgstr ""
 msgid "Right"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1089
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1108
 msgid "Row with empty description will not show on the tracking page"
 msgstr ""
 
@@ -1702,9 +1707,9 @@ msgstr ""
 msgid "Sandbox Client Secret"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:958
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:974
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:177
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1787
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1806
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/webhooks.php:52
 msgid "Save"
 msgstr ""
@@ -1739,7 +1744,7 @@ msgid ""
 "service"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1938
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1957
 msgid "Search carrier name"
 msgstr ""
 
@@ -1764,7 +1769,7 @@ msgstr ""
 msgid "Select file"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1041
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1060
 msgid ""
 "Select order status to change to when Shipment status changes to Delivered. "
 "Leave it blank if you don't want to change order status"
@@ -1778,7 +1783,7 @@ msgstr ""
 msgid "Select statuses that you want to be notified"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1290
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1309
 msgid "Select the reCAPTCHA version that you want to use"
 msgstr ""
 
@@ -1791,7 +1796,7 @@ msgstr ""
 msgid "Send email"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:924
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:940
 msgid "Send email to customer if tracking info changes."
 msgstr ""
 
@@ -1810,15 +1815,15 @@ msgstr ""
 msgid "Send tracking of whole order"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:896
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:897
 msgid "Service"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1931
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1950
 msgid "Set Default"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:1138
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:1154
 msgid "Set tracking number for all items of this order"
 msgstr ""
 
@@ -1873,7 +1878,7 @@ msgstr ""
 msgid "Shipping address"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:834
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:850
 msgid "Shipping carrier"
 msgstr ""
 
@@ -1881,12 +1886,12 @@ msgstr ""
 msgid "Shipping Carriers"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1744
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1814
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1763
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1833
 msgid "Shipping Country"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:855
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:871
 msgid "Shipping country"
 msgstr ""
 
@@ -1898,21 +1903,21 @@ msgstr ""
 msgid "Shortcode"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1105
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1124
 msgid ""
 "Show below track info in tracking timeline if a real tracking number does "
 "not have any information from tracking service"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1099
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1118
 msgid "Show default track info"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1114
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1133
 msgid "Show if order status"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1467
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1486
 msgid "Slug exists, please choose another slug or leave slug field blank"
 msgstr ""
 
@@ -1957,7 +1962,7 @@ msgid "Start scheduling to send emails"
 msgstr ""
 
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/import_csv.php:1946
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1116
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1135
 msgid "Status"
 msgstr ""
 
@@ -1965,7 +1970,7 @@ msgstr ""
 msgid "Statuses"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1710
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1729
 msgid "Successfully!"
 msgstr ""
 
@@ -2005,15 +2010,15 @@ msgstr ""
 msgid "The name of carrier"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:885
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1776
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1846
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:901
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1795
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1865
 msgid "The placeholder for postal code of an order"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:883
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1773
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1843
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:899
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1792
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1862
 msgid "The placeholder for tracking number of an item"
 msgstr ""
 
@@ -2026,19 +2031,19 @@ msgstr ""
 msgid "The tracking URL"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1779
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1798
 msgid ""
 "The tracking url will not include tracking number because carrier URL does "
 "not include {tracking_number}"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:887
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:903
 msgid ""
 "The tracking url will not include tracking number if carrier URL does not "
 "include "
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1849
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1868
 msgid ""
 "The tracking url will not include tracking number if carrier URL does not "
 "include {tracking_number}"
@@ -2048,13 +2053,13 @@ msgstr ""
 msgid "This email is used when no Email template is selected"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1088
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1107
 msgid ""
 "This feature is to reduce after-purchase support for new orders when "
 "tracking number is not available, or available but without any info"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1066
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1085
 #, php-format
 msgid ""
 "This functionality uses Cloud Translation - Basic API, please click <a "
@@ -2064,13 +2069,13 @@ msgstr ""
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:110
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:115
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:311
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:572
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:1072
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:580
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:1088
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-track-info.php:246
 msgid "This tracking number was added to PayPal"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/export-orders-tracking.php:870
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/export-orders-tracking.php:865
 msgid ""
 "This will reset all settings above to default but changes will not be saved "
 "until you click the \"Save filter settings\" button. Continue?"
@@ -2080,11 +2085,11 @@ msgstr ""
 msgid "Time format"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1090
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1109
 msgid "Time is relative to an order's created time"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1115
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1134
 msgid "Time(since order created)"
 msgstr ""
 
@@ -2112,7 +2117,7 @@ msgstr ""
 msgid "Title:"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1067
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1086
 #, php-format
 msgid ""
 "To get API key, please read <a target=\"_blank\" href=\"%s\">https://cloud."
@@ -2138,10 +2143,10 @@ msgstr ""
 msgid "Toggle active status of all carrier on/off"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/design.php:749
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/design.php:694
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/import_csv.php:2073
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1561
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:321
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1580
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:295
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/tracking-more-form.php:35
 msgid "Track"
 msgstr ""
@@ -2163,11 +2168,11 @@ msgstr ""
 msgid "Tracking Carrier"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:819
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:835
 msgid "Tracking carrier"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:1041
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:1057
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-track-info.php:235
 #, php-format
 msgid "Tracking carrier %s"
@@ -2177,7 +2182,7 @@ msgstr ""
 msgid "Tracking content"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:840
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:1007
 msgid "Tracking data is not available now. Please come back later. Thank you."
 msgstr ""
 
@@ -2200,7 +2205,7 @@ msgid ""
 " or not"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1616
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1635
 msgid "Tracking link"
 msgstr ""
 
@@ -2223,14 +2228,14 @@ msgstr ""
 msgid "Tracking Number"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/design.php:754
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/design.php:699
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/import_csv.php:2087
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:812
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:1038
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:1101
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:828
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:1054
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:1117
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:400
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:684
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1606
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1625
 msgid "Tracking number"
 msgstr ""
 
@@ -2242,15 +2247,15 @@ msgstr ""
 msgid "Tracking number is copied to clipboard"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:854
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:1021
 msgid "Tracking number is expired or not found in existing orders."
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/design.php:755
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/design.php:700
 msgid "Tracking number(*Required)"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:316
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/frontend/frontend.php:290
 msgid "Tracking number(*required)"
 msgstr ""
 
@@ -2264,21 +2269,21 @@ msgstr ""
 msgid "Tracking number: %s"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:1146
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:1162
 msgid "Tracking numbers that were added to PayPal transaction of this order"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:967
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:986
 msgid "Tracking page"
 msgstr ""
 
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:152
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:459
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:467
 msgid "Tracking saved"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:415
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:737
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:423
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:753
 msgid "Tracking saved and Email sent"
 msgstr ""
 
@@ -2286,18 +2291,18 @@ msgstr ""
 msgid "Tracking Service"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1091
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1110
 msgid "Tracking service must be enabled and tracking page must be set"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1839
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1858
 msgid "Tracking URL"
 msgstr ""
 
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/import_csv.php:2089
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:401
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:685
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1276
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1295
 msgid "Tracking url"
 msgstr ""
 
@@ -2362,7 +2367,7 @@ msgctxt "trackingmore_tracking_status"
 msgid "Undelivered"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1048
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1067
 msgid "Translate timeline"
 msgstr ""
 
@@ -2393,22 +2398,22 @@ msgstr ""
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:670
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:681
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:850
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1040
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1053
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1065
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1104
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1257
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1270
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1306
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1059
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1072
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1084
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1123
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1276
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1289
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1325
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/webhooks.php:65
 msgid "Upgrade This Feature"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1307
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1326
 msgid "Use Google reCAPTCHA for tracking form"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1054
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1073
 #, php-format
 msgid ""
 "Using <a target=\"_blank\" href=\"%s\">Google Cloud Translation API</a> to "
@@ -2422,8 +2427,8 @@ msgstr ""
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/import_csv.php:1702
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/import_csv.php:1744
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/import_csv.php:1759
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:926
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:947
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:942
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/orders-edit-tracking.php:963
 msgid "View settings"
 msgstr ""
 
@@ -2431,7 +2436,7 @@ msgstr ""
 msgid "VillaTheme"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1289
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1308
 msgid ""
 "Visit <a target=\"_blank\" href=\"http://www.google.com/recaptcha/admin\">"
 "Google reCAPTCHA page</a> to sign up for an API key pair with your Gmail "
@@ -2446,20 +2451,20 @@ msgstr ""
 msgid "Webhooks Settings"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1259
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1278
 msgid ""
 "When a customer uses a \"default tracking number\" to track, the default "
 "track info will be used."
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1031
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1050
 msgid ""
 "When customers search for a tracking number on tracking page, the result "
 "will be saved to use for same searches for this tracking number within this "
 "cache time"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:957
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:976
 msgid ""
 "When customers search for a tracking number that exists in your current "
 "orders, add it to your tracking API if it does not exist in your API "
@@ -2484,7 +2489,7 @@ msgstr ""
 
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:549
 #: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:881
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:955
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:974
 msgid "Yes"
 msgstr ""
 
@@ -2522,7 +2527,7 @@ msgid ""
 "use this option."
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:984
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/settings.php:1003
 msgid "Your branded tracking page, only used when Tracking service is enabled"
 msgstr ""
 
@@ -2538,11 +2543,11 @@ msgid ""
 "Carrier slug</strong>."
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/design.php:750
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/design.php:695
 msgid "Your email"
 msgstr ""
 
-#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/design.php:751
+#: D:/git/free-version/woo-orders-tracking/woo-orders-tracking/includes/admin/design.php:696
 msgid "Your email(*Required)"
 msgstr ""
 

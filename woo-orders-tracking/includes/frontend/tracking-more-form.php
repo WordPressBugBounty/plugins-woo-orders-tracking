@@ -18,8 +18,8 @@ class VI_WOO_ORDERS_TRACKING_FRONTEND_TRACKING_MORE_FORM {
 		if ( $wot_tracking_more_form !== null ) {
 			return '';
 		} else {
-			wp_enqueue_script( 'vi-wot-tracking-more-form', VI_WOO_ORDERS_TRACKING_JS . 'tracking-more-form.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION );
-			wp_enqueue_script( 'vi-wot-tracking-more-form', VI_WOO_ORDERS_TRACKING_CSS . 'tracking-more-form.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
+			wp_enqueue_script( 'vi-wot-tracking-more-form', VI_WOO_ORDERS_TRACKING_JS . 'tracking-more-form.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
+			wp_enqueue_style( 'vi-wot-tracking-more-form', VI_WOO_ORDERS_TRACKING_CSS . 'tracking-more-form.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 			$wot_tracking_more_form = true;
 			ob_start();
 			?>

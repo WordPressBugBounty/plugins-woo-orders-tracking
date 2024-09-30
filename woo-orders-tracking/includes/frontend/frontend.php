@@ -42,232 +42,206 @@ class VI_WOO_ORDERS_TRACKING_FRONTEND_FRONTEND {
 
 	public function wp_enqueue_scripts() {
 		if ( $this->is_tracking_page() ) {
-			if ( is_customize_preview() ) {
-				self::$tracking_info = do_shortcode( '[vi_wot_track_order_timeline tracking_code = "customize_preview" preview="true"]' );
-			} elseif ( self::$settings->get_params( 'service_carrier_enable' ) ) {
-				$tracking_code = isset( $_GET['tracking_id'] ) ? sanitize_text_field( $_GET['tracking_id'] ) : '';
-				if ($tracking_code ){
-					preg_match_all( '/[^A-Za-z0-9_-]/', $tracking_code, $matches );
-                    if (!empty($matches[0])) {
-	                    $tracking_code = '';
-                    }
-                }
-                ob_start();
-				?>
-                <div class="<?php echo esc_attr( self::set( 'shortcode-timeline-container' ) ); ?>"
-                     data-tracking_code="<?php echo esc_attr( $tracking_code ) ?>">
-					<?php
-					if ( isset( $_GET['woo_orders_tracking_nonce'] ) && wp_verify_nonce( wc_clean($_GET['woo_orders_tracking_nonce']), 'woo_orders_tracking_nonce_action' ) ) {
-						echo do_shortcode( "[vi_wot_track_order_timeline tracking_code = '{$tracking_code}']" );
-					} else {
-						?>
-                        <div class="vi-woo-orders-tracking-message-empty-nonce"><?php echo apply_filters( 'woo_orders_tracking_empty_nonce_message', esc_html__( 'Please click button Track to track your order.', 'woo-orders-tracking' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped  ?></div>
-						<?php
-					}
-
-					?>
-                </div>
-				<?php
-				self::$tracking_info = ob_get_clean();
-			}
 			if ( ! wp_style_is( 'vi-wot-frontend-shortcode-track-order-icons' ) ) {
 				wp_enqueue_style( 'vi-wot-frontend-shortcode-track-order-icons', VI_WOO_ORDERS_TRACKING_CSS . 'woo-orders-tracking-icons.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 			}
 			wp_enqueue_style( 'vi-wot-frontend-shortcode-track-order-css', VI_WOO_ORDERS_TRACKING_CSS . 'frontend-shortcode-track-order.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 			wp_enqueue_style( 'vi-wot-frontend-shortcode-track-order-icon', VI_WOO_ORDERS_TRACKING_CSS . 'frontend-shipment-icon.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
-			$css = '';
-			//general
-			$css .= $this->add_inline_style(
-				array(
-					'timeline_track_info_title_alignment',
-					'timeline_track_info_title_color',
-					'timeline_track_info_title_font_size',
-				),
-				'.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-title',
-				array(
-					'text-align',
-					'color',
-					'font-size',
-				), array(
-					'',
-					'',
-					'px'
-				)
-			);
-			$css .= $this->add_inline_style(
-				array(
-					'timeline_track_info_status_color',
-				),
-				'.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap',
-				array(
-					'color',
-				), array(
-				'',
-			) );
-			$css .= $this->add_inline_style(
-				array(
-					'timeline_track_info_status_background_delivered',
-				),
-				'.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-delivered',
-				array(
-					'background-color',
-				), array(
-				'',
-			) );
-			$css .= $this->add_inline_style(
-				array(
-					'timeline_track_info_status_background_pickup',
-				),
-				'.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-pickup',
-				array(
-					'background-color',
-				), array(
-				'',
-			) );
-			$css .= $this->add_inline_style(
-				array(
-					'timeline_track_info_status_background_transit',
-				),
-				'.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-transit',
-				array(
-					'background-color',
-				), array(
-				'',
-			) );
-			$css .= $this->add_inline_style(
-				array(
-					'timeline_track_info_status_background_pending',
-				),
-				'.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-pending',
-				array(
-					'background-color',
-				), array(
-				'',
-			) );
-			$css .= $this->add_inline_style(
-				array(
-					'timeline_track_info_status_background_alert',
-				),
-				'.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-alert',
-				array(
-					'background-color',
-				), array(
-				'',
-			) );
-			/*
-			 * template one
-			 */
-			if ( self::$settings->get_params( 'timeline_track_info_template' ) === '1' ) {
+			if (!is_customize_preview()) {
+				$css = '';
+				//general
 				$css .= $this->add_inline_style(
 					array(
-						'icon_delivered_color',
+						'timeline_track_info_title_alignment',
+						'timeline_track_info_title_color',
+						'timeline_track_info_title_font_size',
 					),
-					'.woo-orders-tracking-shortcode-timeline-wrap.woo-orders-tracking-shortcode-timeline-wrap-template-one
+					'.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-title',
+					array(
+						'text-align',
+						'color',
+						'font-size',
+					), array(
+						'',
+						'',
+						'px'
+					)
+				);
+				$css .= $this->add_inline_style(
+					array(
+						'timeline_track_info_status_color',
+					),
+					'.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap',
+					array(
+						'color',
+					), array(
+					'',
+				) );
+				$css .= $this->add_inline_style(
+					array(
+						'timeline_track_info_status_background_delivered',
+					),
+					'.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-delivered',
+					array(
+						'background-color',
+					), array(
+					'',
+				) );
+				$css .= $this->add_inline_style(
+					array(
+						'timeline_track_info_status_background_pickup',
+					),
+					'.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-pickup',
+					array(
+						'background-color',
+					), array(
+					'',
+				) );
+				$css .= $this->add_inline_style(
+					array(
+						'timeline_track_info_status_background_transit',
+					),
+					'.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-transit',
+					array(
+						'background-color',
+					), array(
+					'',
+				) );
+				$css .= $this->add_inline_style(
+					array(
+						'timeline_track_info_status_background_pending',
+					),
+					'.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-pending',
+					array(
+						'background-color',
+					), array(
+					'',
+				) );
+				$css .= $this->add_inline_style(
+					array(
+						'timeline_track_info_status_background_alert',
+					),
+					'.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-alert',
+					array(
+						'background-color',
+					), array(
+					'',
+				) );
+				/*
+				 * template one
+				 */
+				if ( self::$settings->get_params( 'timeline_track_info_template' ) === '1' ) {
+					$css .= $this->add_inline_style(
+						array(
+							'icon_delivered_color',
+						),
+						'.woo-orders-tracking-shortcode-timeline-wrap.woo-orders-tracking-shortcode-timeline-wrap-template-one
 .woo-orders-tracking-shortcode-timeline-events-wrap
 .woo-orders-tracking-shortcode-timeline-event
 .woo-orders-tracking-shortcode-timeline-icon-delivered i:before',
-					array(
-						'color',
-					),
-					array(
-						'',
-					),
-					array(
-						'timeline_track_info_template_one',
-					) );
-				$css .= $this->add_inline_style(
-					array(
-						'icon_delivered_color',
-					),
-					'.woo-orders-tracking-shortcode-timeline-wrap.woo-orders-tracking-shortcode-timeline-wrap-template-one
+						array(
+							'color',
+						),
+						array(
+							'',
+						),
+						array(
+							'timeline_track_info_template_one',
+						) );
+					$css .= $this->add_inline_style(
+						array(
+							'icon_delivered_color',
+						),
+						'.woo-orders-tracking-shortcode-timeline-wrap.woo-orders-tracking-shortcode-timeline-wrap-template-one
 .woo-orders-tracking-shortcode-timeline-events-wrap
 .woo-orders-tracking-shortcode-timeline-event
 .woo-orders-tracking-shortcode-timeline-icon-delivered svg circle',
-					array(
-						'fill',
-					), array(
-					''
-				),
-					array(
-						'timeline_track_info_template_one'
-					)
-				);
-
-				$css .= $this->add_inline_style(
-					array(
-						'icon_pickup_color',
+						array(
+							'fill',
+						), array(
+						''
 					),
-					'.woo-orders-tracking-shortcode-timeline-wrap.woo-orders-tracking-shortcode-timeline-wrap-template-one
+						array(
+							'timeline_track_info_template_one'
+						)
+					);
+
+					$css .= $this->add_inline_style(
+						array(
+							'icon_pickup_color',
+						),
+						'.woo-orders-tracking-shortcode-timeline-wrap.woo-orders-tracking-shortcode-timeline-wrap-template-one
 .woo-orders-tracking-shortcode-timeline-events-wrap
 .woo-orders-tracking-shortcode-timeline-event
 .woo-orders-tracking-shortcode-timeline-icon-pickup i:before',
-					array(
-						'color',
-					),
-					array(
-						''
-					),
-					array(
-						'timeline_track_info_template_one'
-					)
-				);
+						array(
+							'color',
+						),
+						array(
+							''
+						),
+						array(
+							'timeline_track_info_template_one'
+						)
+					);
 
-				$css .= $this->add_inline_style(
-					array(
-						'icon_pickup_background',
-					),
-					'.woo-orders-tracking-shortcode-timeline-wrap.woo-orders-tracking-shortcode-timeline-wrap-template-one
+					$css .= $this->add_inline_style(
+						array(
+							'icon_pickup_background',
+						),
+						'.woo-orders-tracking-shortcode-timeline-wrap.woo-orders-tracking-shortcode-timeline-wrap-template-one
 .woo-orders-tracking-shortcode-timeline-events-wrap
 .woo-orders-tracking-shortcode-timeline-event
 .woo-orders-tracking-shortcode-timeline-icon-pickup ',
-					array(
-						'background-color',
-					),
-					array(
-						'',
-					),
-					array(
-						'timeline_track_info_template_one'
-					) );
+						array(
+							'background-color',
+						),
+						array(
+							'',
+						),
+						array(
+							'timeline_track_info_template_one'
+						) );
 
-				$css .= $this->add_inline_style(
-					array(
-						'icon_transit_color',
-					),
-					'.woo-orders-tracking-shortcode-timeline-wrap.woo-orders-tracking-shortcode-timeline-wrap-template-one
+					$css .= $this->add_inline_style(
+						array(
+							'icon_transit_color',
+						),
+						'.woo-orders-tracking-shortcode-timeline-wrap.woo-orders-tracking-shortcode-timeline-wrap-template-one
 .woo-orders-tracking-shortcode-timeline-events-wrap
 .woo-orders-tracking-shortcode-timeline-event
 .woo-orders-tracking-shortcode-timeline-icon-transit i:before',
-					array(
-						'color',
-					),
-					array(
-						'',
-					),
-					array(
-						'timeline_track_info_template_one'
-					) );
+						array(
+							'color',
+						),
+						array(
+							'',
+						),
+						array(
+							'timeline_track_info_template_one'
+						) );
 
-				$css .= $this->add_inline_style(
-					array(
-						'icon_transit_background',
-					),
-					'.woo-orders-tracking-shortcode-timeline-wrap.woo-orders-tracking-shortcode-timeline-wrap-template-one
+					$css .= $this->add_inline_style(
+						array(
+							'icon_transit_background',
+						),
+						'.woo-orders-tracking-shortcode-timeline-wrap.woo-orders-tracking-shortcode-timeline-wrap-template-one
 .woo-orders-tracking-shortcode-timeline-events-wrap
 .woo-orders-tracking-shortcode-timeline-event
 .woo-orders-tracking-shortcode-timeline-icon-transit ',
-					array(
-						'background-color',
-					),
-					array(
-						'',
-					),
-					array(
-						'timeline_track_info_template_one'
-					) );
+						array(
+							'background-color',
+						),
+						array(
+							'',
+						),
+						array(
+							'timeline_track_info_template_one'
+						) );
+				}
+				$css .= self::$settings->get_params( 'custom_css' );
+				wp_add_inline_style( 'vi-wot-frontend-shortcode-track-order-css', $css );
 			}
-			$css .= self::$settings->get_params( 'custom_css' );
-			wp_add_inline_style( 'vi-wot-frontend-shortcode-track-order-css', $css );
 		}
 	}
 
@@ -284,7 +258,7 @@ class VI_WOO_ORDERS_TRACKING_FRONTEND_FRONTEND {
 			$inline_css = $this->add_inline_style( 'tracking_form_button_track_color', '.vi-woo-orders-tracking-form-search .vi-woo-orders-tracking-form-row .vi-woo-orders-tracking-form-search-tracking-number-btnclick', 'color', '' );
 			$inline_css .= $this->add_inline_style( 'tracking_form_button_track_bg_color', '.vi-woo-orders-tracking-form-search .vi-woo-orders-tracking-form-row .vi-woo-orders-tracking-form-search-tracking-number-btnclick', 'background-color', '' );
 			wp_add_inline_style( 'vi-wot-frontend-shortcode-form-search-css', $inline_css );
-			wp_enqueue_script( 'vi-wot-frontend-shortcode-form-search-js', VI_WOO_ORDERS_TRACKING_JS . 'frontend-shortcode-form-search.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION );
+			wp_enqueue_script( 'vi-wot-frontend-shortcode-form-search-js', VI_WOO_ORDERS_TRACKING_JS . 'frontend-shortcode-form-search.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
 			wp_localize_script( 'vi-wot-frontend-shortcode-form-search-js', 'vi_wot_frontend_form_search',
 				array(
 					'ajax_url'         => admin_url( 'admin-ajax.php' ),
@@ -333,6 +307,36 @@ class VI_WOO_ORDERS_TRACKING_FRONTEND_FRONTEND {
             </div>
         </form>
 		<?php
+        if (!self::$tracking_info){
+	        if ( is_customize_preview() ) {
+		        self::$tracking_info = do_shortcode( '[vi_wot_track_order_timeline tracking_code = "customize_preview" preview="true"]' );
+	        } elseif ( self::$settings->get_params( 'service_carrier_enable' ) ) {
+		        $tracking_code = isset( $_GET['tracking_id'] ) ? sanitize_text_field( $_GET['tracking_id'] ) : '';
+		        if ($tracking_code ){
+			        preg_match_all( '/[^A-Za-z0-9_-]/', $tracking_code, $matches );
+			        if (!empty($matches[0])) {
+				        $tracking_code = '';
+			        }
+		        }
+		        ob_start();
+		        ?>
+                <div class="<?php echo esc_attr( self::set( 'shortcode-timeline-container' ) ); ?>"
+                     data-tracking_code="<?php echo esc_attr( $tracking_code ) ?>">
+			        <?php
+			        if ( isset( $_GET['woo_orders_tracking_nonce'] ) && wp_verify_nonce( wc_clean($_GET['woo_orders_tracking_nonce']), 'woo_orders_tracking_nonce_action' ) ) {
+				        echo do_shortcode( "[vi_wot_track_order_timeline tracking_code = '{$tracking_code}']" );
+			        } else {
+				        ?>
+                        <div class="vi-woo-orders-tracking-message-empty-nonce"><?php echo apply_filters( 'woo_orders_tracking_empty_nonce_message', esc_html__( 'Please click button Track to track your order.', 'woo-orders-tracking' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped  ?></div>
+				        <?php
+			        }
+
+			        ?>
+                </div>
+		        <?php
+		        self::$tracking_info = ob_get_clean();
+	        }
+        }
 		echo VI_WOO_ORDERS_TRACKING_DATA::wp_kses_post(self::$tracking_info);// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		return ob_get_clean();
@@ -528,7 +532,7 @@ class VI_WOO_ORDERS_TRACKING_FRONTEND_FRONTEND {
                             </span>
                             <div>
                                 <span class="<?php echo esc_attr( self::set( 'shortcode-timeline-event-location' ) ) ?>">
-                                    <?php echo esc_html( trim( $track_info[ $i ]['location'], ' ' ) ) ?>
+                                    <?php echo esc_html( trim( $track_info[ $i ]['location']??'', ' ' ) ) ?>
                                 </span>
                                 <span class="<?php echo esc_attr( self::set( 'shortcode-timeline-event-time' ) ) ?>">
                                     <?php echo esc_html( self::format_datetime( $track_info[ $i ]['time'] ) ); ?>
@@ -628,95 +632,128 @@ class VI_WOO_ORDERS_TRACKING_FRONTEND_FRONTEND {
 		} else {
 			self::$query_tracking = VI_WOO_ORDERS_TRACKING_DATA::search_order_item_by_tracking_number( $tracking_code );
 			if ( count( self::$query_tracking ) ) {
-//					$order_ids            = array_column( self::$query_tracking, 'order_id' );
 				$service_carrier_type = self::$settings->get_params( 'service_carrier_type' );
 				$found_tracking       = false;
-				if ( $service_carrier_type === 'trackingmore' ) {
-					$tracking_from_db       = VI_WOO_ORDERS_TRACKING_TRACKINGMORE_TABLE::get_rows_by_tracking_number_carrier_pairs( array_column( self::$query_tracking, 'tracking_number_carrier_pair' ) );
-					$tracking_from_db_count = count( $tracking_from_db );
-					if ( $tracking_from_db_count > 0 ) {
-						$tracking_from_db = $tracking_from_db[0];
-						$tracking_code    = $tracking_from_db['tracking_number'];
-						$carrier          = self::$settings->get_shipping_carrier_by_slug( $tracking_from_db['carrier_id'] );
-						$carrier_name     = $tracking_from_db['carrier_name'];
-						if ( is_array( $carrier ) && count( $carrier ) ) {
-							$carrier_name = $carrier['name'];
-						}
+                switch ($service_carrier_type){
+                    case 'trackingmore':
+	                    $tracking_from_db       = VI_WOO_ORDERS_TRACKING_TRACKINGMORE_TABLE::get_rows_by_tracking_number_carrier_pairs( array_column( self::$query_tracking, 'tracking_number_carrier_pair' ) );
+	                    $tracking_from_db_count = count( $tracking_from_db );
+	                    if ( $tracking_from_db_count > 0 ) {
+		                    $tracking_from_db = $tracking_from_db[0];
+		                    $tracking_code    = $tracking_from_db['tracking_number'];
+		                    $carrier          = self::$settings->get_shipping_carrier_by_slug( $tracking_from_db['carrier_id'] );
+		                    $carrier_name     = $tracking_from_db['carrier_name'];
+		                    if ( is_array( $carrier ) && count( $carrier ) ) {
+			                    $carrier_name = $carrier['name'];
+		                    }
 
-						$this->process_tracking_from_db_trackingmore( $tracking_from_db, $tracking_code, $service_carrier_type, $found_tracking );
+		                    $this->process_tracking_from_db_trackingmore( $tracking_from_db, $tracking_code, $service_carrier_type, $found_tracking );
 
-					} else if ( self::$settings->get_params( 'service_add_tracking_if_not_exist' ) ) {
-						$current_tracking = self::$query_tracking[0];
-						if ( ! $tracking_code ) {
-							$tracking_code = $current_tracking['tracking_number'];
-						}
-						$tracking_from_db                          = VI_WOO_ORDERS_TRACKING_TRACKINGMORE_TABLE::get_cols();
-						$tracking_from_db['order_id']              = $current_tracking['order_id'];
-						$tracking_from_db['tracking_number']       = $tracking_code;
-						$item_tracking_data                        = $current_tracking['meta_value'];
-						$tracking_from_db['shipping_country_code'] = self::get_shipping_country_by_order_id( $current_tracking['order_id'] );
-						if ( $item_tracking_data ) {
-							$item_tracking_data             = vi_wot_json_decode( $item_tracking_data );
-							$current_tracking_data          = array_pop( $item_tracking_data );
-							$carrier_name                   = $current_tracking_data['carrier_name'];
-							$carrier_slug                   = $current_tracking_data['carrier_slug'];
-							$tracking_from_db['carrier_id'] = $carrier_slug;
-							$carrier                        = self::$settings->get_shipping_carrier_by_slug( $carrier_slug );
-							if ( is_array( $carrier ) && count( $carrier ) ) {
-								$carrier_name       = $carrier['name'];
-								$tracking_more_slug = empty( $carrier['tracking_more_slug'] ) ? VI_WOO_ORDERS_TRACKING_TRACKINGMORE::get_carrier_slug_by_name( $carrier_name ) : $carrier['tracking_more_slug'];
-								if ( ! empty( $tracking_more_slug ) ) {
-									$service_carrier_api_key = self::$settings->get_params( 'service_carrier_api_key' );
-									if ( $service_carrier_api_key ) {
-										$trackingMore = new VI_WOO_ORDERS_TRACKING_TRACKINGMORE( $service_carrier_api_key );
-										$track_data   = $trackingMore->create_tracking( $tracking_code, $tracking_more_slug, $current_tracking['order_id'] );
-										$status       = '';
-										$track_info   = '';
-										$description  = '';
-										if ( $track_data['status'] === 'success' ) {
-											$status = $track_data['data']['status'];
-											VI_WOO_ORDERS_TRACKING_TRACKINGMORE_TABLE::insert( $current_tracking['order_id'], $tracking_code, $status, $carrier_slug, $carrier_name, $tracking_from_db['shipping_country_code'], $track_info, '' );
-										} else {
-											if ( $track_data['code'] === 4016 ) {
-												/*Tracking exists*/
-												$track_data = $trackingMore->get_tracking( $tracking_code, $tracking_more_slug );
-												if ( $track_data['status'] === 'success' ) {
-													if ( count( $track_data['data'] ) ) {
-														$tracking                             = $track_data['data'];
-														$track_info                           = vi_wot_json_encode( $track_data['data'] );
-														$last_event                           = array_shift( $track_data['data'] );
-														$status                               = $last_event['status'];
-														$description                          = $last_event['description'];
-														$current_tracking_data['status']      = $last_event['status'];
-														$current_tracking_data['last_update'] = time();
-														$found_tracking                       = true;
-														self::display_timeline( array(
-															'status'            => $status,
-															'tracking'          => $tracking,
-															'last_event'        => $last_event,
-															'carrier_name'      => $carrier_name,
-															'est_delivery_date' => '',
-															'modified_at'       => gmdate( 'Y-m-d H:i:s' ),
-															'order_id'          => $tracking_from_db['order_id'],
-														), $tracking_code );
-														$convert_status = VI_WOO_ORDERS_TRACKING_DATA::convert_status( $last_event['status'] );
-														if ( $convert_status !== VI_WOO_ORDERS_TRACKING_DATA::convert_status( $tracking_from_db['status'] ) || $track_info !== $tracking_from_db['track_info'] ) {
+	                    } else if ( self::$settings->get_params( 'service_add_tracking_if_not_exist' ) ) {
+		                    $current_tracking = self::$query_tracking[0];
+		                    if ( ! $tracking_code ) {
+			                    $tracking_code = $current_tracking['tracking_number'];
+		                    }
+		                    $tracking_from_db                          = VI_WOO_ORDERS_TRACKING_TRACKINGMORE_TABLE::get_cols();
+		                    $tracking_from_db['order_id']              = $current_tracking['order_id'];
+		                    $tracking_from_db['tracking_number']       = $tracking_code;
+		                    $item_tracking_data                        = $current_tracking['meta_value'];
+		                    $tracking_from_db['shipping_country_code'] = self::get_shipping_country_by_order_id( $current_tracking['order_id'] );
+		                    if ( $item_tracking_data ) {
+			                    $item_tracking_data             = vi_wot_json_decode( $item_tracking_data );
+			                    $current_tracking_data          = array_pop( $item_tracking_data );
+			                    $carrier_name                   = $current_tracking_data['carrier_name'];
+			                    $carrier_slug                   = $current_tracking_data['carrier_slug'];
+			                    $tracking_from_db['carrier_id'] = $carrier_slug;
+			                    $carrier                        = self::$settings->get_shipping_carrier_by_slug( $carrier_slug );
+			                    if ( is_array( $carrier ) && count( $carrier ) ) {
+				                    $carrier_name       = $carrier['name'];
+				                    $tracking_more_slug = empty( $carrier['tracking_more_slug'] ) ? VI_WOO_ORDERS_TRACKING_TRACKINGMORE::get_carrier_slug_by_name( $carrier_name ) : $carrier['tracking_more_slug'];
+				                    if ( ! empty( $tracking_more_slug ) ) {
+					                    $service_carrier_api_key = self::$settings->get_params( 'service_carrier_api_key' );
+					                    if ( $service_carrier_api_key ) {
+						                    $trackingMore = new VI_WOO_ORDERS_TRACKING_TRACKINGMORE( $service_carrier_api_key );
+						                    $track_data   = $trackingMore->create_tracking( $tracking_code, $tracking_more_slug, $current_tracking['order_id'] );
+						                    $status       = '';
+						                    $track_info   = '';
+						                    $description  = '';
+						                    if ( $track_data['status'] === 'success' ) {
+							                    $status = $track_data['data']['status'];
+							                    VI_WOO_ORDERS_TRACKING_TRACKINGMORE_TABLE::insert( $current_tracking['order_id'], $tracking_code, $status, $carrier_slug, $carrier_name, $tracking_from_db['shipping_country_code'], $track_info, '' );
+						                    } else {
+							                    if ( $track_data['code'] === 4016 ) {
+								                    /*Tracking exists*/
+								                    $track_data = $trackingMore->get_tracking( $tracking_code, $tracking_more_slug );
+								                    if ( $track_data['status'] === 'success' ) {
+									                    if ( count( $track_data['data'] ) ) {
+										                    $tracking                             = $track_data['data'];
+										                    $track_info                           = vi_wot_json_encode( $track_data['data'] );
+										                    $last_event                           = array_shift( $track_data['data'] );
+										                    $status                               = $last_event['status'];
+										                    $description                          = $last_event['description'];
+										                    $current_tracking_data['status']      = $last_event['status'];
+										                    $current_tracking_data['last_update'] = time();
+										                    $found_tracking                       = true;
+										                    self::display_timeline( array(
+											                    'status'            => $status,
+											                    'tracking'          => $tracking,
+											                    'last_event'        => $last_event,
+											                    'carrier_name'      => $carrier_name,
+											                    'est_delivery_date' => '',
+											                    'modified_at'       => gmdate( 'Y-m-d H:i:s' ),
+											                    'order_id'          => $tracking_from_db['order_id'],
+										                    ), $tracking_code );
+										                    $convert_status = VI_WOO_ORDERS_TRACKING_DATA::convert_status( $last_event['status'] );
+										                    if ( $convert_status !== VI_WOO_ORDERS_TRACKING_DATA::convert_status( $tracking_from_db['status'] ) || $track_info !== $tracking_from_db['track_info'] ) {
 //																$tracking_change = 1;
-															VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_TRACK_INFO::update_order_items_tracking_status( $tracking_code, $tracking_from_db['carrier_id'], $last_event['status'] );
-														}
-													}
-												}
-												VI_WOO_ORDERS_TRACKING_TRACKINGMORE_TABLE::insert( $current_tracking['order_id'], $tracking_code, $status, $carrier_slug, $carrier_name, $tracking_from_db['shipping_country_code'], $track_info, $description );
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-					if ( ! $found_tracking ) {
-						self::tracking_not_available_message();
-					}
+											                    VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_TRACK_INFO::update_order_items_tracking_status( $tracking_code, $tracking_from_db['carrier_id'], $last_event['status'] );
+										                    }
+									                    }
+								                    }
+								                    VI_WOO_ORDERS_TRACKING_TRACKINGMORE_TABLE::insert( $current_tracking['order_id'], $tracking_code, $status, $carrier_slug, $carrier_name, $tracking_from_db['shipping_country_code'], $track_info, $description );
+							                    }
+						                    }
+					                    }
+				                    }
+			                    }
+		                    }
+	                    }
+                        break;
+                    case 'vitracking':
+	                    VI_WOO_ORDERS_TRACKING_TRACK_INFO_TABLE::maybe_create_table();
+	                    /**
+	                     * Search tracking in db
+	                     */
+	                    $tracking_from_db       = VI_WOO_ORDERS_TRACKING_TRACK_INFO_TABLE::get_rows_by_tracking_number_carrier_pairs( array_column( self::$query_tracking, 'tracking_number_carrier_pair' ), $service_carrier_type );
+	                    $tracking_from_db_count = count( $tracking_from_db );
+                        if (!$tracking_from_db_count &&  self::$settings->get_params( 'service_add_tracking_if_not_exist' ) ){
+	                        $current_tracking                    = self::$query_tracking[0];
+	                        $tracking_from_db                    = VI_WOO_ORDERS_TRACKING_TRACK_INFO_TABLE::get_cols();
+	                        $tracking_from_db['order_id']        = $current_tracking['order_id'];
+	                        $tracking_from_db['tracking_number'] = $tracking_code;
+	                        $item_tracking_data                  = $current_tracking['meta_value'];
+	                        if ( $item_tracking_data ) {
+		                        $item_tracking_data    = vi_wot_json_decode( $item_tracking_data );
+		                        $current_tracking_data = array_pop( $item_tracking_data );
+		                        $carrier_slug          = $current_tracking_data['carrier_slug'];
+	                        } else {
+		                        $carrier_slug = $current_tracking['carrier_slug'];
+	                        }
+	                        if ( $carrier_slug ) {
+		                        $tracking_from_db['carrier_id'] = $carrier_slug;
+		                        $tracking_from_db['id']         = VI_WOO_ORDERS_TRACKING_TRACK_INFO_TABLE::insert( $tracking_code, $current_tracking['order_id'], $carrier_slug, $service_carrier_type, '', '', '', '', '' );
+	                        }
+                            if (!empty($tracking_from_db['id'])){
+                                $tracking_from_db_count = 1;
+                            }
+                        }
+                        if ($tracking_from_db_count){
+	                        $this->track_with_vitracking( $tracking_code, $tracking_from_db, $service_carrier_type, $found_tracking );
+                        }
+	                    break;
+                }
+				if ( ! $found_tracking ) {
+					self::tracking_not_available_message();
 				}
 			} else {
 				self::get_not_found_text();
@@ -724,6 +761,136 @@ class VI_WOO_ORDERS_TRACKING_FRONTEND_FRONTEND {
 		}
 	}
 
+	/**
+	 * @param $tracking_code
+	 * @param $tracking_from_db
+	 * @param $service_carrier_type
+	 * @param $found_tracking
+	 * @param string $modified_at_real
+	 *
+	 * @throws Exception
+	 */
+	public function track_with_vitracking( $tracking_code, $tracking_from_db, $service_carrier_type, &$found_tracking, $modified_at_real = '' ) {
+		if ( $service_carrier_type !== 'vitracking' ) {
+			return;
+		}
+		if (!is_array($tracking_from_db)  ||  empty( $tracking_from_db ) ) {
+            return;
+		}
+		$now = time();
+		if ( ! isset( $tracking_from_db['id'] ) ) {
+			$tracking_from_db = $tracking_from_db[0];
+		}
+		if ( ! $tracking_code ) {
+			$tracking_code = $tracking_from_db['tracking_number'];
+		}
+		$modified_at    = $tracking_from_db['modified_at'];
+		if ( VI_WOO_ORDERS_TRACKING_DATA::convert_status( $tracking_from_db['status'] ) === 'delivered' && $tracking_from_db['track_info'] ) {
+			$track_info   = vi_wot_json_decode( $tracking_from_db['track_info'] );
+			$carrier_name = $tracking_from_db['carrier_id'];
+			$display_name = $carrier_name;
+			$carrier      = self::$settings->get_shipping_carrier_by_slug( $tracking_from_db['carrier_id'] );
+			if ( is_array( $carrier ) && count( $carrier ) ) {
+				$carrier_name = $carrier['name'];
+				$display_name = empty( $carrier['display_name'] ) ? $carrier_name : $carrier['display_name'];
+			}
+			self::display_timeline( array(
+				'status'            => $tracking_from_db['status'],
+				'tracking'          => $track_info,
+				'last_event'        => $tracking_from_db['last_event'],
+				'carrier_name'      => $display_name,
+				'est_delivery_date' => isset( $tracking_from_db['est_delivery_date'] ) ? $tracking_from_db['est_delivery_date'] : '',
+				'modified_at'       => $modified_at_real ?: $tracking_from_db['modified_at'],
+				'order_id'          => $tracking_from_db['order_id'],
+			), $tracking_code );
+            return;
+		}
+		if ( ( $now - strtotime( $modified_at ) ) > self::$settings->get_cache_request_time() ) {
+			$found_tracking = true;
+			$carrier_name = $tracking_from_db['carrier_id'];
+			$display_name = $carrier_name;
+			$carrier      = self::$settings->get_shipping_carrier_by_slug( $tracking_from_db['carrier_id'] );
+			if ( is_array( $carrier ) && count( $carrier ) ) {
+				$carrier_name = $carrier['name'];
+				$display_name = empty( $carrier['display_name'] ) ? $carrier_name : $carrier['display_name'];
+			}
+			self::vitracking_search_tracking( $tracking_code, $found_tracking, $tracking_from_db, $service_carrier_type, $carrier_name, $display_name );
+		}
+		if ( !$found_tracking && $tracking_from_db['track_info'] ) {
+			$found_tracking = true;
+			$track_info     = vi_wot_json_decode( $tracking_from_db['track_info'] );
+			$carrier_name   = $tracking_from_db['carrier_id'];
+			$display_name   = $carrier_name;
+			$carrier        = self::$settings->get_shipping_carrier_by_slug( $tracking_from_db['carrier_id'] );
+			if ( is_array( $carrier ) && count( $carrier ) ) {
+				$carrier_name = $carrier['name'];
+				$display_name = empty( $carrier['display_name'] ) ? $carrier_name : $carrier['display_name'];
+			}
+			self::display_timeline( array(
+				'status'            => $tracking_from_db['status'],
+				'tracking'          => $track_info,
+				'last_event'        => $tracking_from_db['last_event'],
+				'carrier_name'      => $display_name,
+				'est_delivery_date' => isset( $tracking_from_db['est_delivery_date'] ) ? $tracking_from_db['est_delivery_date'] : '',
+				'modified_at'       => $tracking_from_db['modified_at'],
+				'order_id'          => $tracking_from_db['order_id'],
+			), $tracking_code );
+		}
+	}
+
+	/**
+	 * @param $tracking_code
+	 * @param $found_tracking
+	 * @param $tracking_from_db
+	 * @param $service_carrier_type
+	 * @param $carrier_name
+	 * @param $display_name
+	 *
+	 * @throws Exception
+	 */
+	public static function vitracking_search_tracking( $tracking_code, &$found_tracking, $tracking_from_db, $service_carrier_type, $carrier_name, $display_name ) {
+		$found_tracking = false;
+		$service_carrier_api_key = self::$settings->get_params( 'service_carrier_api_key' );
+		$url            = "https://vitracking.com/wp-json/tracking-service/get-tracking?tracking_number={$tracking_code}";
+		$request_data   = VI_WOO_ORDERS_TRACKING_DATA::wp_remote_get( $url, [
+			'headers' => [ 'Authorization' => $service_carrier_api_key, 'Referer' => get_site_url() ]
+		]  );
+        if (($request_data['status'] ??'') !== 'success' || empty($request_data['data'])){
+            return;
+        }
+		$tracking = vi_wot_json_decode( $request_data['data'] );
+        if (empty($tracking['data']['states'])){
+            return;
+        }
+		$found_tracking = true;
+        $track_info_args = $tracking['data']['states'];
+        foreach ( $track_info_args as &$item){
+            $item['description'] = $item['status'];
+            $item['time'] = $item['date'];
+        }
+		$track_info     = vi_wot_json_encode( $track_info_args );
+		$last_event     = $track_info_args[0];
+        $tracking_status = $tracking['data']['sub_status']??'';
+		if ( $tracking_from_db['id'] ) {
+			VI_WOO_ORDERS_TRACKING_TRACK_INFO_TABLE::update( $tracking_from_db['id'], '', $tracking_from_db['carrier_id'], '', $tracking_status, $track_info, $last_event['description'], '' );
+		}else{
+			VI_WOO_ORDERS_TRACKING_TRACK_INFO_TABLE::insert( $tracking_code, $tracking_from_db['order_id'], $tracking_from_db['carrier_id'], $service_carrier_type, $tracking_status, $track_info, $last_event['description'], '', false );
+		}
+		$convert_status = VI_WOO_ORDERS_TRACKING_DATA::convert_status( $tracking_status);
+		$settings       = VI_WOO_ORDERS_TRACKING_DATA::get_instance();
+		if ( $convert_status !== VI_WOO_ORDERS_TRACKING_DATA::convert_status( $tracking_from_db['status'] ) || $track_info !== $tracking_from_db['track_info'] ) {
+			VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_TRACK_INFO::update_order_items_tracking_status( $tracking_code, $tracking_from_db['carrier_id'], $last_event['status'], $settings->get_params( 'change_order_status' ) );
+		}
+		self::display_timeline( array(
+			'status'            => $tracking_status,
+			'tracking'          => $track_info_args,
+			'last_event'        => $last_event,
+			'carrier_name'      => $display_name,
+			'est_delivery_date' => $tracking_from_db['est_delivery_date'] ?? '',
+			'modified_at'       => date( 'Y-m-d H:i:s' ),
+			'order_id'          => $tracking_from_db['order_id'],
+		), $tracking_code );
+	}
 	/**
 	 * @param $tracking_from_db
 	 * @param $tracking_code

@@ -10,7 +10,7 @@ jQuery(document).ready(function ($) {
         }
         wp.customize('woo_orders_tracking_settings' + type + '[' + name + ']', function (value) {
             value.bind(function (newval) {
-                $('#vi-wot-orders-tracking-customize-preview-' + name.replace(/_/g, '-')).html(element + '{' + style + ':' + newval + suffix + ' ; }');
+                $('#vi-wot-orders-tracking-customize-preview-' + name.replace(/_/g, '-') + '-inline-css').html(element + '{' + style + ':' + newval + suffix + ' ; }');
             })
         })
     }
@@ -28,7 +28,7 @@ jQuery(document).ready(function ($) {
         value.bind(function (newval) {
             switch (newval) {
                 case '1':
-                    $('#vi-wot-orders-tracking-customize-preview-show-timeline-template').html('.woo-orders-tracking-preview-shortcode-template-two{\n' +
+                    $('#vi-wot-orders-tracking-customize-preview-show-timeline-template-inline-css').html('.woo-orders-tracking-preview-shortcode-template-two{\n' +
                         '                display: none !important;\n' +
                         '            }\n' +
                         '            .woo-orders-tracking-preview-shortcode-template-one{\n' +
@@ -36,7 +36,7 @@ jQuery(document).ready(function ($) {
                         '            }');
                     break;
                 case '2':
-                    $('#vi-wot-orders-tracking-customize-preview-show-timeline-template').html('.woo-orders-tracking-preview-shortcode-template-two{\n' +
+                    $('#vi-wot-orders-tracking-customize-preview-show-timeline-template-inline-css').html('.woo-orders-tracking-preview-shortcode-template-two{\n' +
                         '                display: block;\n' +
                         '            }\n' +
                         '            .woo-orders-tracking-preview-shortcode-template-one{\n' +
@@ -124,35 +124,35 @@ jQuery(document).ready(function ($) {
 
     wp.customize('woo_orders_tracking_settings[timeline_track_info_status_background_delivered]', function (value) {
         value.bind(function (newval) {
-            $('#vi-wot-orders-tracking-customize-preview-timeline-track-info-status-background-delivered').html('.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-delivered{background-color:' + newval + ' ; }');
+            $('#vi-wot-orders-tracking-customize-preview-timeline-track-info-status-background-delivered-inline-css').html('.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-delivered{background-color:' + newval + ' ; }');
             $('.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap').addClass('woo-orders-tracking-shortcode-hidden');
             $('.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-delivered').removeClass('woo-orders-tracking-shortcode-hidden');
         });
     });
     wp.customize('woo_orders_tracking_settings[timeline_track_info_status_background_pickup]', function (value) {
         value.bind(function (newval) {
-            $('#vi-wot-orders-tracking-customize-preview-timeline-track-info-status-background-pickup').html('.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-pickup{background-color:' + newval + ' ; }');
+            $('#vi-wot-orders-tracking-customize-preview-timeline-track-info-status-background-pickup-inline-css').html('.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-pickup{background-color:' + newval + ' ; }');
             $('.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap').addClass('woo-orders-tracking-shortcode-hidden');
             $('.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-pickup').removeClass('woo-orders-tracking-shortcode-hidden');
         });
     });
     wp.customize('woo_orders_tracking_settings[timeline_track_info_status_background_transit]', function (value) {
         value.bind(function (newval) {
-            $('#vi-wot-orders-tracking-customize-preview-timeline-track-info-status-background-transit').html('.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-transit{background-color:' + newval + ' ; }');
+            $('#vi-wot-orders-tracking-customize-preview-timeline-track-info-status-background-transit-inline-css').html('.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-transit{background-color:' + newval + ' ; }');
             $('.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap').addClass('woo-orders-tracking-shortcode-hidden');
             $('.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-transit').removeClass('woo-orders-tracking-shortcode-hidden');
         });
     });
     wp.customize('woo_orders_tracking_settings[timeline_track_info_status_background_pending]', function (value) {
         value.bind(function (newval) {
-            $('#vi-wot-orders-tracking-customize-preview-timeline-track-info-status-background-pending').html('.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-pending{background-color:' + newval + ' ; }');
+            $('#vi-wot-orders-tracking-customize-preview-timeline-track-info-status-background-pending-inline-css').html('.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-pending{background-color:' + newval + ' ; }');
             $('.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap').addClass('woo-orders-tracking-shortcode-hidden');
             $('.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-pending').removeClass('woo-orders-tracking-shortcode-hidden');
         });
     });
     wp.customize('woo_orders_tracking_settings[timeline_track_info_status_background_alert]', function (value) {
         value.bind(function (newval) {
-            $('#vi-wot-orders-tracking-customize-preview-timeline-track-info-status-background-alert').html('.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-alert{background-color:' + newval + ' ; }');
+            $('#vi-wot-orders-tracking-customize-preview-timeline-track-info-status-background-alert-inline-css').html('.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-alert{background-color:' + newval + ' ; }');
             $('.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap').addClass('woo-orders-tracking-shortcode-hidden');
             $('.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-status-wrap.woo-orders-tracking-shortcode-timeline-status-alert').removeClass('woo-orders-tracking-shortcode-hidden');
         });
@@ -216,14 +216,14 @@ jQuery(document).ready(function ($) {
     });
     wp.customize('woo_orders_tracking_settings[custom_css]', function (value) {
         value.bind(function (newval) {
-            $('#vi-wot-orders-tracking-customize-preview-custom-css').html(newval);
+            $('#vi-wot-orders-tracking-customize-preview-custom-css-inline-css').html(newval);
         });
     });
 
     wp.customize.preview.bind('active', function () {
         wp.customize.preview.bind('vi_wot_orders_tracking_design_template_one', function () {
-            $('#vi-wot-orders-tracking-customize-preview-show-timeline').html('.woo-orders-tracking-shortcode-timeline-wrap{ display: block ; }');
-            $('#vi-wot-orders-tracking-customize-preview-show-timeline-template').html('.woo-orders-tracking-preview-shortcode-template-two{\n' +
+            $('#vi-wot-orders-tracking-customize-preview-show-timeline-inline-css').html('.woo-orders-tracking-shortcode-timeline-wrap{ display: block ; }');
+            $('#vi-wot-orders-tracking-customize-preview-show-timeline-template-inline-css').html('.woo-orders-tracking-preview-shortcode-template-two{\n' +
                 '                display: none !important;\n' +
                 '            }\n' +
                 '            .woo-orders-tracking-preview-shortcode-template-one{\n' +
@@ -235,7 +235,7 @@ jQuery(document).ready(function ($) {
             let template = wp.customize('woo_orders_tracking_settings[timeline_track_info_template]').get();
             switch (template) {
                 case '1':
-                    $('#vi-wot-orders-tracking-customize-preview-show-timeline-template').html('.woo-orders-tracking-preview-shortcode-template-two{\n' +
+                    $('#vi-wot-orders-tracking-customize-preview-show-timeline-template-inline-css').html('.woo-orders-tracking-preview-shortcode-template-two{\n' +
                         '                display: none !important;\n' +
                         '            }\n' +
                         '            .woo-orders-tracking-preview-shortcode-template-one{\n' +
@@ -243,7 +243,7 @@ jQuery(document).ready(function ($) {
                         '            }');
                     break;
                 case '2':
-                    $('#vi-wot-orders-tracking-customize-preview-show-timeline-template').html('.woo-orders-tracking-preview-shortcode-template-two{\n' +
+                    $('#vi-wot-orders-tracking-customize-preview-show-timeline-template-inline-css').html('.woo-orders-tracking-preview-shortcode-template-two{\n' +
                         '                display: block;\n' +
                         '            }\n' +
                         '            .woo-orders-tracking-preview-shortcode-template-one{\n' +

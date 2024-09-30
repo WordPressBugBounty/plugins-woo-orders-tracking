@@ -11,7 +11,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_DESIGN {
 		$this->settings = VI_WOO_ORDERS_TRACKING_DATA::get_instance();
 		$this->prefix   = 'vi-wot-orders-tracking-customize-';
 		add_action( 'customize_register', array( $this, 'design_option_customizer' ) );
-		add_action( 'wp_print_styles', array( $this, 'customize_controls_print_styles' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'customize_controls_print_styles' ) );
 		add_action( 'customize_preview_init', array( $this, 'customize_preview_init' ) );
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'customize_controls_enqueue_scripts' ), 30 );
 		add_action( 'wp_ajax_vi_wot_customize_params_date_time_format', array(
@@ -606,64 +606,10 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_DESIGN {
 		if ( ! is_customize_preview() ) {
 			return;
 		}
-		?>
-        <style type="text/css" id="<?php echo esc_attr( $this->set( 'preview-custom-css' ) ) ?>">
-            <?php
-			echo esc_html($this->settings->get_params('custom_css'));
-		  ?>
-        </style>
-        <style type="text/css" id="<?php echo esc_attr( $this->set( 'preview-show-timeline' ) ) ?>">
-            <?php
-            $service_tracking_page = $this->settings->get_params( 'service_tracking_page' );
-            if ( $service_tracking_page && $service_tracking_page_url = get_the_permalink( $service_tracking_page ) ) {
-				?>
-            .woo-orders-tracking-shortcode-timeline-wrap {
-                display: block;
-            }
-
-            <?php
-			}else{
-				?>
-            .woo-orders-tracking-shortcode-timeline-wrap {
-                display: none !important;
-            }
-
-            <?php
-			}
-		  ?>
-        </style>
-        <style type="text/css" id="<?php echo esc_attr( $this->set( 'preview-show-timeline-template' ) ) ?>">
-            <?php
-            $template=$this->settings->get_params('timeline_track_info_template')? $this->settings->get_params('timeline_track_info_template'):$this->settings->get_default('timeline_track_info_template');
-			switch ($template){
-			    case '1':
-			        ?>
-            .woo-orders-tracking-preview-shortcode-template-two {
-                display: none !important;
-            }
-
-            .woo-orders-tracking-preview-shortcode-template-one {
-                display: block;
-            }
-
-            <?php
-			        break;
-			    case '2':
-			        ?>
-            .woo-orders-tracking-preview-shortcode-template-two {
-                display: block;
-            }
-
-            .woo-orders-tracking-preview-shortcode-template-one {
-                display: none !important;
-            }
-
-            <?php
-			        break;
-			}
-		  ?>
-        </style>
-		<?php
+		$service_tracking_page = $this->settings->get_params( 'service_tracking_page' );
+		$this->add_preview_style( 'preview-custom-css', '', '', '','',$this->settings->get_params('custom_css') );
+		$this->add_preview_style( 'preview-show-timeline', '', '', '','',(!$service_tracking_page || !get_the_permalink( $service_tracking_page ) ) ?'.woo-orders-tracking-shortcode-timeline-wrap {display: none !important;}' : '.woo-orders-tracking-shortcode-timeline-wrap {display: block;}' );
+		$this->add_preview_style( 'preview-show-timeline-template', '', '', '','','.woo-orders-tracking-preview-shortcode-template-two { display: none !important; } .woo-orders-tracking-preview-shortcode-template-one {display: block;}' );
 		$this->add_preview_style( 'timeline_track_info_title_alignment', '.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-title', 'text-align', '' );
 		$this->add_preview_style( 'timeline_track_info_title_color', '.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-title', 'color', '' );
 		$this->add_preview_style( 'timeline_track_info_title_font_size', '.woo-orders-tracking-shortcode-timeline-wrap .woo-orders-tracking-shortcode-timeline-title', 'font-size', 'px' );
@@ -702,23 +648,22 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_DESIGN {
 
 	}
 
-	private function add_preview_style( $name, $element, $style, $suffix = '', $type = '', $echo = true ) {
-		ob_start();
-		?>
-        <style type="text/css"
-               id="<?php echo esc_attr( $this->set( 'preview-' ) . str_replace( '_', '-', $name ) ) ?>">
-            <?php
-            $value=$type?$this->settings->get_params( $type,$name ):$this->settings->get_params( $name );
-             echo esc_html($element . '{' . ( ( $value === '' ) ? '' : ( $style . ':' . $value . $suffix ) ) . '}');
-             ?>
-        </style>
-		<?php
-		$return = ob_get_clean();
-		if ( $echo ) {
-			echo wp_kses( $return, VI_WOO_ORDERS_TRACKING_DATA::extend_post_allowed_style_html() );
+	private function add_preview_style( $name, $element, $style, $suffix = '', $type = '', $css=null ) {
+        if (!$name){
+            return ;
+        }
+		$id_css = $this->set( 'preview-' ) . str_replace( '_', '-', $name );
+		if (!wp_style_is($id_css)){
+			wp_register_style( $id_css, false,'', VI_WOO_ORDERS_TRACKING_VERSION, false );
+			wp_enqueue_style($id_css);
+            if ($css === null) {
+	            $value = $type ? $this->settings->get_params( $type, $name ) : $this->settings->get_params( $name );
+	            $css   = $element . '{' . ( ( $value === '' ) ? '' : ( $style . ':' . $value . $suffix ) ) . '}';
+            }elseif (!$css){
+                $css = '.viwot_cusstom_css{}';
+            }
+			wp_add_inline_style( $id_css, $css );
 		}
-
-		return $return;
 	}
 
 	/*

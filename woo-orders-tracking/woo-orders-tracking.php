@@ -3,23 +3,23 @@
  * Plugin Name: Orders Tracking for WooCommerce
  * Plugin URI: https://villatheme.com/extensions/woocommerce-orders-tracking
  * Description: Easily import/manage your tracking numbers, add tracking numbers to PayPal and send email notifications to customers.
- * Version: 1.2.11
+ * Version: 1.2.12
  * Author: VillaTheme
  * Author URI: https://villatheme.com
- * License:           GPL v2 or later
- * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * License: GPL v2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: woo-orders-tracking
  * Domain Path: /languages
  * Copyright 2019-2024 VillaTheme.com. All rights reserved.
  * Requires Plugins: woocommerce
  * Tested up to: 6.5
- * WC tested up to: 8.7
+ * WC tested up to: 8.8
  * Requires PHP: 7.0
  **/
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-define( 'VI_WOO_ORDERS_TRACKING_VERSION', '1.2.11' );
+define( 'VI_WOO_ORDERS_TRACKING_VERSION', '1.2.12' );
 define( 'VI_WOO_ORDERS_TRACKING_PATH_FILE', __FILE__ );
 define( 'VI_WOO_ORDERS_TRACKING_DIR', WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'woo-orders-tracking' . DIRECTORY_SEPARATOR );
 define( 'VI_WOO_ORDERS_TRACKING_INCLUDES', VI_WOO_ORDERS_TRACKING_DIR . 'includes' . DIRECTORY_SEPARATOR );
@@ -35,6 +35,10 @@ if ( is_file( VI_WOO_ORDERS_TRACKING_INCLUDES . 'class-vi-woo-orders-tracking-tr
 	require_once VI_WOO_ORDERS_TRACKING_INCLUDES . 'class-vi-woo-orders-tracking-trackingmore-table.php';
 }
 
+if ( is_file( VI_WOO_ORDERS_TRACKING_INCLUDES . 'class-vi-woo-orders-tracking-track-info-table.php' ) ) {
+	require_once VI_WOO_ORDERS_TRACKING_INCLUDES . 'class-vi-woo-orders-tracking-track-info-table.php';
+}
+
 if ( ! class_exists( 'VIWOT_WOO_ORDERS_TRACKING' ) ) {
 	class VIWOT_WOO_ORDERS_TRACKING {
 		protected $settings;
@@ -48,6 +52,7 @@ if ( ! class_exists( 'VIWOT_WOO_ORDERS_TRACKING' ) ) {
 			add_action( 'plugins_loaded', array( $this, 'init' ) );
 			add_action( 'activated_plugin', array( $this, 'install' ), 10, 2 );
 		}
+
 		public function init() {
 			$include_dir = plugin_dir_path( __FILE__ ) . 'includes/';
 			if ( ! class_exists( 'VillaTheme_Require_Environment' ) ) {
@@ -60,8 +65,8 @@ if ( ! class_exists( 'VIWOT_WOO_ORDERS_TRACKING' ) ) {
 					'wp_version'      => '5.0',
 					'require_plugins' => [
 						[
-							'slug' => 'woocommerce',
-							'name' => 'WooCommerce',
+							'slug'             => 'woocommerce',
+							'name'             => 'WooCommerce',
 							'required_version' => '7.0',
 						]
 					]
@@ -75,13 +80,14 @@ if ( ! class_exists( 'VIWOT_WOO_ORDERS_TRACKING' ) ) {
 			$init_file = WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . "woo-orders-tracking" . DIRECTORY_SEPARATOR . "includes" . DIRECTORY_SEPARATOR . "define.php";
 			require_once $init_file;
 		}
+
 		public function before_woocommerce_init() {
 			if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
 				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
 			}
 		}
 
-		public static function install($plugin, $network_wide) {
+		public static function install( $plugin, $network_wide ) {
 			if ( $plugin !== plugin_basename( __FILE__ ) ) {
 				return;
 			}
@@ -96,12 +102,14 @@ if ( ! class_exists( 'VIWOT_WOO_ORDERS_TRACKING' ) ) {
 					switch_to_blog( $blog );
 					/*Create custom table to store tracking data*/
 					VI_WOO_ORDERS_TRACKING_TRACKINGMORE_TABLE::create_table();
+					VI_WOO_ORDERS_TRACKING_TRACK_INFO_TABLE::maybe_create_table();
 				}
 				switch_to_blog( $current_blog );
 			} else {
 				//Single site activate action
 				/*Create custom table to store tracking data*/
 				VI_WOO_ORDERS_TRACKING_TRACKINGMORE_TABLE::create_table();
+				VI_WOO_ORDERS_TRACKING_TRACK_INFO_TABLE::maybe_create_table();
 			}
 			/*create tracking page*/
 			if ( ! get_option( 'woo_orders_tracking_settings' ) ) {

@@ -28,7 +28,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_TRACK_INFO {
 
 	public function admin_enqueue_script() {
 		global $pagenow, $post_type;
-		if ( ($pagenow === 'edit.php' && $post_type === 'shop_order') || (!empty($_GET['page']) && wc_clean(wp_unslash($_GET['page'])) === 'wc-orders') ) {// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( ($pagenow === 'edit.php' && $post_type === 'shop_order') || (isset($_GET['page']) && wc_clean(wp_unslash($_GET['page'])) === 'wc-orders') ) {// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			wp_enqueue_style( 'semantic-ui-popup', VI_WOO_ORDERS_TRACKING_CSS . 'popup.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 			wp_enqueue_style( 'vi-wot-admin-order-manager-icon', VI_WOO_ORDERS_TRACKING_CSS . 'woo-orders-tracking-icons.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 			wp_enqueue_style( 'vi-wot-admin-order-manager-css', VI_WOO_ORDERS_TRACKING_CSS . 'admin-order-manager.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
@@ -38,7 +38,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_TRACK_INFO {
 			$css .= '.woo-orders-tracking-tracking-number-container-pending a{color:' . self::$settings->get_params( 'timeline_track_info_status_background_pending' ) . '}';
 			$css .= '.woo-orders-tracking-tracking-number-container-alert a{color:' . self::$settings->get_params( 'timeline_track_info_status_background_alert' ) . '}';
 			wp_add_inline_style( 'vi-wot-admin-order-manager-css', $css );
-			wp_enqueue_script( 'vi-wot-admin-order-manager-js', VI_WOO_ORDERS_TRACKING_JS . 'admin-order-manager.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION );
+			wp_enqueue_script( 'vi-wot-admin-order-manager-js', VI_WOO_ORDERS_TRACKING_JS . 'admin-order-manager.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
 			wp_localize_script(
 				'vi-wot-admin-order-manager-js',
 				'vi_wot_admin_order_manager',

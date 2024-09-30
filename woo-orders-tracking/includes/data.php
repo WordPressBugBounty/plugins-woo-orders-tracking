@@ -42,7 +42,7 @@ class VI_WOO_ORDERS_TRACKING_DATA {
 			'custom_carriers_list'                            => vi_wot_json_encode( array() ),
 			'shipping_carriers_define_list'                   => vi_wot_json_encode( self::shipping_carriers() ),
 			'service_carrier_enable'                          => 0,
-			'service_carrier_type'                            => 'trackingmore',
+			'service_carrier_type'                            => 'vitracking',
 			'service_carrier_api_key'                         => '',
 			'service_tracking_page'                           => get_option( 'vi_woo_orders_tracking_page_track_order' ),
 			'service_cache_request'                           => 1,
@@ -1218,6 +1218,8 @@ Your sincerely',
 				'depart_from_original_country_exc'     => 'alert',
 				'arrived_at_dest_country_exc'          => 'alert',
 				'not_lazada_order'                     => 'alert',
+				'in transit'                           => 'transit',
+				'store processing the order'           => 'pickup',
 				// OWS LIGHT map
 				'ows_whcaccept'                        => 'transit',
 				'ows_whcoutbound'                      => 'transit',
@@ -1333,7 +1335,7 @@ Your sincerely',
 		}
 		if ( $email ) {
 			$query   = "SELECT vi_wot_woocommerce_order_items.*,vi_wot_woocommerce_order_itemmeta.* FROM {$wpdb->prefix}woocommerce_order_items as vi_wot_woocommerce_order_items JOIN {$wpdb->prefix}woocommerce_order_itemmeta as vi_wot_woocommerce_order_itemmeta on vi_wot_woocommerce_order_items.order_item_id=vi_wot_woocommerce_order_itemmeta.order_item_id";
-			if (get_option( 'woocommerce_feature_custom_order_tables_enabled' ) === 'yes' && get_option( 'woocommerce_custom_orders_table_data_sync_enabled' ) === 'no'){
+			if ((get_option( 'woocommerce_feature_custom_order_tables_enabled' ) === 'yes' || get_option( 'woocommerce_custom_orders_table_enabled' ) === 'yes' ) && get_option( 'woocommerce_custom_orders_table_data_sync_enabled','no' ) === 'no'){
 				$query .=" JOIN {$wpdb->prefix}wc_orders as vi_wot_postmeta on vi_wot_woocommerce_order_items.order_id=vi_wot_postmeta.id";
 				$where[]      = "vi_wot_postmeta.billing_email = %s";
 			}else{
@@ -1684,14 +1686,35 @@ Your sincerely',
 	 */
 	public static function service_carriers_list( $name = '' ) {
 		$list = array(
-			'cainiao'      => 'Cainiao',
-			'trackingmore' => 'TrackingMore',
-			'easypost'     => 'EasyPost',
-			'aftership'    => 'AfterShip',
-			'17track'      => '17Track',
+			'vitracking'      => [
+				'name'=>'ViTracking',
+				'status'=>'beta',
+				'get_key_url'=>'https://vitracking.com/my-account/',
+			],
+			'trackingmore'      => [
+				'name'=>'TrackingMore',
+				'status'=>'active',
+				'get_key_url'=>'https://my.trackingmore.com/get_apikey.php',
+			],
+			'cainiao'      => [
+				'name'=>'Cainiao',
+				'status'=>'disabled',
+			],
+			'17track'      => [
+				'name'=>'17Track',
+				'status'=>'disabled',
+			],
+			'easypost'      => [
+				'name'=>'EasyPost',
+				'status'=>'disabled',
+			],
+			'aftership'      => [
+				'name'=>'AfterShip',
+				'status'=>'disabled',
+			]
 		);
 		if ( $name ) {
-			return isset( $list[ $name ] ) ? $list[ $name ] : '';
+			return isset( $list[ $name ] ) ? $list[ $name ]['name'] : '';
 		} else {
 			return $list;
 		}

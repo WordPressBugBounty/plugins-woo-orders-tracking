@@ -413,7 +413,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDER_MANAGE {
 		$results['filename']   = $export_settings['filename'];
 		$results['header_row'] = $results['content'] = array();
 		$results['header_row'] = self::get_header_row( $export_settings['set-fields'] );
-		if ( get_option( 'woocommerce_feature_custom_order_tables_enabled' ) === 'yes' && get_option( 'woocommerce_custom_orders_table_data_sync_enabled' ) === 'no' ) {
+		if ( (get_option( 'woocommerce_feature_custom_order_tables_enabled' ) === 'yes' || get_option( 'woocommerce_custom_orders_table_enabled' ) === 'yes' ) && get_option( 'woocommerce_custom_orders_table_data_sync_enabled','no' ) === 'no' ) {
 			$order_ids = self::get_wc_orders_ids( $export_settings );
 		} else {
 			$order_ids = self::get_orders_ids( $export_settings );
@@ -691,7 +691,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDER_MANAGE {
 		global $wpdb;
 		if ( $order_ids && is_array( $order_ids ) && count( $order_ids ) ) {
 			$order_ids = join( ',', $order_ids );
-			if (get_option( 'woocommerce_feature_custom_order_tables_enabled' ) === 'yes' && get_option( 'woocommerce_custom_orders_table_data_sync_enabled' ) === 'no'){
+			if ((get_option( 'woocommerce_feature_custom_order_tables_enabled' ) === 'yes' || get_option( 'woocommerce_custom_orders_table_enabled' ) === 'yes' ) && get_option( 'woocommerce_custom_orders_table_data_sync_enabled','no' ) === 'no'){
 				$fields       = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT meta_key FROM {$wpdb->prefix}wc_orders_meta Where  order_id IN ( %s )", $order_ids) );// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			}else {
 				$fields = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT meta_key FROM {$wpdb->postmeta} Where  post_id IN ( %s )", $order_ids) );// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching

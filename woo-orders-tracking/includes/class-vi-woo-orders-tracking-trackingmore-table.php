@@ -239,7 +239,7 @@ if ( ! class_exists( 'VI_WOO_ORDERS_TRACKING_TRACKINGMORE_TABLE' ) ) {
 			$table = $wpdb->prefix . 'wotv_woo_track_info';
 			$args  = array( $tracking_number );
 			if ( $email ) {
-				if (get_option( 'woocommerce_feature_custom_order_tables_enabled' ) === 'yes' && get_option( 'woocommerce_custom_orders_table_data_sync_enabled' ) === 'no'){
+				if ((get_option( 'woocommerce_feature_custom_order_tables_enabled' ) === 'yes' || get_option( 'woocommerce_custom_orders_table_enabled' ) === 'yes' ) && get_option( 'woocommerce_custom_orders_table_data_sync_enabled','no' ) === 'no'){
 					$query = "SELECT * FROM {$table} as woo_orders_tracking_track_info JOIN {$wpdb->prefix}wc_orders as woo_orders_tracking_wp_postmeta ON woo_orders_tracking_track_info.order_id=woo_orders_tracking_wp_postmeta.id WHERE tracking_number=%s AND woo_orders_tracking_wp_postmeta.billing_email=%s";
 				}else {
 					$query = "SELECT * FROM {$table} as woo_orders_tracking_track_info JOIN {$wpdb->prefix}postmeta as woo_orders_tracking_wp_postmeta ON woo_orders_tracking_track_info.order_id=woo_orders_tracking_wp_postmeta.post_id WHERE tracking_number=%s AND woo_orders_tracking_wp_postmeta.meta_key='_billing_email' AND woo_orders_tracking_wp_postmeta.meta_value=%s";
@@ -314,7 +314,7 @@ if ( ! class_exists( 'VI_WOO_ORDERS_TRACKING_TRACKINGMORE_TABLE' ) ) {
 				$args[]  = $tracking_number;
 			}
 			if ( $email ) {
-				if (get_option( 'woocommerce_feature_custom_order_tables_enabled' ) === 'yes' && get_option( 'woocommerce_custom_orders_table_data_sync_enabled' ) === 'no'){
+				if ((get_option( 'woocommerce_feature_custom_order_tables_enabled' ) === 'yes' || get_option( 'woocommerce_custom_orders_table_enabled' ) === 'yes' ) && get_option( 'woocommerce_custom_orders_table_data_sync_enabled','no' ) === 'no'){
 					$query = "SELECT * FROM {$table} as woo_orders_tracking_track_info JOIN {$wpdb->prefix}wc_orders as woo_orders_tracking_wp_postmeta ON woo_orders_tracking_track_info.order_id=woo_orders_tracking_wp_postmeta.id";
 					$where[]      = "woo_orders_tracking_wp_postmeta.billing_email = %s";
 				}else {

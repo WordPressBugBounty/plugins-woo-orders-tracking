@@ -7,12 +7,12 @@ if ( ! class_exists( 'VillaTheme_Support' ) ) {
 
 	/**
 	 * Class VillaTheme_Support
-	 * 1.1.11
+	 * 1.1.12
 	 */
 	class VillaTheme_Support {
 		protected $plugin_base_name;
 		protected $ads_data;
-		protected $version = '1.1.11';
+		protected $version = '1.1.12';
 		protected $data = [];
 
 		public function __construct( $data ) {
@@ -566,21 +566,8 @@ if ( ! class_exists( 'VillaTheme_Support' ) ) {
 					wp_register_style( 'villatheme-support-basic', false,'', $this->version, false );
 					wp_enqueue_style('villatheme-support-basic');
 					wp_add_inline_style( 'villatheme-support-basic', '.villatheme-deactivate-modal{position: fixed;z-index: 99999;top: 0;right: 0;bottom: 0;left: 0;background: rgba(0, 0, 0, 0.5);display: none}.villatheme-deactivate-modal.modal-active{display: block}.villatheme-deactivate-modal-wrap{width: 50%;position: relative;margin: 10% auto;background: #fff}.villatheme-deactivate-modal-header{border-bottom: 1px solid #eee;padding: 8px 20px}.villatheme-deactivate-modal-header h3{line-height: 150%;margin: 0}.villatheme-deactivate-modal-body{padding: 5px 20px 20px 20px}.villatheme-deactivate-modal-body .input-text,.villatheme-deactivate-modal-body textarea{width: 75%}.villatheme-deactivate-modal-body .reason-input{margin-top: 5px;margin-left: 20px}.villatheme-deactivate-modal-footer{border-top: 1px solid #eee;padding: 12px 20px;text-align: right}' );
-				}
-				wp_add_inline_script( 'villatheme-support', $this->deactivate_script($support_basic) );
-				add_action( 'admin_footer', array( $this, 'deactivate_scripts' ) );
-			}
-		}
-		public function deactivate_script($support_basic){
-			ob_start();
-			?>
-            <script type="text/javascript">
-				<?php
-				if ($support_basic){
-				?>
-                var ViDeactivate = {deactivateLink: '', surveyUrl: ''};
-
-                (function ($) {
+					wp_add_inline_script( 'villatheme-support', "var ViDeactivate = {deactivateLink: '', surveyUrl: ''};
+                    (function ($) {
                     $(function () {
                         let modal = $('#villatheme-deactivate-survey-modal');
                         ViDeactivate.modal = modal;
@@ -590,13 +577,13 @@ if ( ! class_exists( 'VillaTheme_Support' ) ) {
                             modal.removeClass('modal-active');
                         });
 
-                        modal.on('click', 'input[type="radio"]', function () {
+                        modal.on('click', 'input[type=\"radio\"]', function () {
                             $('button.villatheme-deactivate-submit').removeClass('disabled');
                             var parent = $(this).parents('li:first');
                             modal.find('.reason-input').remove();
                             var inputType = parent.data('type'),
                                 inputPlaceholder = parent.data('placeholder'),
-                                reasonInputHtml = '<div class="reason-input">' + (('text' === inputType) ? '<input type="text" class="input-text" size="40" />' : '<textarea rows="5" cols="45"></textarea>') + '</div>';
+                                reasonInputHtml = '<div class=\"reason-input\">' + (('text' === inputType) ? '<input type=\"text\" class=\"input-text\" size=\"40\" />' : '<textarea rows=\"5\" cols=\"45\"></textarea>') + '</div>';
 
                             if (inputType !== '') {
                                 parent.append($(reasonInputHtml));
@@ -610,11 +597,11 @@ if ( ! class_exists( 'VillaTheme_Support' ) ) {
 
                             if (button.hasClass('disabled')) return;
 
-                            let $radio = $('input[type="radio"]:checked', modal);
-                            let $selected_reason = $radio.parents('li:first'),
-                                $input = $selected_reason.find('textarea, input[type="text"]');
-                            let reason_id = (0 === $radio.length) ? '' : $radio.val();
-                            let reason_info = (0 !== $input.length) ? $input.val().trim() : '';
+                            let radio = $('input[type=\"radio\"]:checked', modal);
+                            let selected_reason = radio.parents('li:first'),
+                                input = selected_reason.find('textarea, input[type=\"text\"]');
+                            let reason_id = (0 === radio.length) ? '' : radio.val();
+                            let reason_info = (0 !== input.length) ? input.val().trim() : '';
                             let date = new Date(Date.now()).toLocaleString().split(',')[0];
 
                             if ((reason_id === 'other' && !reason_info) || !reason_id) {
@@ -623,7 +610,7 @@ if ( ! class_exists( 'VillaTheme_Support' ) ) {
                             }
 
                             $.ajax({
-                                url: `${ViDeactivate.surveyUrl}?date=${date}&${reason_id}=1&reason_info=${reason_info}`,
+                                url: ViDeactivate.surveyUrl+'?date='+date+'&'+reason_id+'=1&reason_info='+reason_info,
                                 type: 'GET',
                                 beforeSend: function () {
                                     button.addClass('disabled');
@@ -636,24 +623,21 @@ if ( ! class_exists( 'VillaTheme_Support' ) ) {
 
                         });
                     });
-                }(jQuery));
-				<?php
+                }(jQuery));" );
 				}
-				?>
-                (function ($) {
+				wp_add_inline_script( 'villatheme-support', "(function ($) {
                     $(function () {
-                        $(document).on('click', '#the-list a#deactivate-<?php echo esc_html( $this->data['slug'] ) ?>', function (e) {
+                        $(document).on('click', '#the-list a#deactivate-". $this->data['slug'] ."', function (e) {
                             e.preventDefault();
                             ViDeactivate.modal.addClass('modal-active');
                             ViDeactivate.deactivateLink = $(this).attr('href');
-                            ViDeactivate.surveyUrl = '<?php echo esc_url( $this->data['survey_url'] )?>';
+                            ViDeactivate.surveyUrl = '".$this->data['survey_url'] ."';
                             ViDeactivate.modal.find('a.dont-bother-me').attr('href', ViDeactivate.deactivateLink).css('float', 'left');
                         });
                     });
-                }(jQuery));
-            </script>
-			<?php
-			return  preg_replace( '#<script[^>]*>(.*)</script>#is', '$1', ob_get_clean() ) ;
+                }(jQuery));" );
+				add_action( 'admin_footer', array( $this, 'deactivate_scripts' ) );
+			}
 		}
 
 		/**

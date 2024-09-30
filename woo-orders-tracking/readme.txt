@@ -7,7 +7,7 @@ Tested up to: 6.5
 Requires PHP: 7.0
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.2.11
+Stable tag: trunk
 
 Easily import/manage your tracking numbers, add tracking numbers to PayPal and send email notifications to customers.
 
@@ -261,6 +261,10 @@ Tracking numbers are displayed in orders list/order details on customers' My acc
 2. Push tracking number to PayPal
 
 == Changelog ==
+/**1.2.12 - 2024.09.27**/
+- Added: The beta version of ViTracking for 'Tracking Service'
+- Updated: Convert shipping status from Cainao
+
 /**1.2.11 - 2024.05.09**/
 – Updated: Use WC log to save the plugin log
 – Updated: Including the custom JS/CSS via wp_enqueue

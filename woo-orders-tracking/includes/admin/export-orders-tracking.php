@@ -837,29 +837,24 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDERS_TRACKING {
 			wp_enqueue_style( 'woo-orders-tracking-admin-ui-css',
 				'//ajax.googleapis.com/ajax/libs/jqueryui/' . $wp_scripts->registered['jquery-ui-core']->ver . '/themes/smoothness/jquery-ui.css',
 				false,
-				VI_WOO_ORDERS_TRACKING_VERSION,
-				false );
-			wp_enqueue_script( 'iris', admin_url( 'js/iris.min.js' ), array(
-				'jquery-ui-draggable',
-				'jquery-ui-slider',
-				'jquery-touch-punch'
-			), false, 1 );
+				VI_WOO_ORDERS_TRACKING_VERSION);
+			wp_enqueue_script( 'iris', admin_url( 'js/iris.min.js' ), array('jquery-ui-draggable','jquery-ui-slider','jquery-touch-punch' ), VI_WOO_ORDERS_TRACKING_VERSION, true );
 			wp_enqueue_script( 'jquery-ui-sortable' );
 			wp_enqueue_script( 'jquery-ui-datepicker' );
-			wp_enqueue_script( 'semantic-ui-accordion', VI_WOO_ORDERS_TRACKING_JS . 'accordion.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION );
-			wp_enqueue_script( 'semantic-ui-address', VI_WOO_ORDERS_TRACKING_JS . 'address.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION );
-			wp_enqueue_script( 'semantic-ui-dropdown', VI_WOO_ORDERS_TRACKING_JS . 'dropdown.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION );
-			wp_enqueue_script( 'semantic-ui-form', VI_WOO_ORDERS_TRACKING_JS . 'form.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION );
+			wp_enqueue_script( 'semantic-ui-accordion', VI_WOO_ORDERS_TRACKING_JS . 'accordion.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
+			wp_enqueue_script( 'semantic-ui-address', VI_WOO_ORDERS_TRACKING_JS . 'address.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
+			wp_enqueue_script( 'semantic-ui-dropdown', VI_WOO_ORDERS_TRACKING_JS . 'dropdown.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
+			wp_enqueue_script( 'semantic-ui-form', VI_WOO_ORDERS_TRACKING_JS . 'form.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
 			if ( ! wp_script_is( 'select2' ) ) {
 				wp_enqueue_style( 'select2', VI_WOO_ORDERS_TRACKING_CSS . 'select2.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
-				wp_enqueue_script( 'select2', VI_WOO_ORDERS_TRACKING_JS . 'select2.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION );
+				wp_enqueue_script( 'select2', VI_WOO_ORDERS_TRACKING_JS . 'select2.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
 			}
-			wp_enqueue_script( 'vi-wot-admin-export-serializejson', VI_WOO_ORDERS_TRACKING_JS . 'serializejson.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION );
+			wp_enqueue_script( 'vi-wot-admin-export-serializejson', VI_WOO_ORDERS_TRACKING_JS . 'serializejson.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
 			if ( ! wp_script_is( 'transition' ) ) {
 				wp_enqueue_style( 'transition', VI_WOO_ORDERS_TRACKING_CSS . 'transition.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
-				wp_enqueue_script( 'transition', VI_WOO_ORDERS_TRACKING_JS . 'transition.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION );
+				wp_enqueue_script( 'transition', VI_WOO_ORDERS_TRACKING_JS . 'transition.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
 			}
-			wp_enqueue_script( 'vi-wot-admin-export-js', VI_WOO_ORDERS_TRACKING_JS . 'admin-export.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION );
+			wp_enqueue_script( 'vi-wot-admin-export-js', VI_WOO_ORDERS_TRACKING_JS . 'admin-export.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
 			wp_localize_script(
 				'vi-wot-admin-export-js',
 				'vi_wot_admin_export',

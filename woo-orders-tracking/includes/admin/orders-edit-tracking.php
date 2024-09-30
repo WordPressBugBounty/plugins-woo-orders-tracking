@@ -33,10 +33,10 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_EDIT_TRACKING {
 			wp_enqueue_style( 'vi-wot-admin-edit-order-css', VI_WOO_ORDERS_TRACKING_CSS . 'admin-edit-order.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 			if ( ! wp_script_is( 'select2' ) ) {
 				wp_enqueue_style( 'select2', VI_WOO_ORDERS_TRACKING_CSS . 'select2.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
-				wp_enqueue_script( 'select2', VI_WOO_ORDERS_TRACKING_JS . 'select2.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION );
+				wp_enqueue_script( 'select2', VI_WOO_ORDERS_TRACKING_JS . 'select2.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
 			}
-			wp_enqueue_script( 'vi-wot-admin-edit-order-js', VI_WOO_ORDERS_TRACKING_JS . 'admin-edit-order.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION );
-			wp_enqueue_script( 'vi-wot-admin-edit-carrier-functions-js', VI_WOO_ORDERS_TRACKING_JS . '/carrier-functions.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION );
+			wp_enqueue_script( 'vi-wot-admin-edit-order-js', VI_WOO_ORDERS_TRACKING_JS . 'admin-edit-order.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
+			wp_enqueue_script( 'vi-wot-admin-edit-carrier-functions-js', VI_WOO_ORDERS_TRACKING_JS . '/carrier-functions.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
 			$shipping_carrier_default = $this->settings->get_params( 'shipping_carrier_default' );
 			wp_localize_script( 'vi-wot-admin-edit-order-js',
 				'vi_wot_edit_order',
@@ -397,6 +397,14 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_EDIT_TRACKING {
 						}
 					}
 					break;
+				case 'vitracking':
+					VI_WOO_ORDERS_TRACKING_TRACK_INFO_TABLE::maybe_create_table();
+					$tracking_from_db = VI_WOO_ORDERS_TRACKING_TRACK_INFO_TABLE::get_row_by_tracking_number( $tracking_number, $carrier_slug, $service_carrier_type,
+						$order_id );
+					if ( ! count( $tracking_from_db ) ) {
+						VI_WOO_ORDERS_TRACKING_TRACK_INFO_TABLE::insert( $tracking_number, $order_id, $carrier_slug, $service_carrier_type, '', '', '', '', '' );
+					}
+                    break;
 				default:
 			}
 		}
@@ -657,6 +665,14 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_EDIT_TRACKING {
 							if ( $need_update_tracking_table && $order_id != $tracking_from_db['order_id'] ) {
 								VI_WOO_ORDERS_TRACKING_TRACKINGMORE_TABLE::update( $tracking_from_db['id'], $order_id, $status, $carrier_slug, $carrier_name, VI_WOO_ORDERS_TRACKING_FRONTEND_FRONTEND::get_shipping_country_by_order_id( $order_id ), $track_info, $description );
 							}
+						}
+						break;
+					case 'vitracking':
+						VI_WOO_ORDERS_TRACKING_TRACK_INFO_TABLE::maybe_create_table();
+						$tracking_from_db = VI_WOO_ORDERS_TRACKING_TRACK_INFO_TABLE::get_row_by_tracking_number( $tracking_number, $carrier_slug, $service_carrier_type,
+							$order_id );
+						if ( ! count( $tracking_from_db ) ) {
+							VI_WOO_ORDERS_TRACKING_TRACK_INFO_TABLE::insert( $tracking_number, $order_id, $carrier_slug, $service_carrier_type, '', '', '', '', '' );
 						}
 						break;
 					default:
