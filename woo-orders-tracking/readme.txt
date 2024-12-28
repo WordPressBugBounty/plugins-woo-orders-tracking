@@ -3,7 +3,7 @@ Contributors: villatheme, mrt3vn
 Donate link: https://www.villatheme.com/donate
 Tags: advanced shipment tracking for woocommerce, orders tracking for woocommerce,  woocommerce order tracking plugin, woocommerce shipment tracking, woocommerce tracking number
 Requires at least: 5.0.0
-Tested up to: 6.5
+Tested up to: 6.7
 Requires PHP: 7.0
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -245,7 +245,7 @@ Tracking numbers are displayed in orders list/order details on customers' My acc
 ### Plugin Links
 - [Project Page](https://villatheme.com)
 - [Documentation](http://docs.villatheme.com/woo-orders-tracking)
-- [Report Bugs/Issues](https://villatheme.com/supports)
+- [Report Bugs/Issues](https://villatheme.com/knowledge-base/security-is-our-priority/)
 
 == Upgrade Notice ==
 
@@ -261,6 +261,10 @@ Tracking numbers are displayed in orders list/order details on customers' My acc
 2. Push tracking number to PayPal
 
 == Changelog ==
+/**1.2.13 - 2024.12.28**/
+- Updated: Compatible with WP 6.7 and  WC 9.5
+– Updated: Update support class
+
 /**1.2.12 - 2024.09.27**/
 - Added: The beta version of ViTracking for 'Tracking Service'
 - Updated: Convert shipping status from Cainao
