@@ -3,14 +3,14 @@
  * Plugin Name: Orders Tracking for WooCommerce
  * Plugin URI: https://villatheme.com/extensions/woocommerce-orders-tracking
  * Description: Easily import/manage your tracking numbers, add tracking numbers to PayPal and send email notifications to customers.
- * Version: 1.2.13
+ * Version: 1.2.14
  * Author: VillaTheme
  * Author URI: https://villatheme.com
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: woo-orders-tracking
  * Domain Path: /languages
- * Copyright 2019-2024 VillaTheme.com. All rights reserved.
+ * Copyright 2019-2025 VillaTheme.com. All rights reserved.
  * Requires Plugins: woocommerce
  * Tested up to: 6.7
  * WC tested up to: 9.5
@@ -19,7 +19,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-define( 'VI_WOO_ORDERS_TRACKING_VERSION', '1.2.13' );
+define( 'VI_WOO_ORDERS_TRACKING_VERSION', '1.2.14' );
 define( 'VI_WOO_ORDERS_TRACKING_PATH_FILE', __FILE__ );
 define( 'VI_WOO_ORDERS_TRACKING_DIR', WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'woo-orders-tracking' . DIRECTORY_SEPARATOR );
 define( 'VI_WOO_ORDERS_TRACKING_INCLUDES', VI_WOO_ORDERS_TRACKING_DIR . 'includes' . DIRECTORY_SEPARATOR );
@@ -65,9 +65,10 @@ if ( ! class_exists( 'VIWOT_WOO_ORDERS_TRACKING' ) ) {
 					'wp_version'      => '5.0',
 					'require_plugins' => [
 						[
-							'slug'             => 'woocommerce',
-							'name'             => 'WooCommerce',
-							'required_version' => '7.0',
+							'slug'            => 'woocommerce',
+							'name'            => 'WooCommerce',
+							'defined_version' => 'WC_VERSION',
+							'version'         => '7.0',
 						]
 					]
 				]

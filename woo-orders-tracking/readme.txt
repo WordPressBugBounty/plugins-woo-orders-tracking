@@ -261,6 +261,9 @@ Tracking numbers are displayed in orders list/order details on customers' My acc
 2. Push tracking number to PayPal
 
 == Changelog ==
+/**1.2.14 - 2025.02.28**/
+- Updated: Update support file
+
 /**1.2.13 - 2024.12.28**/
 - Updated: Compatible with WP 6.7 and  WC 9.5
 – Updated: Update support class
