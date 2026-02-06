@@ -42,7 +42,8 @@ class VI_WOO_ORDERS_TRACKING_FRONTEND_ORDER_DETAILS {
 			$display = apply_filters( 'woocommerce_orders_tracking_display_tracking_for_order_details', $display );
 		}
 		if ( $display ) {
-			wp_enqueue_style( 'woo-orders-tracking-order-details', VI_WOO_ORDERS_TRACKING_CSS . 'order-details.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
+			$src_min = WP_DEBUG ? '' : '.min';
+			wp_enqueue_style( 'woo-orders-tracking-order-details', VI_WOO_ORDERS_TRACKING_CSS . 'order-details' . $src_min . '.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 			$css = '.woo-orders-tracking-tracking-number-container-delivered a{color:' . self::$settings->get_params( 'timeline_track_info_status_background_delivered' ) . '}';
 			$css .= '.woo-orders-tracking-tracking-number-container-pickup a{color:' . self::$settings->get_params( 'timeline_track_info_status_background_pickup' ) . '}';
 			$css .= '.woo-orders-tracking-tracking-number-container-transit a{color:' . self::$settings->get_params( 'timeline_track_info_status_background_transit' ) . '}';

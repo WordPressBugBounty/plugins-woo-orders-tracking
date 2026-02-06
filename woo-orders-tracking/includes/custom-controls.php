@@ -12,8 +12,9 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 			protected $data = array();
 
 			public function enqueue() {
+				$src_min = WP_DEBUG ? '' : '.min';
 				wp_enqueue_script( 'jquery-ui-button' );
-				wp_enqueue_script( 'vi_wot_customize-customize-preview-control', VI_WOO_ORDERS_TRACKING_JS . 'admin-custom-control.js', array(
+				wp_enqueue_script( 'vi_wot_customize-customize-preview-control', VI_WOO_ORDERS_TRACKING_JS . 'admin-custom-control' . $src_min . '.js', array(
 					'jquery'
 				), VI_WOO_ORDERS_TRACKING_VERSION, true );
 			}

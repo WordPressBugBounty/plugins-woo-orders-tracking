@@ -30,13 +30,14 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_EDIT_TRACKING {
 	public function admin_enqueue_script() {
 		$screen = get_current_screen();
 		if ( in_array($screen->id ?? '',['shop_order','woocommerce_page_wc-orders'])) {
-			wp_enqueue_style( 'vi-wot-admin-edit-order-css', VI_WOO_ORDERS_TRACKING_CSS . 'admin-edit-order.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
+			$src_min = WP_DEBUG ? '' : '.min';
+			wp_enqueue_style( 'vi-wot-admin-edit-order-css', VI_WOO_ORDERS_TRACKING_CSS . 'admin-edit-order' . $src_min . '.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 			if ( ! wp_script_is( 'select2' ) ) {
 				wp_enqueue_style( 'select2', VI_WOO_ORDERS_TRACKING_CSS . 'select2.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 				wp_enqueue_script( 'select2', VI_WOO_ORDERS_TRACKING_JS . 'select2.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
 			}
-			wp_enqueue_script( 'vi-wot-admin-edit-order-js', VI_WOO_ORDERS_TRACKING_JS . 'admin-edit-order.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
-			wp_enqueue_script( 'vi-wot-admin-edit-carrier-functions-js', VI_WOO_ORDERS_TRACKING_JS . '/carrier-functions.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
+			wp_enqueue_script( 'vi-wot-admin-edit-order-js', VI_WOO_ORDERS_TRACKING_JS . 'admin-edit-order' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
+			wp_enqueue_script( 'vi-wot-admin-edit-carrier-functions-js', VI_WOO_ORDERS_TRACKING_JS . '/carrier-functions' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
 			$shipping_carrier_default = $this->settings->get_params( 'shipping_carrier_default' );
 			wp_localize_script( 'vi-wot-admin-edit-order-js',
 				'vi_wot_edit_order',

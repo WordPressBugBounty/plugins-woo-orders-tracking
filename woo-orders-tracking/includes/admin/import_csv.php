@@ -1482,6 +1482,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 		global $pagenow;
 		$page = isset( $_REQUEST['page'] ) ? sanitize_text_field( $_REQUEST['page'] ) : '';// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( $pagenow === 'admin.php' && $page === 'woo-orders-tracking-import-csv' ) {
+			$src_min = WP_DEBUG ? '' : '.min';
 			global $wp_scripts;
 			$scripts = $wp_scripts->registered;
 			foreach ( $scripts as $k => $script ) {
@@ -1532,8 +1533,8 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 				wp_enqueue_script( 'transition', VI_WOO_ORDERS_TRACKING_JS . 'transition.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
 			}
 			wp_enqueue_script( 'woo-orders-tracking-dropdown', VI_WOO_ORDERS_TRACKING_JS . 'dropdown.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
-			wp_enqueue_script( 'woo-orders-tracking-import', VI_WOO_ORDERS_TRACKING_JS . 'import-csv.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
-			wp_enqueue_style( 'woo-orders-tracking-import', VI_WOO_ORDERS_TRACKING_CSS . 'import-csv.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
+			wp_enqueue_script( 'woo-orders-tracking-import', VI_WOO_ORDERS_TRACKING_JS . 'import-csv' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
+			wp_enqueue_style( 'woo-orders-tracking-import', VI_WOO_ORDERS_TRACKING_CSS . 'import-csv' . $src_min . '.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
             $params = [
 	            'url'                => admin_url( 'admin-ajax.php' ),
 	            'step'               => $this->step,

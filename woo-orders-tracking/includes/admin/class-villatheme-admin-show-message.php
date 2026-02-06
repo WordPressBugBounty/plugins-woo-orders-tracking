@@ -11,8 +11,9 @@ if ( ! class_exists( 'VILLATHEME_ADMIN_SHOW_MESSAGE' ) ) {
 		}
 
 		public function admin_enqueue_scripts() {
-			wp_enqueue_style( 'villatheme-admin-show-message', VI_WOO_ORDERS_TRACKING_CSS . 'show-message.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
-			wp_enqueue_script( 'villatheme-admin-show-message', VI_WOO_ORDERS_TRACKING_JS . 'show-message.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
+			$src_min = WP_DEBUG ? '' : '.min';
+			wp_enqueue_style( 'villatheme-admin-show-message', VI_WOO_ORDERS_TRACKING_CSS . 'show-message' . $src_min . '.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
+			wp_enqueue_script( 'villatheme-admin-show-message', VI_WOO_ORDERS_TRACKING_JS . 'show-message' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
 		}
 
 		public static function get_instance() {

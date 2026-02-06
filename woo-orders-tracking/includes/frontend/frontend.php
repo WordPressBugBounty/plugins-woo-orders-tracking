@@ -42,11 +42,12 @@ class VI_WOO_ORDERS_TRACKING_FRONTEND_FRONTEND {
 
 	public function wp_enqueue_scripts() {
 		if ( $this->is_tracking_page() ) {
+			$src_min = WP_DEBUG ? '' : '.min';
 			if ( ! wp_style_is( 'vi-wot-frontend-shortcode-track-order-icons' ) ) {
-				wp_enqueue_style( 'vi-wot-frontend-shortcode-track-order-icons', VI_WOO_ORDERS_TRACKING_CSS . 'woo-orders-tracking-icons.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
+				wp_enqueue_style( 'vi-wot-frontend-shortcode-track-order-icons', VI_WOO_ORDERS_TRACKING_CSS . 'woo-orders-tracking-icons' . $src_min . '.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 			}
-			wp_enqueue_style( 'vi-wot-frontend-shortcode-track-order-css', VI_WOO_ORDERS_TRACKING_CSS . 'frontend-shortcode-track-order.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
-			wp_enqueue_style( 'vi-wot-frontend-shortcode-track-order-icon', VI_WOO_ORDERS_TRACKING_CSS . 'frontend-shipment-icon.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
+			wp_enqueue_style( 'vi-wot-frontend-shortcode-track-order-css', VI_WOO_ORDERS_TRACKING_CSS . 'frontend-shortcode-track-order' . $src_min . '.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
+			wp_enqueue_style( 'vi-wot-frontend-shortcode-track-order-icon', VI_WOO_ORDERS_TRACKING_CSS . 'frontend-shipment-icon' . $src_min . '.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 			if (!is_customize_preview()) {
 				$css = '';
 				//general
@@ -251,14 +252,15 @@ class VI_WOO_ORDERS_TRACKING_FRONTEND_FRONTEND {
 		), $atts );
 		$service_tracking_page = self::$settings->get_params( 'service_tracking_page' );
 		if ( $service_tracking_page && $service_tracking_page_url = get_the_permalink( $service_tracking_page ) && ! wp_script_is( 'vi-wot-frontend-shortcode-form-search-js' ) ) {
+			$src_min = WP_DEBUG ? '' : '.min';
 			if ( ! wp_style_is( 'vi-wot-frontend-shortcode-track-order-icons' ) ) {
-				wp_enqueue_style( 'vi-wot-frontend-shortcode-track-order-icons', VI_WOO_ORDERS_TRACKING_CSS . 'woo-orders-tracking-icons.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
+				wp_enqueue_style( 'vi-wot-frontend-shortcode-track-order-icons', VI_WOO_ORDERS_TRACKING_CSS . 'woo-orders-tracking-icons' . $src_min . '.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 			}
-			wp_enqueue_style( 'vi-wot-frontend-shortcode-form-search-css', VI_WOO_ORDERS_TRACKING_CSS . 'frontend-shortcode-form-search.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
+			wp_enqueue_style( 'vi-wot-frontend-shortcode-form-search-css', VI_WOO_ORDERS_TRACKING_CSS . 'frontend-shortcode-form-search' . $src_min . '.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 			$inline_css = $this->add_inline_style( 'tracking_form_button_track_color', '.vi-woo-orders-tracking-form-search .vi-woo-orders-tracking-form-row .vi-woo-orders-tracking-form-search-tracking-number-btnclick', 'color', '' );
 			$inline_css .= $this->add_inline_style( 'tracking_form_button_track_bg_color', '.vi-woo-orders-tracking-form-search .vi-woo-orders-tracking-form-row .vi-woo-orders-tracking-form-search-tracking-number-btnclick', 'background-color', '' );
 			wp_add_inline_style( 'vi-wot-frontend-shortcode-form-search-css', $inline_css );
-			wp_enqueue_script( 'vi-wot-frontend-shortcode-form-search-js', VI_WOO_ORDERS_TRACKING_JS . 'frontend-shortcode-form-search.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
+			wp_enqueue_script( 'vi-wot-frontend-shortcode-form-search-js', VI_WOO_ORDERS_TRACKING_JS . 'frontend-shortcode-form-search' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
 			wp_localize_script( 'vi-wot-frontend-shortcode-form-search-js', 'vi_wot_frontend_form_search',
 				array(
 					'ajax_url'         => admin_url( 'admin-ajax.php' ),

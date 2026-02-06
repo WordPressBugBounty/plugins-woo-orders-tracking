@@ -1917,15 +1917,16 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
 			self::admin_enqueue_semantic();
 			add_action( 'admin_footer', array( $this, 'orders_tracking_admin_footer' ) );
 			$this->schedule_send_emails = wp_next_scheduled( 'vi_wot_send_mails_for_import_csv_function' );
-			wp_enqueue_style( 'vi-wot-admin-setting-css', VI_WOO_ORDERS_TRACKING_CSS . 'admin-setting.css', '', VI_WOO_ORDERS_TRACKING_VERSION, false );
-			wp_enqueue_style( 'vi-wot-admin-setting-support', VI_WOO_ORDERS_TRACKING_CSS . 'villatheme-support.css', '', VI_WOO_ORDERS_TRACKING_VERSION, false );
+			$src_min = WP_DEBUG ? '' : '.min';
+			wp_enqueue_style( 'vi-wot-admin-setting-css', VI_WOO_ORDERS_TRACKING_CSS . 'admin-setting' . $src_min . '.css', '', VI_WOO_ORDERS_TRACKING_VERSION, false );
+			wp_enqueue_style( 'vi-wot-admin-setting-support', VI_WOO_ORDERS_TRACKING_CSS . 'villatheme-support' . $src_min . '.css', '', VI_WOO_ORDERS_TRACKING_VERSION, false );
 			wp_enqueue_script( 'iris', admin_url( 'js/iris.min.js' ), array(
 				'jquery-ui-draggable',
 				'jquery-ui-slider',
 				'jquery-touch-punch'
 			), VI_WOO_ORDERS_TRACKING_VERSION, true );
 
-			wp_enqueue_script( 'vi-wot-admin-setting-carrier-functions-js', VI_WOO_ORDERS_TRACKING_JS . '/carrier-functions.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
+			wp_enqueue_script( 'vi-wot-admin-setting-carrier-functions-js', VI_WOO_ORDERS_TRACKING_JS . '/carrier-functions' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
 			if ( ! wp_script_is( 'transition' ) ) {
 				wp_enqueue_style( 'transition', VI_WOO_ORDERS_TRACKING_CSS . 'transition.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION, false );
 				wp_enqueue_script( 'transition', VI_WOO_ORDERS_TRACKING_JS . 'transition.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
@@ -1934,7 +1935,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
 				wp_enqueue_style( 'select2', VI_WOO_ORDERS_TRACKING_CSS . 'select2.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION , false);
 				wp_enqueue_script( 'select2', VI_WOO_ORDERS_TRACKING_JS . 'select2.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
 			}
-			wp_enqueue_script( 'vi-wot-admin-setting-js', VI_WOO_ORDERS_TRACKING_JS . 'admin-setting.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
+			wp_enqueue_script( 'vi-wot-admin-setting-js', VI_WOO_ORDERS_TRACKING_JS . 'admin-setting' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
 			$countries                = new WC_Countries();
 			$this->shipping_countries = $countries->get_countries();
 			wp_localize_script(

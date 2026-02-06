@@ -17,13 +17,14 @@ if ( ! class_exists( 'VI_WOO_ORDERS_TRACKING_ADMIN_WEBHOOKS' ) ) {
 			global $pagenow;
 			$page = isset( $_REQUEST['page'] ) ? sanitize_text_field( $_REQUEST['page'] ) : '';// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ( $pagenow === 'admin.php' && $page === 'woo-orders-tracking-webhooks' ) {
+				$src_min = WP_DEBUG ? '' : '.min';
 				VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS::admin_enqueue_semantic();
 				if ( ! wp_script_is( 'transition' ) ) {
 					wp_enqueue_style( 'transition', VI_WOO_ORDERS_TRACKING_CSS . 'transition.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 					wp_enqueue_script( 'transition', VI_WOO_ORDERS_TRACKING_JS . 'transition.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
 				}
-				wp_enqueue_style( 'woo-orders-tracking-webhooks', VI_WOO_ORDERS_TRACKING_CSS . 'webhooks.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
-				wp_enqueue_script( 'woo-orders-tracking-webhooks', VI_WOO_ORDERS_TRACKING_JS . 'webhooks.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
+				wp_enqueue_style( 'woo-orders-tracking-webhooks', VI_WOO_ORDERS_TRACKING_CSS . 'webhooks' . $src_min . '.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
+				wp_enqueue_script( 'woo-orders-tracking-webhooks', VI_WOO_ORDERS_TRACKING_JS . 'webhooks' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
 			}
 		}
 

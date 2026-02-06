@@ -670,15 +670,17 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_DESIGN {
 	 * enqueue script
 	 */
 	public function customize_controls_enqueue_scripts() {
-		wp_enqueue_style( 'vi-wot-customize-preview-style', VI_WOO_ORDERS_TRACKING_CSS . 'customize-preview.css', array(), VI_WOO_ORDERS_TRACKING_VERSION );
-		wp_enqueue_style( 'vi-wot-customize-icon', VI_WOO_ORDERS_TRACKING_CSS . 'frontend-shipment-icon.css', array(), VI_WOO_ORDERS_TRACKING_VERSION );
+		$src_min = WP_DEBUG ? '' : '.min';
+		wp_enqueue_style( 'vi-wot-customize-preview-style', VI_WOO_ORDERS_TRACKING_CSS . 'customize-preview' . $src_min . '.css', array(), VI_WOO_ORDERS_TRACKING_VERSION );
+		wp_enqueue_style( 'vi-wot-customize-icon', VI_WOO_ORDERS_TRACKING_CSS . 'frontend-shipment-icon' . $src_min . '.css', array(), VI_WOO_ORDERS_TRACKING_VERSION );
 	}
 
 	/*
 	 * customize preview init
 	 */
 	public function customize_preview_init() {
-		wp_enqueue_script( 'vi-wot-customize-preview-js', VI_WOO_ORDERS_TRACKING_JS . 'customize-preview.js', array(
+		$src_min = WP_DEBUG ? '' : '.min';
+		wp_enqueue_script( 'vi-wot-customize-preview-js', VI_WOO_ORDERS_TRACKING_JS . 'customize-preview' . $src_min . '.js', array(
 			'jquery',
 			'customize-preview',
 			'select2',

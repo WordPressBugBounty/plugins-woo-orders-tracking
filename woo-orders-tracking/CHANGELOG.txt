@@ -1,3 +1,12 @@
+/**1.2.17 - 2026.01.20/**/
+- Updated: Villatheme support
+
+/**1.2.16 - 2025.11.19/**/
+- Fixed: Can not export order tracking number based on order status filter
+
+/**1.2.15 - 2025.*/
+- Updated: Minify some source code
+
 /**1.2.14 - 2025.02.28**/
 - Updated: Update support file
 

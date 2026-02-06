@@ -824,9 +824,10 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDERS_TRACKING {
 		global $pagenow;
 		$page = isset( $_REQUEST['page'] ) ? sanitize_text_field( $_REQUEST['page'] ) : '';// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( $pagenow === 'admin.php' && $page === 'woo-orders-tracking-export' ) {
+			$src_min = WP_DEBUG ? '' : '.min';
 			wp_dequeue_script( 'select-js' );//Causes select2 error, from ThemeHunk MegaMenu Plus plugin
 			wp_dequeue_style( 'eopa-admin-css' );
-			wp_enqueue_style( 'vi-wot-admin-export-css', VI_WOO_ORDERS_TRACKING_CSS . 'admin-export.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
+			wp_enqueue_style( 'vi-wot-admin-export-css', VI_WOO_ORDERS_TRACKING_CSS . 'admin-export' . $src_min . '.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 			wp_enqueue_style( 'semantic-ui-accordion', VI_WOO_ORDERS_TRACKING_CSS . 'accordion.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 			wp_enqueue_style( 'semantic-ui-button', VI_WOO_ORDERS_TRACKING_CSS . 'button.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 			wp_enqueue_style( 'semantic-ui-dropdown', VI_WOO_ORDERS_TRACKING_CSS . 'dropdown.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
@@ -854,7 +855,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDERS_TRACKING {
 				wp_enqueue_style( 'transition', VI_WOO_ORDERS_TRACKING_CSS . 'transition.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 				wp_enqueue_script( 'transition', VI_WOO_ORDERS_TRACKING_JS . 'transition.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
 			}
-			wp_enqueue_script( 'vi-wot-admin-export-js', VI_WOO_ORDERS_TRACKING_JS . 'admin-export.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
+			wp_enqueue_script( 'vi-wot-admin-export-js', VI_WOO_ORDERS_TRACKING_JS . 'admin-export' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
 			wp_localize_script(
 				'vi-wot-admin-export-js',
 				'vi_wot_admin_export',

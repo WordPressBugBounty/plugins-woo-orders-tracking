@@ -224,7 +224,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDER_MANAGE {
 		if ( ! empty( $export_settings['filter-order-status'] ) ) {
 			$filter_by_status = $export_settings['filter-order-status'];
 			$filter_by_status = '\'' . join( '\' , \'', $filter_by_status ) . '\'';
-			$where[]          = $order_table . 'status IN ( ' . $filter_by_status . ' )';
+			$where[]          = $order_table . '.status IN ( ' . $filter_by_status . ' )';
 		}
 		//filter by billing address
 		if ( ! empty( $export_settings['filter-order-billing-address'] ) ) {
