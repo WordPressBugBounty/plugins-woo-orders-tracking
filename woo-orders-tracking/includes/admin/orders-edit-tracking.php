@@ -61,8 +61,17 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_EDIT_TRACKING {
 	 * @throws Exception
 	 */
 	public function add_tracking_to_paypal() {
-		if (!isset( $_POST['action_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( $_POST['action_nonce'] ), 'vi_wot_item_action_nonce' ) ) {
+		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['action_nonce'] ??'') ), 'vi_wot_item_action_nonce' ) ) {
 			return;
+		}
+		$order_id = isset( $_POST['order_id'] ) ? absint( $_POST['order_id'] ) : 0;
+		if ( ! $order_id || ! current_user_can( 'edit_post', $order_id ) ) {
+			wp_send_json(
+				array(
+					'status'  => 'error',
+					'message' => esc_html__( 'Sorry, you are not allowed to edit this order.', 'woo-orders-tracking' ),
+				)
+			);
 		}
 		$response = array(
 			'status'                 => 'error',
@@ -71,8 +80,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_EDIT_TRACKING {
 			'paypal_added_trackings' => '',
 			'paypal_button_title'    => '',
 		);
-		$order_id = isset( $_POST['order_id'] ) ? sanitize_text_field( $_POST['order_id'] ) : '';
-		$item_id  = isset( $_POST['item_id'] ) ? sanitize_text_field( $_POST['item_id'] ) : '';
+		$item_id = isset( $_POST['item_id'] ) ? absint( $_POST['item_id'] ) : 0;
 		if ( $order_id && $item_id ) {
 			$order = wc_get_order( $order_id );
 			if ( $order ) {
@@ -126,11 +134,20 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_EDIT_TRACKING {
 	 * @throws Exception
 	 */
 	public function wotv_save_track_info_item() {
-		if ( !isset( $_POST['action_nonce'] ) ||  ! wp_verify_nonce( sanitize_text_field( $_POST['action_nonce'] ), 'vi_wot_item_action_nonce' ) ) {
+		$action_nonce = isset( $_POST['action_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['action_nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $action_nonce, 'vi_wot_item_action_nonce' ) ) {
 			return;
 		}
 		$quantity_index           = isset( $_POST['quantity_index'] ) ? intval( $_POST['quantity_index'] ) : null;
-		$order_id                 = isset( $_POST['order_id'] ) ? sanitize_text_field( $_POST['order_id'] ) : '';
+		$order_id                 = isset( $_POST['order_id'] ) ? absint( $_POST['order_id'] ) : 0;
+		if ( ! $order_id || ! current_user_can( 'edit_post', $order_id ) ) {
+			wp_send_json(
+				array(
+					'status'  => 'error',
+					'message' => esc_html__( 'Sorry, you are not allowed to edit this order.', 'woo-orders-tracking' ),
+				)
+			);
+		}
 		$item_id                  = isset( $_POST['item_id'] ) ? sanitize_text_field( $_POST['item_id'] ) : '';
 		$item_name                = isset( $_POST['item_name'] ) ? sanitize_text_field( $_POST['item_name'] ) : '';
 		$change_order_status      = isset( $_POST['change_order_status'] ) ? sanitize_text_field( $_POST['change_order_status'] ) : '';
@@ -444,10 +461,19 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_EDIT_TRACKING {
 	 * @throws Exception
 	 */
 	public function wotv_save_track_info_all_item() {
-		if ( !isset( $_POST['action_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( $_POST['action_nonce'] ), 'vi_wot_item_action_nonce' ) ) {
+		$action_nonce = isset( $_POST['action_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['action_nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $action_nonce, 'vi_wot_item_action_nonce' ) ) {
 			return;
 		}
-		$order_id                 = isset( $_POST['order_id'] ) ? sanitize_text_field( $_POST['order_id'] ) : '';
+		$order_id = isset( $_POST['order_id'] ) ? absint( $_POST['order_id'] ) : 0;
+		if ( ! $order_id || ! current_user_can( 'edit_post', $order_id ) ) {
+			wp_send_json(
+				array(
+					'status'  => 'error',
+					'message' => esc_html__( 'Sorry, you are not allowed to edit this order.', 'woo-orders-tracking' ),
+				)
+			);
+		}
 		$change_order_status      = isset( $_POST['change_order_status'] ) ? sanitize_text_field( $_POST['change_order_status'] ) : '';
 		$send_mail                = isset( $_POST['send_mail'] ) ? sanitize_text_field( $_POST['send_mail'] ) : '';
 		$add_to_paypal            = isset( $_POST['add_to_paypal'] ) ? sanitize_text_field( $_POST['add_to_paypal'] ) : '';

@@ -1543,6 +1543,14 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
 
 
 	public function wot_preview_emails() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json(
+				array(
+					'status'  => 'error',
+					'message' => esc_html__( 'You do not have permission.', 'woo-orders-tracking' ),
+				)
+			);
+		}
 		if ( !isset( $_GET['_vi_wot_setting_nonce'] ) || !wp_verify_nonce( wc_clean($_GET['_vi_wot_setting_nonce']), 'vi_wot_setting_action_nonce' ) ) {
             wp_send_json([
                     'status'=> 'error',
@@ -1711,6 +1719,14 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
 	}
 
 	public function wot_test_connection_paypal() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json(
+				array(
+					'status'  => 'error',
+					'message' => esc_html__( 'You do not have permission.', 'woo-orders-tracking' ),
+				)
+			);
+		}
 		if ( !isset( $_GET['_vi_wot_setting_nonce'] ) || !wp_verify_nonce( wc_clean($_GET['_vi_wot_setting_nonce']), 'vi_wot_setting_action_nonce' ) ) {
 			wp_send_json([
 				'status'=> 'error',
@@ -2007,14 +2023,14 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
 			'post_status'    => 'any',
 			'post_type'      => 'page',
 			'posts_per_page' => 50,
-			's'              => $keyword
+			's'              => $keyword,
+			'fields'         => 'ids',
 		);
 		$the_query = new WP_Query( $args );
 		$items     = array();
 		if ( $the_query->have_posts() ) {
-			while ( $the_query->have_posts() ) {
-				$the_query->the_post();
-				$items[] = array( 'id' => get_the_ID(), 'text' => get_the_title() );
+			foreach ( $the_query->posts as $page_id ) {
+				$items[] = array( 'id' => $page_id, 'text' => get_the_title( $page_id ) );
 			}
 		}
 		wp_reset_postdata();

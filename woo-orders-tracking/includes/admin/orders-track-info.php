@@ -353,12 +353,24 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_TRACK_INFO {
 	 * @throws Exception
 	 */
 	public function refresh_track_info() {
-        if (!isset($_POST['action_nonce']) || !wp_verify_nonce(wc_clean($_POST['action_nonce']), 'vi_wot_item_action_nonce')){
-            wp_send_json([
-	            'status'                   => 'error',
-	            'message'                  => esc_html__( 'Invalid nonce', 'woo-orders-tracking' ),
-            ]);
-        }
+		$action_nonce = isset( $_POST['action_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['action_nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $action_nonce, 'vi_wot_item_action_nonce' ) ) {
+			wp_send_json(
+				array(
+					'status'  => 'error',
+					'message' => esc_html__( 'Invalid nonce', 'woo-orders-tracking' ),
+				)
+			);
+		}
+		$order_id = isset( $_POST['order_id'] ) ? absint( $_POST['order_id'] ) : 0;
+		if ( ! $order_id || ! current_user_can( 'edit_post', $order_id ) ) {
+			wp_send_json(
+				array(
+					'status'  => 'error',
+					'message' => esc_html__( 'Sorry, you are not allowed to edit this order.', 'woo-orders-tracking' ),
+				)
+			);
+		}
 		$response        = array(
 			'status'                   => 'success',
 			'message'                  => esc_html__( 'Update tracking data successfully.', 'woo-orders-tracking' ),
@@ -370,7 +382,6 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_TRACK_INFO {
 		);
 		$tracking_number = isset( $_POST['tracking_number'] ) ? sanitize_text_field( $_POST['tracking_number'] ) : '';
 		$carrier_slug    = isset( $_POST['carrier_slug'] ) ? sanitize_text_field( $_POST['carrier_slug'] ) : '';
-		$order_id        = isset( $_POST['order_id'] ) ? sanitize_text_field( stripslashes( $_POST['order_id'] ) ) : '';
 		$order           = wc_get_order( $order_id );
 		if ( $order && $tracking_number && $carrier_slug && self::$settings->get_params( 'service_carrier_enable' ) ) {
 			$response['message_content'] = '<div>' . sprintf( esc_html__( 'Tracking number: %s', 'woo-orders-tracking' ), $tracking_number ) . '</div>'; // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment

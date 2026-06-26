@@ -639,7 +639,15 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDERS_TRACKING {
 
 
 	public function vi_wot_export_preview() {
-		if ( ! isset( $_POST['_vi_wot_export_nonce'] ) || ! wp_verify_nonce( $_POST['_vi_wot_export_nonce'], 'vi_wot_export_action_nonce' ) ) {
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json(
+				array(
+					'status'  => 'error',
+					'message' => esc_html__( 'You do not have permission.', 'woo-orders-tracking' ),
+				)
+			);
+		}
+		if ( ! isset( $_POST['_vi_wot_export_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_vi_wot_export_nonce'] ) ), 'vi_wot_export_action_nonce' ) ) {
 			wp_send_json(
 				array(
 					'status'  => 'error',
@@ -730,7 +738,15 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDERS_TRACKING {
 			'status'  => 'error',
 			'message' => esc_html__( 'Invalid data', 'woo-orders-tracking' ),
 		);
-		if ( ! isset( $_POST['_vi_wot_export_nonce'] ) || ! wp_verify_nonce( $_POST['_vi_wot_export_nonce'], 'vi_wot_export_action_nonce' ) ) {
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json(
+				array(
+					'status'  => 'error',
+					'message' => esc_html__( 'You do not have permission.', 'woo-orders-tracking' ),
+				)
+			);
+		}
+		if ( ! isset( $_POST['_vi_wot_export_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_vi_wot_export_nonce'] ) ), 'vi_wot_export_action_nonce' ) ) {
 			wp_send_json(
 				array(
 					'status'  => 'error',

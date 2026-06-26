@@ -3,7 +3,7 @@ Contributors: villatheme, mrt3vn
 Donate link: https://www.villatheme.com/donate
 Tags: advanced shipment tracking for woocommerce, orders tracking for woocommerce,  woocommerce order tracking plugin, woocommerce shipment tracking, woocommerce tracking number
 Requires at least: 5.0.0
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.0
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -158,6 +158,8 @@ Tracking numbers are displayed in orders list/order details on customers' My acc
 
 ### MAY BE YOU NEED
 
+[VARGAL - Additional Variation Gallery for Woo](https://wordpress.org/plugins/vargal-additional-variation-gallery-for-woo)
+
 [9MAIL - WordPress Email Templates Designer](https://wordpress.org/plugins/9mail-wp-email-templates-designer/)
 
 [9Map - Map Multi Locations](https://wordpress.org/plugins/9map-map-multi-locations/)
@@ -173,8 +175,6 @@ Tracking numbers are displayed in orders list/order details on customers' My acc
 [Boost Sales for WooCommerce - Set up Up-Sells & Cross-Sells Popups & Auto Apply Coupon](https://wordpress.org/plugins/woo-boost-sales/)
 
 [Bopo - WooCommerce Product Bundle Builder](https://wordpress.org/plugins/bopo-woo-product-bundle-builder/)
-
-[Bulky - Bulk Edit Products for WooCommerce](https://wordpress.org/plugins/bulky-bulk-edit-products-for-woo/)
 
 [Cart All In One For WooCommerce](https://wordpress.org/plugins/woo-cart-all-in-one/)
 
@@ -192,7 +192,7 @@ Tracking numbers are displayed in orders list/order details on customers' My acc
 
 [Coupon Box for WooCommerce](https://wordpress.org/plugins/woo-coupon-box/)
 
-[CURCY - Multi Currency for WooCommerce - Smoothly on WooCommerce 9.x](https://wordpress.org/plugins/woo-multi-currency/)
+[CURCY - Multi Currency for WooCommerce - The best free currency exchange plugin - Run smoothly on WooCommerce 9.x](https://wordpress.org/plugins/woo-multi-currency/)
 
 [Customer Coupons for WooCommerce](https://wordpress.org/plugins/woo-customer-coupons/)
 
@@ -208,9 +208,9 @@ Tracking numbers are displayed in orders list/order details on customers' My acc
 
 [EXMAGE - WordPress Image Links](https://wordpress.org/plugins/exmage-wp-image-links/)
 
-[Faview - Virtual Reviews for WooCommerce](https://wordpress.org/plugins/woo-virtual-reviews/)
-
 [FEWC - Extra Checkout Fields For WooCommerce](https://wordpress.org/plugins/fewc-extra-checkout-fields-for-woocommerce/)
+
+[Faview - Virtual Reviews for WooCommerce](https://wordpress.org/plugins/woo-virtual-reviews/)
 
 [Free Shipping Bar for WooCommerce](https://wordpress.org/plugins/woo-free-shipping-bar/)
 
@@ -235,8 +235,6 @@ Tracking numbers are displayed in orders list/order details on customers' My acc
 [Photo Reviews for WooCommerce](https://wordpress.org/plugins/woo-photo-reviews/)
 
 [Pofily - WooCommerce Product Filters](https://wordpress.org/plugins/pofily-woo-product-filters/)
-
-[PRENA - Product Pre-Orders for WooCommerce](https://wordpress.org/plugins/product-pre-orders-for-woo/)
 
 [Product Builder for WooCommerce - Custom PC Builder](https://wordpress.org/plugins/woo-product-builder/)
 
@@ -298,13 +296,14 @@ Tracking numbers are displayed in orders list/order details on customers' My acc
 3. Tracking carrier
 
 == Changelog ==
+/**1.3.0 - 2026.06.26**/
+- Updated: Villatheme support
+
 /**1.2.17 - 2026.01.20/**/
 - Updated: Villatheme support
 
-/**1.2.16 - 2025.11.19/**/
+/**1.2.16 - 2025.11.19/
 - Fixed: Can not export order tracking number based on order status filter
-
-/**1.2.15 - 2025.**/
 - Updated: Minify some source code
 
 /**1.2.14 - 2025.02.28**/

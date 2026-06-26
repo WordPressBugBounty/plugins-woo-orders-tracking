@@ -21,21 +21,30 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_DESIGN {
 	}
 
 	public function vi_wot_customize_params_date_time_format() {
-        if (!isset($_POST['nonce']) || !wp_verify_nonce(wc_clean($_POST['nonce']),'viwot_design_nonce')){
-	        wp_send_json(
-		        array(
-			        'status' => 'error',
-			        'html'   => 'invalid nonce'
-		        )
-	        );
-        }
-		$format = isset( $_POST['format'] ) ? sanitize_text_field( $_POST['format'] ) : '';
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json(
+				array(
+					'status' => 'error',
+					'html'   => esc_html__( 'You do not have permission.', 'woo-orders-tracking' ),
+				)
+			);
+		}
+		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce, 'viwot_design_nonce' ) ) {
+			wp_send_json(
+				array(
+					'status' => 'error',
+					'html'   => esc_html__( 'Invalid nonce', 'woo-orders-tracking' ),
+				)
+			);
+		}
+		$format = isset( $_POST['format'] ) ? sanitize_text_field( wp_unslash( $_POST['format'] ) ) : '';
 		if ( $format ) {
 			$result = date_format( date_create(), $format );
 			wp_send_json(
 				array(
 					'status' => 'success',
-					'html'   => $result
+					'html'   => esc_html( $result ),
 				)
 			);
 		}
