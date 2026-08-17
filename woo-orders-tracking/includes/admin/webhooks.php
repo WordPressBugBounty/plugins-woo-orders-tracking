@@ -63,7 +63,7 @@ if ( ! class_exists( 'VI_WOO_ORDERS_TRACKING_ADMIN_WEBHOOKS' ) ) {
                                 </th>
                                 <td>
                                     <a class="vi-ui button" target="_blank"
-                                       href="https://1.envato.market/6ZPBE"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
+                                       href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
                                 </td>
                             </tr>
                             <tr>

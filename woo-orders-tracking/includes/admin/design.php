@@ -81,7 +81,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_DESIGN {
 			'theme_supports' => '',
 			'title'          => esc_html__( 'Tracking form', 'woo-orders-tracking' ),
 			'panel'          => 'vi_wot_orders_tracking_design',
-			'description'    => wp_kses_post(__( 'To manage which fields(tracking number, order ID, email) to be visible or required in the tracking form, please <a class="button" target="_blank" href="https://1.envato.market/6ZPBE">upgrade to pro</a>', 'woo-orders-tracking' )),
+			'description'    => wp_kses_post(__( 'To manage which fields(tracking number, order ID, email) to be visible or required in the tracking form, please <a class="button" target="_blank" href="https://villatheme.com/extensions/woocommerce-orders-tracking/">upgrade to pro</a>', 'woo-orders-tracking' )),
 		) );
 		$wp_customize->add_section( 'vi_wot_orders_tracking_design_template_one', array(
 			'priority'       => 20,

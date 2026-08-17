@@ -110,7 +110,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ADMIN {
 					'support'   => 'https://wordpress.org/support/plugin/woo-orders-tracking/',
 					'docs'      => 'http://docs.villatheme.com/?item=woo-orders-tracking',
 					'review'    => 'https://wordpress.org/support/plugin/woo-orders-tracking/reviews/?rate=5#rate-response',
-					'pro_url'   => 'https://1.envato.market/6ZPBE',
+					'pro_url'   => 'https://villatheme.com/extensions/woocommerce-orders-tracking/',
 					'css'       => VI_WOO_ORDERS_TRACKING_CSS,
 					'image'     => VI_WOO_ORDERS_TRACKING_IMAGES,
 					'slug'      => 'woo-orders-tracking',

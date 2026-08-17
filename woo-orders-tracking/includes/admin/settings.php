@@ -292,8 +292,8 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
                 </th>
                 <td>
                     <a class="vi-ui yellow button" target="_blank"
-                       href="https://1.envato.market/6ZPBE"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
-                    <p><?php echo wp_kses_post(__( 'You can use <a href="https://1.envato.market/BZZv1" target="_blank">WooCommerce Email Template Customizer</a> or <a href="http://bit.ly/woo-email-template-customizer" target="_blank">Email Template Customizer for WooCommerce</a> to create and customize your own email template. If no email template is selected, below email will be used.', 'woo-orders-tracking' )) ?></p>
+                       href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
+                    <p><?php echo wp_kses_post(__( 'You can use <a href="https://villatheme.com/extensions/woocommerce-email-template-customizer/" target="_blank">WooCommerce Email Template Customizer</a> or <a href="http://bit.ly/woo-email-template-customizer" target="_blank">Email Template Customizer for WooCommerce</a> to create and customize your own email template. If no email template is selected, below email will be used.', 'woo-orders-tracking' )) ?></p>
                 </td>
             </tr>
             </tbody>
@@ -369,7 +369,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
                     </th>
                     <td>
                         <a class="vi-ui yellow button" target="_blank"
-                           href="https://1.envato.market/6ZPBE"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
+                           href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
                     </td>
                 </tr>
                 <tr>
@@ -380,7 +380,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
                     </th>
                     <td>
                         <a class="vi-ui yellow button" target="_blank"
-                           href="https://1.envato.market/6ZPBE"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
+                           href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
                     </td>
                 </tr>
                 <tr>
@@ -391,7 +391,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
                     </th>
                     <td>
                         <a class="vi-ui yellow button" target="_blank"
-                           href="https://1.envato.market/6ZPBE"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
+                           href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
                         <p><?php esc_html_e( '{tracking_table} contains 4 columns and you can customize 3 of them, the first column is Product title and it\'s mandatory.', 'woo-orders-tracking' ) ?></p>
                         <p><?php esc_html_e( 'You can leave column content blank to remove it from {tracking_table}.', 'woo-orders-tracking' ) ?></p>
                         <p><?php esc_html_e( 'Below placeholders can be used in both 3 columns of {tracking_table}', 'woo-orders-tracking' ) ?></p>
@@ -498,7 +498,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
                 </th>
                 <td>
                     <a class="vi-ui yellow button" target="_blank"
-                       href="https://1.envato.market/6ZPBE"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
+                       href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
                 </td>
             </tr>
             <tr>
@@ -509,7 +509,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
                 </th>
                 <td>
                     <a class="vi-ui yellow button" target="_blank"
-                       href="https://1.envato.market/6ZPBE"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
+                       href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
 					<?php
 					self::table_of_placeholders( array(
 							'order_id'           => esc_html__( 'ID of current order', 'woo-orders-tracking' ),
@@ -636,7 +636,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
                 </th>
                 <td>
                     <a class="vi-ui yellow button" target="_blank"
-                       href="https://1.envato.market/6ZPBE"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
+                       href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
                 </td>
             </tr>
             <tr class="<?php echo esc_attr( self::set( $not_after_order_item_class ) ) ?>">
@@ -647,7 +647,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
                 </th>
                 <td>
                     <a class="vi-ui yellow button" target="_blank"
-                       href="https://1.envato.market/6ZPBE"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
+                       href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
                 </td>
             </tr>
             <tr>
@@ -667,7 +667,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
                 </th>
                 <td>
                     <a class="vi-ui yellow button" target="_blank"
-                       href="https://1.envato.market/6ZPBE"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
+                       href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
                 </td>
             </tr>
             <tr>
@@ -678,7 +678,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
                 </th>
                 <td>
                     <a class="vi-ui yellow button" target="_blank"
-                       href="https://1.envato.market/6ZPBE"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
+                       href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
 					<?php
 					self::table_of_placeholders( array(
 							'tracking_number' => esc_html__( 'Tracking number', 'woo-orders-tracking' ),
@@ -847,7 +847,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
                 <div class="header">
 					<?php esc_html_e( 'The free version only supports PayPal standard and PayPal Express checkout of WooCommerce and settings will show when one of these payment gateways is active. If you use other PayPal gateway plugins(e.g WooCommerce PayPal Payments...), please consider upgrading to premium.', 'woo-orders-tracking' ) ?>
                     <a class="vi-ui yellow button" target="_blank"
-                       href="https://1.envato.market/6ZPBE"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
+                       href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
                 </div>
             </div>
 			<?php
@@ -1056,7 +1056,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
                 </th>
                 <td>
                     <a class="vi-ui yellow button" target="_blank"
-                       href="https://1.envato.market/6ZPBE"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
+                       href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
                     <div class="description"><?php esc_html_e( 'Select order status to change to when Shipment status changes to Delivered. Leave it blank if you don\'t want to change order status', 'woo-orders-tracking' ) ?></div>
                 </td>
             </tr>
@@ -1069,7 +1069,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
                 </th>
                 <td>
                     <a class="vi-ui yellow button" target="_blank"
-                       href="https://1.envato.market/6ZPBE"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
+                       href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
                     <p class="description"><?php printf( wp_kses_post(__( 'Using <a target="_blank" href="%s">Google Cloud Translation API</a> to translate timeline to a specific language', 'woo-orders-tracking' )), 'https://cloud.google.com/translate/docs/basic/translating-text' )  // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?></p>
                 </td>
             </tr>
@@ -1081,7 +1081,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
                 </th>
                 <td>
                     <a class="vi-ui yellow button" target="_blank"
-                       href="https://1.envato.market/6ZPBE"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
+                       href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
                     <p class="description"><?php printf( wp_kses_post(__( 'This functionality uses Cloud Translation - Basic API, please click <a target="_blank" href="%s">here</a> to read more about pricing', 'woo-orders-tracking' )), 'https://cloud.google.com/translate/pricing#cloud-translation---basic' )  // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?></p>
                     <p class="description"><?php printf( wp_kses_post(__( 'To get API key, please read <a target="_blank" href="%s">https://cloud.google.com/docs/authentication/api-keys#creating_an_api_key</a> or watch our guiding video below', 'woo-orders-tracking' )), 'https://cloud.google.com/docs/authentication/api-keys#creating_an_api_key' )  // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?></p>
                     <div class="vi-ui accordion segment">
@@ -1120,7 +1120,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
                 </th>
                 <td>
                     <a class="vi-ui yellow button" target="_blank"
-                       href="https://1.envato.market/6ZPBE"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
+                       href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
                     <p class="description"><?php esc_html_e( 'Show below track info in tracking timeline if a real tracking number does not have any information from tracking service', 'woo-orders-tracking' ) ?></p>
                 </td>
             </tr>
@@ -1273,7 +1273,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
                 </th>
                 <td>
                     <a class="vi-ui yellow button" target="_blank"
-                       href="https://1.envato.market/6ZPBE"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
+                       href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
                     <p class="description"><?php echo wp_kses_post(__( 'If an order does not have a tracking number, default tracking number will be displayed on Order received page, My account/orders and in emails that you configure in <a href="#email_woo">WooCommerce Email tab</a>.', 'woo-orders-tracking' )) ?></p>
                     <p class="description"><?php esc_html_e( 'When a customer uses a "default tracking number" to track, the default track info will be used.', 'woo-orders-tracking' ) ?></p>
                 </td>
@@ -1286,7 +1286,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
                 </th>
                 <td>
                     <a class="vi-ui yellow button" target="_blank"
-                       href="https://1.envato.market/6ZPBE"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
+                       href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
                     <p class="description"><?php esc_html_e( 'Message including default tracking number which will be displayed on Order received page or WooCommerce email.', 'woo-orders-tracking' ) ?></p>
 					<?php
 					self::table_of_placeholders(
@@ -1322,7 +1322,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
                 </th>
                 <td>
                     <a class="vi-ui yellow button" target="_blank"
-                       href="https://1.envato.market/6ZPBE"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
+                       href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
                     <p class="description"><?php esc_html_e( 'Use Google reCAPTCHA for tracking form', 'woo-orders-tracking' ) ?></p>
                 </td>
             </tr>
