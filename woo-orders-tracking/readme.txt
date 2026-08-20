@@ -3,7 +3,7 @@ Contributors: villatheme, mrt3vn
 Donate link: https://www.villatheme.com/donate
 Tags: advanced shipment tracking for woocommerce, orders tracking for woocommerce,  woocommerce order tracking plugin, woocommerce shipment tracking, woocommerce tracking number
 Requires at least: 5.0.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.0
 WC tested up to: 11.0
 License: GPL v2 or later
@@ -297,6 +297,10 @@ Tracking numbers are displayed in orders list/order details on customers' My acc
 3. Tracking carrier
 
 == Changelog ==
+2026.08.20 - version 1.3.2
+- Updated: Compatible with WP 7.1
+- Updated: Compatibility check with WC 11.0
+
 2026.08.17 - version 1.3.1
 - Updated: Change premium version url
 

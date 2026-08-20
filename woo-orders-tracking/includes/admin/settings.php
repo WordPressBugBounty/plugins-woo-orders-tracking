@@ -293,7 +293,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
                 <td>
                     <a class="vi-ui yellow button" target="_blank"
                        href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
-                    <p><?php echo wp_kses_post(__( 'You can use <a href="https://villatheme.com/extensions/woocommerce-email-template-customizer/" target="_blank">WooCommerce Email Template Customizer</a> or <a href="http://bit.ly/woo-email-template-customizer" target="_blank">Email Template Customizer for WooCommerce</a> to create and customize your own email template. If no email template is selected, below email will be used.', 'woo-orders-tracking' )) ?></p>
+                    <p><?php echo wp_kses_post(__( 'You can use <a href="https://villatheme.com/extensions/woocommerce-email-template-customizer/" target="_blank">WooCommerce Email Template Customizer</a> or <a href="https://wordpress.org/plugins/email-template-customizer-for-woo/" target="_blank">Email Template Customizer for WooCommerce</a> to create and customize your own email template. If no email template is selected, below email will be used.', 'woo-orders-tracking' )) ?></p>
                 </td>
             </tr>
             </tbody>
