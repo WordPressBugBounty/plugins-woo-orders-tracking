@@ -1335,7 +1335,7 @@ Your sincerely',
 		}
 		if ( $email ) {
 			$query   = "SELECT vi_wot_woocommerce_order_items.*,vi_wot_woocommerce_order_itemmeta.* FROM {$wpdb->prefix}woocommerce_order_items as vi_wot_woocommerce_order_items JOIN {$wpdb->prefix}woocommerce_order_itemmeta as vi_wot_woocommerce_order_itemmeta on vi_wot_woocommerce_order_items.order_item_id=vi_wot_woocommerce_order_itemmeta.order_item_id";
-			if ((get_option( 'woocommerce_feature_custom_order_tables_enabled' ) === 'yes' || get_option( 'woocommerce_custom_orders_table_enabled' ) === 'yes' ) && get_option( 'woocommerce_custom_orders_table_data_sync_enabled','no' ) === 'no'){
+			if (vi_wot_hpos_enabled()){
 				$query .=" JOIN {$wpdb->prefix}wc_orders as vi_wot_postmeta on vi_wot_woocommerce_order_items.order_id=vi_wot_postmeta.id";
 				$where[]      = "vi_wot_postmeta.billing_email = %s";
 			}else{
@@ -1772,13 +1772,11 @@ Your sincerely',
 	}
 
 	/**
-	 * Escape html content
+	 * HTML allow list for tracking form and shortcode markup.
 	 *
-	 * @param $content
-	 *
-	 * @return string
+	 * @return array
 	 */
-	public static function wp_kses_post( $content ) {
+	public static function get_allowed_html() {
 		if ( self::$allow_html === null ) {
 			self::$allow_html = wp_kses_allowed_html( 'post' );
 			self::$allow_html = array_merge_recursive( self::$allow_html, array(
@@ -1830,7 +1828,7 @@ Your sincerely',
 			}
 		}
 
-		return wp_kses( $content, self::$allow_html );
+		return self::$allow_html;
 	}
 
 	/**

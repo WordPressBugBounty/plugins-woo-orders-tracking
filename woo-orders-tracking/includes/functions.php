@@ -40,19 +40,33 @@ if ( ! function_exists( 'vi_include_folder' ) ) {
 	}
 }
 if ( ! function_exists( 'vi_wot_set_time_limit' ) ) {
-	function vi_wot_set_time_limit( $limit = 0 ) {
-		if ( function_exists( 'set_time_limit' ) && false === strpos( ini_get( 'disable_functions' ), 'set_time_limit' ) && ! ini_get( 'safe_mode' ) ) { // phpcs:ignore PHPCompatibility.IniDirectives.RemovedIniDirectives.safe_modeDeprecatedRemoved
-			set_time_limit( $limit );
-		}
+	function vi_wot_set_time_limit() {
+		ActionScheduler_Compatibility::raise_memory_limit();
+		wc_set_time_limit();
 	}
 }
 if ( ! function_exists( 'vi_wot_json_decode' ) ) {
 	function vi_wot_json_decode( $json, $assoc = true, $depth = 512, $options = 2 ) {
+		if ( ! is_string( $json ) ) {
+			return array();
+		}
 		if ( function_exists( 'mb_convert_encoding' ) ) {
 			$json = mb_convert_encoding( $json, 'UTF-8', 'UTF-8' );
 		}
 
-		return json_decode( $json, $assoc, $depth, $options );
+		$decoded = json_decode( $json, $assoc, $depth, $options );
+
+		return is_array( $decoded ) ? $decoded : array();
+	}
+}
+if ( ! function_exists( 'vi_wot_hpos_enabled' ) ) {
+	function vi_wot_hpos_enabled() {
+		if ( is_callable( array( '\Automattic\WooCommerce\Utilities\OrderUtil', 'custom_orders_table_usage_is_enabled' ) ) ) {
+			return \Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled();
+		}
+
+		return get_option( 'woocommerce_feature_custom_order_tables_enabled' ) === 'yes'
+			|| get_option( 'woocommerce_custom_orders_table_enabled' ) === 'yes';
 	}
 }
 if ( ! function_exists( 'vi_wot_json_encode' ) ) {

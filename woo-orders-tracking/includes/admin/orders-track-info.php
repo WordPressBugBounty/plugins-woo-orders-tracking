@@ -39,7 +39,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_TRACK_INFO {
 			$css .= '.woo-orders-tracking-tracking-number-container-pending a{color:' . self::$settings->get_params( 'timeline_track_info_status_background_pending' ) . '}';
 			$css .= '.woo-orders-tracking-tracking-number-container-alert a{color:' . self::$settings->get_params( 'timeline_track_info_status_background_alert' ) . '}';
 			wp_add_inline_style( 'vi-wot-admin-order-manager-css', $css );
-			wp_enqueue_script( 'vi-wot-admin-order-manager-js', VI_WOO_ORDERS_TRACKING_JS . 'admin-order-manager' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
+			wp_enqueue_script( 'vi-wot-admin-order-manager-js', VI_WOO_ORDERS_TRACKING_JS . 'admin-order-manager' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, true );
 			wp_localize_script(
 				'vi-wot-admin-order-manager-js',
 				'vi_wot_admin_order_manager',
@@ -76,17 +76,11 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_TRACK_INFO {
 	}
 
 	public function addCustomImportButton() {
-        ob_start();
-		?>
-        <script type="text/javascript">
-            jQuery(document).ready(function ($) {
-                'use strict';
-                $(".wrap .page-title-action").eq(0).after("<a class='page-title-action' target='_blank' href='<?php echo esc_url( admin_url( 'admin.php?page=woo-orders-tracking-import-csv' ) ); ?>'><?php esc_html_e( 'Import tracking number', 'woo-orders-tracking' ) ?></a>"
-                    + "<a class='page-title-action' target='_blank' href='<?php echo esc_url( admin_url( 'admin.php?page=woo-orders-tracking-export' ) ); ?>'><?php esc_html_e( 'Export tracking number ', 'woo-orders-tracking' ) ?></a>");
-            });
-        </script>
-		<?php
-		return  preg_replace( '#<script[^>]*>(.*)</script>#is', '$1', ob_get_clean() ) ;
+		return "jQuery(document).ready(function ($) {
+			'use strict';
+			$('.wrap .page-title-action').eq(0).after(\"<a class='page-title-action' target='_blank' href='" . esc_url( admin_url( 'admin.php?page=woo-orders-tracking-import-csv' ) ) . "'>" . esc_html__( 'Import tracking number', 'woo-orders-tracking' ) . "</a>\"
+				+ \"<a class='page-title-action' target='_blank' href='" . esc_url( admin_url( 'admin.php?page=woo-orders-tracking-export' ) ) . "'>" . esc_html__( 'Export tracking number ', 'woo-orders-tracking' ) . "</a>\");
+		});";
 	}
 
 	public function add_new_order_admin_list_column( $columns ) {
@@ -142,7 +136,8 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_TRACK_INFO {
 		}
 		$button_refresh_title = esc_html__( 'Update latest data', 'woo-orders-tracking' );
 		if ( ! empty( $current_tracking_data['last_update'] ) ) {
-			$button_refresh_title = sprintf( esc_html__( 'Last update: %s. Click to refresh.', 'woo-orders-tracking' ), date_i18n( 'Y-m-d H:i:s', $current_tracking_data['last_update'] ) ); // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+			/* translators: %s: date */
+			$button_refresh_title = sprintf( esc_html__( 'Last update: %s. Click to refresh.', 'woo-orders-tracking' ), date_i18n( 'Y-m-d H:i:s', $current_tracking_data['last_update'] ) );
 		}
 
 		return str_replace( array( '{button_refresh_title}', '{tracking_link}' ), array(
@@ -233,7 +228,10 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_TRACK_INFO {
 			} ?>>
                 <a class="<?php echo esc_attr( self::set( 'tracking-number' ) ) ?>"
                    href="<?php echo esc_url( $tracking_url_show ) ?>"
-                   title="<?php printf(esc_attr__( "Tracking carrier %s", 'woo-orders-tracking' ), esc_attr($carrier_name))  // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?>"
+                   title="<?php
+                   /* translators: %s: carrier name */
+                   printf(esc_attr__( "Tracking carrier %s", 'woo-orders-tracking' ), esc_attr($carrier_name));
+                   ?>"
                    target="_blank"><?php echo esc_html( $tracking_number ) ?></a>
 				<?php
 				echo wp_kses_post( $this->tracking_service_action_buttons_html( $tracking_url_show, $current_tracking_data, $tracking_status ) );
@@ -378,20 +376,23 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_TRACK_INFO {
 			'tracking_change'          => 0,
 			'tracking_status'          => '',
 			'tracking_container_class' => '',
-			'button_title'             => sprintf( esc_html__( 'Last update: %s. Click to refresh.', 'woo-orders-tracking' ), date_i18n( 'Y-m-d H:i:s', time() ) ), // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+			/* translators: %s: date */
+			'button_title'             => sprintf( esc_html__( 'Last update: %s. Click to refresh.', 'woo-orders-tracking' ), date_i18n( 'Y-m-d H:i:s', time() ) ),
 		);
 		$tracking_number = isset( $_POST['tracking_number'] ) ? sanitize_text_field( $_POST['tracking_number'] ) : '';
 		$carrier_slug    = isset( $_POST['carrier_slug'] ) ? sanitize_text_field( $_POST['carrier_slug'] ) : '';
 		$order           = wc_get_order( $order_id );
 		if ( $order && $tracking_number && $carrier_slug && self::$settings->get_params( 'service_carrier_enable' ) ) {
-			$response['message_content'] = '<div>' . sprintf( esc_html__( 'Tracking number: %s', 'woo-orders-tracking' ), $tracking_number ) . '</div>'; // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+			/* translators: %s: tracking number */
+			$response['message_content'] = '<div>' . sprintf( esc_html__( 'Tracking number: %s', 'woo-orders-tracking' ), $tracking_number ) . '</div>';
 			$carrier                     = $this->get_shipping_carrier_by_slug( $carrier_slug );
 			if ( is_array( $carrier ) && count( $carrier ) ) {
 				$status                      = '';
 				$convert_status              = '';
 				$carrier_name                = $carrier['name'];
 				$tracking_more_slug          = empty( $carrier['tracking_more_slug'] ) ? VI_WOO_ORDERS_TRACKING_TRACKINGMORE::get_carrier_slug_by_name( $carrier_name ) : $carrier['tracking_more_slug'];
-				$response['message_content'] .= '<div>' . sprintf( esc_html__( 'Carrier: %s', 'woo-orders-tracking' ), $carrier_name ) . '</div>'; // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+				/* translators: %s: carrier name */
+				$response['message_content'] .= '<div>' . sprintf( esc_html__( 'Carrier: %s', 'woo-orders-tracking' ), $carrier_name ) . '</div>';
 				$service_carrier_type        = self::$settings->get_params( 'service_carrier_type' );
 				switch ( $service_carrier_type ) {
 					case 'trackingmore':

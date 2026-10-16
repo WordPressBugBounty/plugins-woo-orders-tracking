@@ -53,14 +53,19 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 		if ( ! current_user_can( 'manage_woocommerce' ) || empty( $_GET['action'] ) || ! check_admin_referer( wp_unslash( $_GET['action'] ) ) ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'woo-orders-tracking' ) );
 		}
-		if ( empty( $_GET['vi_wot_file'] ) ) {
-			wp_die( esc_html__( 'No log file selected.', 'woo-orders-tracking' ) );
-		}
-		$file = urldecode( wp_unslash( wc_clean( $_GET['vi_wot_file'] ) ) );
-		if ( ! is_file( $file ) ) {
+		$log_key = isset( $_GET['vi_wot_file'] ) ? sanitize_key( wp_unslash( $_GET['vi_wot_file'] ) ) : '';
+		if ( ! in_array( $log_key, array( 'import_tracking', 'debug' ), true ) ) {
 			wp_die( esc_html__( 'Log file not found.', 'woo-orders-tracking' ) );
 		}
-		echo( wp_kses_post( nl2br( file_get_contents( $file ) ) ) );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$file      = VI_WOO_ORDERS_TRACKING_CACHE . $log_key . '.txt';
+		$real_file = realpath( $file );
+		$real_dir  = realpath( VI_WOO_ORDERS_TRACKING_CACHE );
+		$real_file = $real_file ? wp_normalize_path( $real_file ) : '';
+		$real_dir  = $real_dir ? trailingslashit( wp_normalize_path( $real_dir ) ) : '';
+		if ( ! $real_file || ! $real_dir || ! is_file( $real_file ) || 0 !== strpos( $real_file, $real_dir ) ) {
+			wp_die( esc_html__( 'Log file not found.', 'woo-orders-tracking' ) );
+		}
+		echo( wp_kses_post( nl2br( file_get_contents( $real_file ) ) ) );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		exit();
 	}
 
@@ -115,7 +120,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 			if ( $this->step == 'mapping' ) {
 				if ( is_file( $this->file_url ) ) {
 					if ( ( $order_id = fopen( $this->file_url, 'r' ) ) !== false ) {// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
-						$this->header = fgetcsv( $order_id, 0, ',' );
+						$this->header = fgetcsv( $order_id, 0, ',', '"', '\\' );
 						fclose( $order_id ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 						if ( ! count( $this->header ) ) {
 							$this->step  = '';
@@ -151,7 +156,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
                 ];
 				if ( is_file( $this->file_url ) ) {
 					if ( ( $file_handle = fopen( $this->file_url, 'r' ) ) !== false ) {// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
-						$header  = fgetcsv( $file_handle, 0, ',' );
+						$header  = fgetcsv( $file_handle, 0, ',', '"', '\\' );
 						$headers = array(
 							'order_id'        => esc_html__( 'Order ID', 'woo-orders-tracking' ),
 							'tracking_number' => esc_html__( 'Tracking Number', 'woo-orders-tracking' ),
@@ -268,9 +273,9 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 				header( 'Content-Disposition: attachment; filename=' . $filename );
 				header( 'Expires: 0' );
 				header( 'Pragma: public' );
-				fputcsv( $fh, $header_row );
+				fputcsv( $fh, $header_row, ',', '"', '\\' );
 				foreach ( $data_rows as $data_row ) {
-					fputcsv( $fh, $data_row );
+					fputcsv( $fh, $data_row, ',', '"', '\\' );
 
 				}
 				$csvFile = stream_get_contents( $fh );
@@ -323,9 +328,9 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 				header( 'Content-Disposition: attachment; filename=' . $filename );
 				header( 'Expires: 0' );
 				header( 'Pragma: public' );
-				fputcsv( $fh, $header_row );
+				fputcsv( $fh, $header_row, ',', '"', '\\' );
 				foreach ( $data_rows as $data_row ) {
-					fputcsv( $fh, $data_row );
+					fputcsv( $fh, $data_row, ',', '"', '\\' );
 
 				}
 				$csvFile = stream_get_contents( $fh );
@@ -536,7 +541,8 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 						}
 					}
 					$changed_orders[] = $order_id;
-					VI_WOO_ORDERS_TRACKING_ADMIN_LOG::log( sprintf(esc_html__( "Import tracking successfully for order #%s", 'woo-orders-tracking' ), esc_attr($order_id)) );// phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+					/* translators: %s: order id */
+					VI_WOO_ORDERS_TRACKING_ADMIN_LOG::log( sprintf(esc_html__( "Import tracking successfully for order #%s", 'woo-orders-tracking' ), esc_attr($order_id)) );
 				}
 				if ( ! empty( $paypal_order ) && in_array( $paypal_method, VI_WOO_ORDERS_TRACKING_ADMIN_PAYPAL::get_supported_paypal_gateways() ) ) {
 					$paypal_order['method_id'] = $paypal_method;
@@ -707,7 +713,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 			case 'check':
 				if ( is_file( $file_url ) ) {
 					if ( ( $file_handle = fopen( $file_url, 'r' ) ) !== false ) {// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
-						$header = fgetcsv( $file_handle, 0, ',' );
+						$header = fgetcsv( $file_handle, 0, ',', '"', '\\' );
 						unset( $header );
 						$options                       = $this->settings->get_params();
 						$options['orders_per_request'] = $orders_per_request;
@@ -716,7 +722,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 						$options['paypal_enable']      = $paypal_enable;
 						update_option( 'woo_orders_tracking_settings', $options );
 						$count = 1;
-						while ( ( $item = fgetcsv( $file_handle, 0, ',' ) ) !== false ) {
+						while ( ( $item = fgetcsv( $file_handle, 0, ',', '"', '\\' ) ) !== false ) {
 							$count ++;
 						}
 						$total = $count;
@@ -766,7 +772,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 			case 'import':
 				if ( is_file( $file_url ) ) {
 					if ( ( $file_handle = fopen( $file_url, 'r' ) ) !== false ) {// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
-						$header = fgetcsv( $file_handle, 0, ',' );
+						$header = fgetcsv( $file_handle, 0, ',', '"', '\\' );
 						unset( $header );
 						$count          = 0;
 						$import_options = array(
@@ -782,11 +788,11 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 							fseek( $file_handle, $ftell );
 						} elseif ( $start > 1 ) {
 							for ( $i = 0; $i < $start; $i ++ ) {
-								$buff = fgetcsv( $file_handle, 0, ',' );
+								$buff = fgetcsv( $file_handle, 0, ',', '"', '\\' );
 								unset( $buff );
 							}
 						}
-						while ( ( $item = fgetcsv( $file_handle, 0, ',' ) ) !== false ) {
+						while ( ( $item = fgetcsv( $file_handle, 0, ',', '"', '\\' ) ) !== false ) {
 							$count ++;
 							$order_id_1            = $item[ $index['order_id'] ];
 							$mapped_order_status_1 = $index['order_status'] > - 1 ? $item[ $index['order_status'] ] : '';
@@ -843,7 +849,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 								);
 							}
 							unset( $item );
-							$next_item = fgetcsv( $file_handle, 0, ',' );
+							$next_item = fgetcsv( $file_handle, 0, ',', '"', '\\' );
 							if ( false === $next_item ) {
 								/*create previous order*/
 								$this->import_tracking( $order_id, $order_data, $import_options, $changed_orders, $paypal, $ppec_paypal, $tracking_more_orders );
@@ -1120,7 +1126,8 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 									}
 								}
 							}
-							$logs .= sprintf(esc_html__( 'Error adding tracking number %1$s to PayPal for order #%2$s. Error message: %3$s', 'woo-orders-tracking' ),// phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+							/* translators: %1$s: tracking number, %2$s: order id, %3$s: error message */
+							$logs .= sprintf(esc_html__( 'Error adding tracking number %1$s to PayPal for order #%2$s. Error message: %3$s', 'woo-orders-tracking' ),
                                 wp_kses_post($send_paypal_item['tracking_number']), wp_kses_post($order_id), wp_kses_post($error_description));
 							if ( $i < $count_send_paypal ) {
 								$logs .= PHP_EOL;
@@ -1130,7 +1137,8 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 						foreach ( $send_paypal as $send_paypal_item ) {
 							$i ++;
 							$order_id = $send_paypal_item['order_id'];
-							$logs .= sprintf(esc_html__( 'Error adding tracking number %1$s to PayPal for order #%2$s. Error message: %3$s', 'woo-orders-tracking' ),// phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+							/* translators: %1$s: tracking number, %2$s: order id, %3$s: error message */
+							$logs .= sprintf(esc_html__( 'Error adding tracking number %1$s to PayPal for order #%2$s. Error message: %3$s', 'woo-orders-tracking' ),
 								wp_kses_post($send_paypal_item['tracking_number']), wp_kses_post($order_id), wp_kses_post($add_paypal['data']));
                             if ( $i < $count_send_paypal ) {
 								$logs .= PHP_EOL;
@@ -1147,7 +1155,8 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 							$paypal_added_trackings = array();
 						}
 						if ( ! in_array( $send_paypal_item['tracking_number'], $paypal_added_trackings ) ) {
-							$logs .= sprintf(esc_html__( 'Add tracking number %1$s to PayPal for order #%2$s successfully. ', 'woo-orders-tracking' ),// phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+							/* translators: %1$s: tracking number, %2$s: order id */
+							$logs .= sprintf(esc_html__( 'Add tracking number %1$s to PayPal for order #%2$s successfully. ', 'woo-orders-tracking' ),
 								wp_kses_post($send_paypal_item['tracking_number']), wp_kses_post($order_id));
 							if ( $i < $count_send_paypal ) {
 								$logs .= PHP_EOL;
@@ -1230,7 +1239,8 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 									}
 								}
 							}
-							$logs .= sprintf(esc_html__('Error adding tracking number %1$s to PayPal for order #%2$s. Error message: %3$s', 'woo-orders-tracking'),// phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+							/* translators: %1$s: tracking number, %2$s: order id, %3$s: error message */
+							$logs .= sprintf(esc_html__('Error adding tracking number %1$s to PayPal for order #%2$s. Error message: %3$s', 'woo-orders-tracking'),
                                 wp_kses_post($send_paypal_item['tracking_number']), wp_kses_post($order_id), wp_kses_post($error_description));
                             if ( $i < $count_send_paypal ) {
 								$logs .= PHP_EOL;
@@ -1240,7 +1250,8 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 						foreach ( $send_paypal as $send_paypal_item ) {
 							$i ++;
 							$order_id = $send_paypal_item['order_id'];
-							$logs .= sprintf(esc_html__('Error adding tracking number %1$s to PayPal for order #%2$s. Error message: %3$s', 'woo-orders-tracking'),// phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+							/* translators: %1$s: tracking number, %2$s: order id, %3$s: error message */
+							$logs .= sprintf(esc_html__('Error adding tracking number %1$s to PayPal for order #%2$s. Error message: %3$s', 'woo-orders-tracking'),
 								wp_kses_post($send_paypal_item['tracking_number']), wp_kses_post($order_id), wp_kses_post($add_paypal['data']));
                             if ( $i < $count_send_paypal ) {
 								$logs .= PHP_EOL;
@@ -1257,7 +1268,8 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 							$paypal_added_trackings = array();
 						}
 						if ( ! in_array( $send_paypal_item['tracking_number'], $paypal_added_trackings ) ) {
-							$logs .= sprintf(esc_html__('Add tracking number %1$s to PayPal for order #%2$s successfully.', 'woo-orders-tracking'),// phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+							/* translators: %1$s: tracking number, %2$s: order id */
+							$logs .= sprintf(esc_html__('Add tracking number %1$s to PayPal for order #%2$s successfully.', 'woo-orders-tracking'),
 								wp_kses_post($send_paypal_item['tracking_number']), wp_kses_post($order_id));
 							if ( $i < $count_send_paypal ) {
 								$logs .= PHP_EOL;
@@ -1533,7 +1545,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 				wp_enqueue_script( 'transition', VI_WOO_ORDERS_TRACKING_JS . 'transition.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
 			}
 			wp_enqueue_script( 'woo-orders-tracking-dropdown', VI_WOO_ORDERS_TRACKING_JS . 'dropdown.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
-			wp_enqueue_script( 'woo-orders-tracking-import', VI_WOO_ORDERS_TRACKING_JS . 'import-csv' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
+			wp_enqueue_script( 'woo-orders-tracking-import', VI_WOO_ORDERS_TRACKING_JS . 'import-csv' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, true );
 			wp_enqueue_style( 'woo-orders-tracking-import', VI_WOO_ORDERS_TRACKING_CSS . 'import-csv' . $src_min . '.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
             $params = [
 	            'url'                => admin_url( 'admin-ajax.php' ),
@@ -1610,14 +1622,16 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 									break;
 								case 2:
 									if ( $file_url ) {
-										printf( wp_kses_post( __( "Can not open file: <strong>%s</strong>", 'woo-orders-tracking' ) ), esc_html($file_url));// phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+										/* translators: %s: file URL */
+										printf( wp_kses_post( __( "Can not open file: <strong>%s</strong>", 'woo-orders-tracking' ) ), esc_html($file_url));
 									} else {
 										esc_html_e( 'Can not open file', 'woo-orders-tracking' );
 									}
 									break;
 								default:
 									if ( $file_url ) {
-										printf(wp_kses_post( __( "File not exists: <strong>%s</strong>", 'woo-orders-tracking' ) ), esc_html($file_url));// phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+										/* translators: %s: file URL */
+										printf(wp_kses_post( __( "File not exists: <strong>%s</strong>", 'woo-orders-tracking' ) ), esc_html($file_url));
 									} else {
 										esc_html_e( 'File not exists', 'woo-orders-tracking' );
 									}
@@ -1929,7 +1943,10 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
                                                class="vi-ui button green vi-woo-orders-tracking-download-carriers-file"
                                                name="woo_orders_tracking_download_carriers_file"
                                                value="<?php echo esc_attr__( 'Download File', 'woo-orders-tracking' ) ?>">
-										<?php printf( wp_kses_post( __( 'If you can not find your carrier, please go to <a target="_blank" href="%s">Plugin settings</a> to Add Carrier', 'woo-orders-tracking' ) ), esc_url( admin_url( 'admin.php?page=woo-orders-tracking#shipping_carriers' ) ) ) // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?>
+										<?php
+										/* translators: %s: plugin settings URL */
+										printf( wp_kses_post( __( 'If you can not find your carrier, please go to <a target="_blank" href="%s">Plugin settings</a> to Add Carrier', 'woo-orders-tracking' ) ), esc_url( admin_url( 'admin.php?page=woo-orders-tracking#shipping_carriers' ) ) );
+										?>
                                     </li>
                                     <li>
 										<?php esc_html_e( 'Each tracking number, carrier name,carrier slug, tracking url is set for a product line item of an order. ', 'woo-orders-tracking' ) ?>
@@ -2021,14 +2038,18 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_IMPORT_CSV {
 	public static function print_log_html( $logs ) {
 		if ( is_array( $logs ) && count( $logs ) ) {
 			foreach ( $logs as $log ) {
+				$log_key = sanitize_key( wp_basename( $log, '.txt' ) );
+				if ( ! in_array( $log_key, array( 'import_tracking', 'debug' ), true ) ) {
+					continue;
+				}
 				?>
-                <p><?php echo esc_html( $log ) ?>
+                <p><?php echo esc_html( $log_key ); ?>
                     <a target="_blank" rel="nofollow"
                        href="<?php echo esc_url( add_query_arg( array(
 						   'action'      => 'vi_wot_view_log',
-						   'vi_wot_file' => urlencode( $log ),
+						   'vi_wot_file' => $log_key,
 						   '_wpnonce'    => wp_create_nonce( 'vi_wot_view_log' ),
-					   ), admin_url( 'admin-ajax.php' ) ) ) ?>"><?php esc_html_e( 'View', 'woo-orders-tracking' ) ?>
+					   ), admin_url( 'admin-ajax.php' ) ) ); ?>"><?php esc_html_e( 'View', 'woo-orders-tracking' ); ?>
                     </a>
                 </p>
 				<?php

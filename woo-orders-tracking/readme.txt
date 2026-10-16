@@ -1,11 +1,12 @@
-=== Orders Tracking for WooCommerce ===
+=== Trakoo - Orders Tracking for WooCommerce ===
 Contributors: villatheme, mrt3vn
 Donate link: https://www.villatheme.com/donate
 Tags: advanced shipment tracking for woocommerce, orders tracking for woocommerce,  woocommerce order tracking plugin, woocommerce shipment tracking, woocommerce tracking number
-Requires at least: 5.0.0
+Requires at least: 5.0
 Tested up to: 7.1
-Requires PHP: 7.0
-WC tested up to: 11.0
+Requires PHP: 7.4
+WC requires at least: 7.0
+WC tested up to: 11.2
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Stable tag: trunk
@@ -297,6 +298,13 @@ Tracking numbers are displayed in orders list/order details on customers' My acc
 3. Tracking carrier
 
 == Changelog ==
+2026.10.16 - version 1.3.3
+- Updated: Export order queries and sort direction
+- Fixed: Escape tracking HTML on the timeline, order details, and webhooks
+- Updated: Require a valid nonce when importing tracking, refreshing tracking status, and searching pages
+- Updated: Export datepicker stylesheet
+- Updated: PayPal access token request
+
 2026.08.20 - version 1.3.2
 - Updated: Compatible with WP 7.1
 - Updated: Compatibility check with WC 11.0

@@ -101,35 +101,138 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDER_MANAGE {
 		return $results;
 	}
 
+	private static function hpos_address_columns() {
+		return array( 'first_name', 'last_name', 'company', 'address_1', 'address_2', 'city', 'state', 'postcode', 'country', 'email', 'phone' );
+	}
+
+	private static function export_address_meta_keys() {
+		return array(
+			'_billing_state',
+			'_billing_country',
+			'_billing_address_index',
+			'_billing_first_name',
+			'_billing_last_name',
+			'_billing_company',
+			'_billing_address_1',
+			'_billing_address_2',
+			'_billing_city',
+			'_billing_postcode',
+			'_billing_email',
+			'_billing_phone',
+			'_shipping_state',
+			'_shipping_country',
+			'_shipping_address_index',
+			'_shipping_first_name',
+			'_shipping_last_name',
+			'_shipping_company',
+			'_shipping_address_1',
+			'_shipping_address_2',
+			'_shipping_city',
+			'_shipping_postcode',
+			'_shipping_phone',
+		);
+	}
+
+	private static function allowed_payment_method_ids( $requested ) {
+		$gateways = array();
+		if ( function_exists( 'WC' ) && WC()->payment_gateways() ) {
+			$gateways = array_keys( (array) WC()->payment_gateways()->payment_gateways() );
+		}
+
+		return array_values( array_intersect( array_map( 'strval', (array) $requested ), array_map( 'strval', $gateways ) ) );
+	}
+
+	private static function append_hpos_address_filters( $expressions, $address_type, $order_table, &$left_join, &$where, &$args, &$alias_i ) {
+		global $wpdb;
+		$prefix = 'billing' === $address_type ? '_billing_' : '_shipping_';
+		foreach ( self::parse_expressions( $expressions ) as $meta_key => $value ) {
+			$field = str_replace( $prefix, '', $meta_key );
+			if ( ! in_array( $field, self::hpos_address_columns(), true ) ) {
+				continue;
+			}
+			$alias       = 'wot_addr_' . $alias_i;
+			$alias_i ++;
+			$left_join[] = ' INNER JOIN ' . $wpdb->prefix . 'wc_order_addresses AS ' . $alias . ' ON ' . $order_table . '.id = ' . $alias . '.order_id ';
+			foreach ( $value as $condition => $meta_value ) {
+				if ( ! in_array( $condition, array( 'IN', 'NOT IN' ), true ) || empty( $meta_value ) ) {
+					continue;
+				}
+				$placeholders = implode( ',', array_fill( 0, count( $meta_value ), '%s' ) );
+				$where[]      = "( {$alias}.address_type = %s AND {$alias}.{$field} {$condition} ({$placeholders}) )";
+				$args[]       = $address_type;
+				foreach ( $meta_value as $item ) {
+					$args[] = $item;
+				}
+			}
+		}
+	}
+
+	private static function append_post_address_filters( $expressions, &$left_join, &$where, &$args, &$alias_i ) {
+		global $wpdb;
+		$allowed = self::export_address_meta_keys();
+		foreach ( self::parse_expressions( $expressions ) as $meta_key => $value ) {
+			if ( ! in_array( $meta_key, $allowed, true ) ) {
+				continue;
+			}
+			$alias       = 'wot_addr_' . $alias_i;
+			$alias_i ++;
+			$left_join[] = ' INNER JOIN ' . $wpdb->postmeta . ' AS ' . $alias . ' ON ' . $wpdb->posts . '.ID = ' . $alias . '.post_id ';
+			foreach ( $value as $condition => $meta_value ) {
+				if ( ! in_array( $condition, array( 'IN', 'NOT IN' ), true ) || empty( $meta_value ) ) {
+					continue;
+				}
+				$placeholders = implode( ',', array_fill( 0, count( $meta_value ), '%s' ) );
+				$where[]      = "( {$alias}.meta_key = %s AND {$alias}.meta_value {$condition} ({$placeholders}) )";
+				$args[]       = $meta_key;
+				foreach ( $meta_value as $item ) {
+					$args[] = $item;
+				}
+			}
+		}
+	}
+
 	private static function get_filter_by_shipping_method( $args ) {
 		$methods = array();
-		foreach ( $args as $string ) {
+		foreach ( (array) $args as $string ) {
 			$t = explode( ':', $string );
-			if ( ! count( $t ) == 2 ) {
+			if ( count( $t ) !== 2 ) {
 				continue;
 			}
 			list( $meta_key, $meta_value ) = array_map( 'trim', $t );
-			$meta_key = addslashes( $meta_key );
+			$meta_key = sanitize_text_field( $meta_key );
+			if ( '' === $meta_key ) {
+				continue;
+			}
 			if ( ! array_key_exists( $meta_key, $methods ) ) {
 				$methods[ $meta_key ] = array();
 			}
-			$methods[ $meta_key ][] = addslashes( $meta_value );
+			$methods[ $meta_key ][] = absint( $meta_value );
 		}
-		if ( ! empty( $methods ) ) {
-			global $wpdb;
-			$sql   = " SELECT order_id FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type='shipping' AND order_item_id IN (  SELECT order_item_id FROM {$wpdb->prefix}woocommerce_order_itemmeta  WHERE ";
-			$where = array();
-			foreach ( $methods as $method => $ids ) {
-				$where[] = ' ( meta_key=\'instance_id\' AND meta_value IN (' . join( ',', $ids ) . ' ) AND order_item_id IN (  SELECT order_item_id FROM wp_woocommerce_order_itemmeta WHERE (meta_key=\'method_id\' AND meta_value = \'' . $method . '\' )))';
+		if ( empty( $methods ) ) {
+			return array();
+		}
+		global $wpdb;
+		$where      = array();
+		$query_args = array();
+		foreach ( $methods as $method => $ids ) {
+			$ids = array_values( array_filter( array_map( 'absint', $ids ) ) );
+			if ( empty( $ids ) ) {
+				continue;
 			}
-			$where   = join( ' OR ', $where ) . ')';
-			$sql     .= $where;
-			$results = $wpdb->get_col( $sql );// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared , WordPress.DB.DirectDatabaseQuery.DirectQuery , WordPress.DB.DirectDatabaseQuery.NoCaching
-
-			return $results;
+			$placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
+			$where[]      = " ( meta_key = 'instance_id' AND meta_value IN ({$placeholders}) AND order_item_id IN ( SELECT order_item_id FROM {$wpdb->prefix}woocommerce_order_itemmeta WHERE meta_key = 'method_id' AND meta_value = %s ) )";
+			foreach ( $ids as $id ) {
+				$query_args[] = $id;
+			}
+			$query_args[] = $method;
 		}
+		if ( empty( $where ) ) {
+			return array();
+		}
+		$sql     = "SELECT order_id FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type = 'shipping' AND order_item_id IN ( SELECT order_item_id FROM {$wpdb->prefix}woocommerce_order_itemmeta WHERE " . implode( ' OR ', $where ) . ' )';
+		$results = $wpdb->get_col( $wpdb->prepare( $sql, $query_args ) );// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 
-		return $methods;
+		return array_map( 'absint', (array) $results );
 	}
 
 	private static function parse_expressions( $args ) {
@@ -152,57 +255,73 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDER_MANAGE {
 				continue;
 			}
 			list( $meta_key, $meta_value ) = array_map( 'trim', $t );
-			$meta_key = addslashes( $meta_key );
 			if ( ! array_key_exists( $meta_key, $results ) ) {
 				$results[ $meta_key ] = array();
 			}
 			if ( ! array_key_exists( $op, $results[ $meta_key ] ) ) {
 				$results[ $meta_key ][ $op ] = array();;
 			}
-			$results[ $meta_key ][ $op ][] = addslashes( $meta_value );
+			$results[ $meta_key ][ $op ][] = $meta_value;
 		}
 
 		return $results;
+	}
+
+	/**
+	 * Sort direction is only ASC or DESC. Anything else becomes ASC.
+	 *
+	 * @param mixed $direction Submitted sort direction.
+	 *
+	 * @return string
+	 */
+	public static function sort_direction( $direction ) {
+		$direction = strtoupper( trim( (string) $direction ) );
+		if ( in_array( $direction, array( 'ASC', 'DESC' ), true ) ) {
+			return $direction;
+		}
+
+		return 'ASC';
 	}
 
 	private static function get_wc_orders_ids( $export_settings ) {
 		global $wpdb;
 		$order_table = $wpdb->prefix . 'wc_orders';
 		$sql         = 'SELECT DISTINCT ' . $order_table . '.id FROM ' . $order_table;
-		$left_join   = $where = array();
+		$left_join = $where = $args = array();
+		$alias_i   = 0;
 		//filter by date
 		switch ( $export_settings['filter-order-date'] ) {
 			case 'date_created':
 				if ( ! empty( $export_settings['filter-order-date-from'] ) ) {
-					$date_from = date_i18n( 'Y-m-d H:i:s', strtotime( $export_settings['filter-order-date-from'] ) );
-					$where[]   = ' date_created_gmt  >= \'' . $date_from . '\' ';
+					$where[] = ' date_created_gmt >= %s ';
+					$args[]  = date_i18n( 'Y-m-d H:i:s', strtotime( $export_settings['filter-order-date-from'] ) );
 				}
 				if ( ! empty( $export_settings['filter-order-date-to'] ) ) {
-					$date_to = date_i18n( 'Y-m-d H:i:s', strtotime( $export_settings['filter-order-date-to'] ) + 86400 );
-					$where[] = '  date_created_gmt  < \'' . $date_to . '\' ';
+					$where[] = ' date_created_gmt < %s ';
+					$args[]  = date_i18n( 'Y-m-d H:i:s', strtotime( $export_settings['filter-order-date-to'] ) + 86400 );
 				}
 
 				break;
 			case 'date_modified':
 				if ( ! empty( $export_settings['filter-order-date-from'] ) ) {
-					$date_from = date_i18n( 'Y-m-d', strtotime( $export_settings['filter-order-date-from'] ) );
-					$where[]   = '  date_updated_gmt  >= \'' . $date_from . '\'';
+					$where[] = ' date_updated_gmt >= %s';
+					$args[]  = date_i18n( 'Y-m-d', strtotime( $export_settings['filter-order-date-from'] ) );
 				}
 				if ( ! empty( $export_settings['filter-order-date-to'] ) ) {
-					$date_to = date_i18n( 'Y-m-d', strtotime( $export_settings['filter-order-date-to'] ) + 86400 );
-					$where[] = '  date_updated_gmt  < \'' . $date_to . '\'';
+					$where[] = ' date_updated_gmt < %s';
+					$args[]  = date_i18n( 'Y-m-d', strtotime( $export_settings['filter-order-date-to'] ) + 86400 );
 				}
 				break;
 			case 'date_completed':
 				if ( ! empty( $export_settings['filter-order-date-from'] ) || ! empty( $export_settings['filter-order-date-to'] ) ) {
 					$left_join[] = ' INNER JOIN ' . $wpdb->prefix . 'wc_order_stats  AS order_meta_date_complete  ON ' . $order_table . '.id = order_meta_date_complete.order_id   ';
 					if ( ! empty( $export_settings['filter-order-date-from'] ) ) {
-						$date_from = date_i18n( 'Y-m-d', strtotime( $export_settings['filter-order-date-from'] ) );
-						$where[]   = 'date_completed  >= \'' . $date_from . '\'';
+						$where[] = 'date_completed >= %s';
+						$args[]  = date_i18n( 'Y-m-d', strtotime( $export_settings['filter-order-date-from'] ) );
 					}
 					if ( ! empty( $export_settings['filter-order-date-to'] ) ) {
-						$date_to = date_i18n( 'Y-m-d', strtotime( $export_settings['filter-order-date-to'] ) + 86400 );
-						$where[] = 'date_completed  < \'' . $date_to . '\'';
+						$where[] = 'date_completed < %s';
+						$args[]  = date_i18n( 'Y-m-d', strtotime( $export_settings['filter-order-date-to'] ) + 86400 );
 					}
 				}
 				break;
@@ -210,76 +329,75 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDER_MANAGE {
 				if ( ! empty( $export_settings['filter-order-date-from'] ) || ! empty( $export_settings['filter-order-date-to'] ) ) {
 					$left_join[] = ' INNER JOIN ' . $wpdb->prefix . 'wc_order_stats  AS order_meta_date_paid ON ' . $order_table . '.id = order_meta_date_paid.order_id   ';
 					if ( ! empty( $export_settings['filter-order-date-from'] ) ) {
-						$date_from = date_i18n( 'Y-m-d', strtotime( $export_settings['filter-order-date-from'] ) );
-						$where[]   = 'date_paid  >= \'' . $date_from . '\'';
+						$where[] = 'date_paid >= %s';
+						$args[]  = date_i18n( 'Y-m-d', strtotime( $export_settings['filter-order-date-from'] ) );
 					}
 					if ( ! empty( $export_settings['filter-order-date-to'] ) ) {
-						$date_to = date_i18n( 'Y-m-d', strtotime( $export_settings['filter-order-date-to'] ) + 86400 );
-						$where[] = 'date_paid  < \'' . $date_to . '\'';
+						$where[] = 'date_paid < %s';
+						$args[]  = date_i18n( 'Y-m-d', strtotime( $export_settings['filter-order-date-to'] ) + 86400 );
 					}
 				}
 				break;
 		}
 		//filter by status
 		if ( ! empty( $export_settings['filter-order-status'] ) ) {
-			$filter_by_status = $export_settings['filter-order-status'];
-			$filter_by_status = '\'' . join( '\' , \'', $filter_by_status ) . '\'';
-			$where[]          = $order_table . '.status IN ( ' . $filter_by_status . ' )';
+			$statuses = array_values( array_intersect( array_map( 'strval', (array) $export_settings['filter-order-status'] ), array_keys( wc_get_order_statuses() ) ) );
+			if ( empty( $statuses ) ) {
+				return array();
+			}
+			$placeholders = implode( ',', array_fill( 0, count( $statuses ), '%s' ) );
+			$where[]      = $order_table . ".status IN ( {$placeholders} )";
+			$args         = array_merge( $args, $statuses );
 		}
 		//filter by billing address
 		if ( ! empty( $export_settings['filter-order-billing-address'] ) ) {
-			$billing_address = self::parse_expressions( $export_settings['filter-order-billing-address'] );
-			foreach ( $billing_address as $meta_key => $value ) {
-				$table       = 'order_meta' . $meta_key;
-				$field       = str_replace( '_billing_', '', $meta_key );
-				$left_join[] = ' INNER JOIN ' . $wpdb->prefix . 'wc_order_addresses AS ' . $table . '  ON ' . $order_table . '.id = ' . $table . '.order_id   ';
-				foreach ( $value as $condition => $meta_value ) {
-					$where[] = " ($table.address_type = 'billing' AND $table.$field $condition ( '" . join( '\' , \'', $meta_value ) . "'))";
-				}
-			}
+			self::append_hpos_address_filters( $export_settings['filter-order-billing-address'], 'billing', $order_table, $left_join, $where, $args, $alias_i );
 		}
 		//filter by shipping address
 		if ( ! empty( $export_settings['filter-order-shipping-address'] ) ) {
-			$shipping_address = self::parse_expressions( $export_settings['filter-order-shipping-address'] );
-			foreach ( $shipping_address as $meta_key => $value ) {
-				$table       = 'order_meta' . $meta_key;
-				$field       = str_replace( '_shipping_', '', $meta_key );
-				$left_join[] = ' INNER JOIN ' . $wpdb->prefix . 'wc_order_addresses AS ' . $table . '  ON ' . $order_table . '.id = ' . $table . '.order_id   ';
-				foreach ( $value as $condition => $meta_value ) {
-					$where[] = " ($table.address_type = 'shipping' AND $table.$field $condition ( '" . join( '\' , \'', $meta_value ) . "'))";
-				}
-			}
+			self::append_hpos_address_filters( $export_settings['filter-order-shipping-address'], 'shipping', $order_table, $left_join, $where, $args, $alias_i );
 		}
 		//filter by payment method
 		if ( ! empty( $export_settings['filter-order-payment-method'] ) ) {
-			$where[] = " ( {$order_table}.payment_method IN ( '" . join( "','", $export_settings['filter-order-payment-method'] ) . "' ) )";
+			$payment_methods = self::allowed_payment_method_ids( $export_settings['filter-order-payment-method'] );
+			if ( empty( $payment_methods ) ) {
+				return array();
+			}
+			$placeholders = implode( ',', array_fill( 0, count( $payment_methods ), '%s' ) );
+			$where[]      = " ( {$order_table}.payment_method IN ( {$placeholders} ) )";
+			$args         = array_merge( $args, $payment_methods );
 		}
 		//filter by shipping method
 		if ( ! empty( $export_settings['filter-order-shipping-method'] ) ) {
-			$where_shipping_method = self::get_filter_by_shipping_method( $export_settings['filter-order-shipping-method'] );
-			if ( ! empty( $where_shipping_method ) ) {
-				$where[] = " {$order_table}.id IN (" . join( ' , ', $where_shipping_method ) . ")";
-			} else {
-				return [];
+			$where_shipping_method = array_values( array_filter( array_map( 'absint', (array) self::get_filter_by_shipping_method( $export_settings['filter-order-shipping-method'] ) ) ) );
+			if ( empty( $where_shipping_method ) ) {
+				return array();
 			}
+			$placeholders = implode( ',', array_fill( 0, count( $where_shipping_method ), '%d' ) );
+			$where[]      = " {$order_table}.id IN ({$placeholders})";
+			$args         = array_merge( $args, $where_shipping_method );
 		}
 		$sql .= join( ' ', $left_join );
 		if ( ! empty( $where ) ) {
 			$sql .= ' WHERE ' . join( ' AND ', $where );
 		}
 		//sort order id
+		$sort_direction = self::sort_direction( isset( $export_settings['sort-order-in'] ) ? $export_settings['sort-order-in'] : '' );
 		switch ( $export_settings['sort-order'] ) {
 			case 'order_id':
-				$sql .= ' ORDER BY ' . $order_table . '.id ' . $export_settings['sort-order-in'];
+				$sql .= ' ORDER BY ' . $order_table . '.id ' . $sort_direction;
 				break;
 			case 'order_created':
-				$sql .= ' ORDER BY ' . $order_table . '.date_created_gmt ' . $export_settings['sort-order-in'];
+				$sql .= ' ORDER BY ' . $order_table . '.date_created_gmt ' . $sort_direction;
 				break;
 			case 'order_modification':
-				$sql .= ' ORDER BY ' . $order_table . '.date_updated_gmt  ' . $export_settings['sort-order-in'];
+				$sql .= ' ORDER BY ' . $order_table . '.date_updated_gmt  ' . $sort_direction;
 				break;
 			default:
 				$sql .= ' ORDER BY ' . $order_table . '.id DESC';
+		}
+		if ( ! empty( $args ) ) {
+			$sql = $wpdb->prepare( $sql, $args );// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		}
 		$results = $wpdb->get_col( $sql );// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared , WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
@@ -289,6 +407,8 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDER_MANAGE {
 		global $wpdb;
 		$sql       = 'SELECT DISTINCT ' . $wpdb->posts . '.ID FROM ' . $wpdb->posts;
 		$left_join = array();
+		$args      = array();
+		$alias_i   = 0;
 		$where     = array(
 			'post_type = \'' . self::$post_type . '\'',
 		);
@@ -296,23 +416,23 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDER_MANAGE {
 		switch ( $settings['filter-order-date'] ) {
 			case 'date_created':
 				if ( ! empty( $settings['filter-order-date-from'] ) ) {
-					$date_from = date_i18n( 'Y-m-d H:i:s', strtotime( $settings['filter-order-date-from'] ) );
-					$where[]   = ' post_date  >= \'' . $date_from . '\' ';
+					$where[] = ' post_date >= %s ';
+					$args[]  = date_i18n( 'Y-m-d H:i:s', strtotime( $settings['filter-order-date-from'] ) );
 				}
 				if ( ! empty( $settings['filter-order-date-to'] ) ) {
-					$date_to = date_i18n( 'Y-m-d H:i:s', strtotime( $settings['filter-order-date-to'] ) + 86400 );
-					$where[] = '  post_date  < \'' . $date_to . '\' ';
+					$where[] = ' post_date < %s ';
+					$args[]  = date_i18n( 'Y-m-d H:i:s', strtotime( $settings['filter-order-date-to'] ) + 86400 );
 				}
 
 				break;
 			case 'date_modified':
 				if ( ! empty( $settings['filter-order-date-from'] ) ) {
-					$date_from = date_i18n( 'Y-m-d', strtotime( $settings['filter-order-date-from'] ) );
-					$where[]   = '  post_modified  >= \'' . $date_from . '\'';
+					$where[] = ' post_modified >= %s';
+					$args[]  = date_i18n( 'Y-m-d', strtotime( $settings['filter-order-date-from'] ) );
 				}
 				if ( ! empty( $settings['filter-order-date-to'] ) ) {
-					$date_to = date_i18n( 'Y-m-d', strtotime( $settings['filter-order-date-to'] ) + 86400 );
-					$where[] = '  post_modified  < \'' . $date_to . '\'';
+					$where[] = ' post_modified < %s';
+					$args[]  = date_i18n( 'Y-m-d', strtotime( $settings['filter-order-date-to'] ) + 86400 );
 				}
 				break;
 			case 'date_completed':
@@ -320,12 +440,12 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDER_MANAGE {
 					$left_join[] = ' INNER JOIN ' . $wpdb->postmeta . ' AS order_meta_date_complete  ON ' . $wpdb->posts . '.ID = order_meta_date_complete.post_id   ';
 					$where[]     = 'order_meta_date_complete.meta_key = \'_completed_date\' ';
 					if ( ! empty( $settings['filter-order-date-from'] ) ) {
-						$date_from = date_i18n( 'Y-m-d', strtotime( $settings['filter-order-date-from'] ) );
-						$where[]   = 'order_meta_date_complete.meta_value  >= \'' . $date_from . '\'';
+						$where[] = 'order_meta_date_complete.meta_value >= %s';
+						$args[]  = date_i18n( 'Y-m-d', strtotime( $settings['filter-order-date-from'] ) );
 					}
 					if ( ! empty( $settings['filter-order-date-to'] ) ) {
-						$date_to = date_i18n( 'Y-m-d', strtotime( $settings['filter-order-date-to'] ) + 86400 );
-						$where[] = 'order_meta_date_complete.meta_value  < \'' . $date_to . '\'';
+						$where[] = 'order_meta_date_complete.meta_value < %s';
+						$args[]  = date_i18n( 'Y-m-d', strtotime( $settings['filter-order-date-to'] ) + 86400 );
 					}
 				}
 				break;
@@ -334,12 +454,12 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDER_MANAGE {
 					$left_join[] = ' INNER JOIN ' . $wpdb->postmeta . ' AS order_meta_date_paid ON ' . $wpdb->posts . '.ID = order_meta_date_paid.post_id   ';
 					$where[]     = 'order_meta_date_paid.meta_key = \'_paid_date\' ';
 					if ( ! empty( $settings['filter-order-date-from'] ) ) {
-						$date_from = date_i18n( 'Y-m-d', strtotime( $settings['filter-order-date-from'] ) );
-						$where[]   = 'order_meta_date_paid.meta_value  >= \'' . $date_from . '\'';
+						$where[] = 'order_meta_date_paid.meta_value >= %s';
+						$args[]  = date_i18n( 'Y-m-d', strtotime( $settings['filter-order-date-from'] ) );
 					}
 					if ( ! empty( $settings['filter-order-date-to'] ) ) {
-						$date_to = date_i18n( 'Y-m-d', strtotime( $settings['filter-order-date-to'] ) + 86400 );
-						$where[] = 'order_meta_date_paid.meta_value  < \'' . $date_to . '\'';
+						$where[] = 'order_meta_date_paid.meta_value < %s';
+						$args[]  = date_i18n( 'Y-m-d', strtotime( $settings['filter-order-date-to'] ) + 86400 );
 					}
 				}
 				break;
@@ -347,58 +467,60 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDER_MANAGE {
 
 		//filter by status
 		if ( ! empty( $settings['filter-order-status'] ) ) {
-			$filter_by_status = $settings['filter-order-status'];
-			$filter_by_status = '\'' . join( '\' , \'', $filter_by_status ) . '\'';
-			$where[]          = 'post_status IN ( ' . $filter_by_status . ' )';
+			$statuses = array_values( array_intersect( array_map( 'strval', (array) $settings['filter-order-status'] ), array_keys( wc_get_order_statuses() ) ) );
+			if ( empty( $statuses ) ) {
+				return array();
+			}
+			$placeholders = implode( ',', array_fill( 0, count( $statuses ), '%s' ) );
+			$where[]      = "post_status IN ( {$placeholders} )";
+			$args         = array_merge( $args, $statuses );
 		}
 		//filter by billing address
 		if ( ! empty( $settings['filter-order-billing-address'] ) ) {
-			$billing_address = self::parse_expressions( $settings['filter-order-billing-address'] );
-			foreach ( $billing_address as $meta_key => $value ) {
-				$table       = 'order_meta' . $meta_key;
-				$left_join[] = ' INNER JOIN ' . $wpdb->postmeta . ' AS ' . $table . '  ON ' . $wpdb->posts . '.ID = ' . $table . '.post_id   ';
-				foreach ( $value as $condition => $meta_value ) {
-					$where[] = ' ( ' . $table . '.meta_key = \'' . $meta_key . '\' AND ' . $table . '.meta_value ' . $condition . ' ( \'' . join( '\' , \'', $meta_value ) . '\' ) )';
-				}
-			}
+			self::append_post_address_filters( $settings['filter-order-billing-address'], $left_join, $where, $args, $alias_i );
 		}
 		//filter by shipping address
 		if ( ! empty( $settings['filter-order-shipping-address'] ) ) {
-			$shipping_address = self::parse_expressions( $settings['filter-order-shipping-address'] );
-			foreach ( $shipping_address as $meta_key => $value ) {
-				$table       = 'order_meta' . $meta_key;
-				$left_join[] = ' INNER JOIN ' . $wpdb->postmeta . ' AS ' . $table . '  ON ' . $wpdb->posts . '.ID = ' . $table . '.post_id   ';
-				foreach ( $value as $condition => $meta_value ) {
-					$where[] = ' ( ' . $table . '.meta_key = \'' . $meta_key . '\' AND ' . $table . '.meta_value ' . $condition . ' ( \'' . join( '\' , \'', $meta_value ) . '\' ) )';
-				}
-			}
+			self::append_post_address_filters( $settings['filter-order-shipping-address'], $left_join, $where, $args, $alias_i );
 		}
 
 		if ( ! empty( $settings['filter-order-payment-method'] ) ) {
-			$left_join[] = ' INNER JOIN ' . $wpdb->postmeta . ' AS order_meta_payment_method  ON ' . $wpdb->posts . '.ID = order_meta_payment_method.post_id   ';
-			$where[]     = ' ( order_meta_payment_method.meta_key = \'_payment_method\' AND order_meta_payment_method.meta_value IN ( \'' . join( '\' , \'', $settings['filter-order-payment-method'] ) . '\' ) )';
+			$payment_methods = self::allowed_payment_method_ids( $settings['filter-order-payment-method'] );
+			if ( empty( $payment_methods ) ) {
+				return array();
+			}
+			$left_join[]  = ' INNER JOIN ' . $wpdb->postmeta . ' AS order_meta_payment_method  ON ' . $wpdb->posts . '.ID = order_meta_payment_method.post_id   ';
+			$placeholders = implode( ',', array_fill( 0, count( $payment_methods ), '%s' ) );
+			$where[]      = " ( order_meta_payment_method.meta_key = '_payment_method' AND order_meta_payment_method.meta_value IN ( {$placeholders} ) )";
+			$args         = array_merge( $args, $payment_methods );
 		}
 		if ( ! empty( $settings['filter-order-shipping-method'] ) ) {
-			$where_shipping_method = self::get_filter_by_shipping_method( $settings['filter-order-shipping-method'] );
+			$where_shipping_method = array_values( array_filter( array_map( 'absint', (array) self::get_filter_by_shipping_method( $settings['filter-order-shipping-method'] ) ) ) );
 			if ( ! empty( $where_shipping_method ) ) {
-				$where[] = ' ' . $wpdb->posts . '.ID IN ( ' . join( ' , ', $where_shipping_method ) . ' )';
+				$placeholders = implode( ',', array_fill( 0, count( $where_shipping_method ), '%d' ) );
+				$where[]      = ' ' . $wpdb->posts . ".ID IN ( {$placeholders} )";
+				$args         = array_merge( $args, $where_shipping_method );
 			}
 		}
 
 		$sql .= join( ' ', $left_join ) . ' WHERE ' . join( ' AND ', $where );
 		//sort order id
+		$sort_direction = self::sort_direction( isset( $settings['sort-order-in'] ) ? $settings['sort-order-in'] : '' );
 		switch ( $settings['sort-order'] ) {
 			case 'order_id':
-				$sql .= ' ORDER BY ' . $wpdb->posts . '.ID ' . $settings['sort-order-in'];
+				$sql .= ' ORDER BY ' . $wpdb->posts . '.ID ' . $sort_direction;
 				break;
 			case 'order_created':
-				$sql .= ' ORDER BY ' . $wpdb->posts . '.post_date ' . $settings['sort-order-in'];
+				$sql .= ' ORDER BY ' . $wpdb->posts . '.post_date ' . $sort_direction;
 				break;
 			case 'order_modification':
-				$sql .= ' ORDER BY ' . $wpdb->posts . '.post_modified  ' . $settings['sort-order-in'];
+				$sql .= ' ORDER BY ' . $wpdb->posts . '.post_modified  ' . $sort_direction;
 				break;
 			default:
 				$sql .= ' ORDER BY ' . $wpdb->posts . '.ID DESC';
+		}
+		if ( ! empty( $args ) ) {
+			$sql = $wpdb->prepare( $sql, $args );// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		}
 		$results = $wpdb->get_col( $sql );// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
@@ -413,7 +535,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDER_MANAGE {
 		$results['filename']   = $export_settings['filename'];
 		$results['header_row'] = $results['content'] = array();
 		$results['header_row'] = self::get_header_row( $export_settings['set-fields'] );
-		if ( (get_option( 'woocommerce_feature_custom_order_tables_enabled' ) === 'yes' || get_option( 'woocommerce_custom_orders_table_enabled' ) === 'yes' ) && get_option( 'woocommerce_custom_orders_table_data_sync_enabled','no' ) === 'no' ) {
+		if ( vi_wot_hpos_enabled() ) {
 			$order_ids = self::get_wc_orders_ids( $export_settings );
 		} else {
 			$order_ids = self::get_orders_ids( $export_settings );
@@ -442,6 +564,9 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDER_MANAGE {
 				}
 
 				$product_categories1 = wp_get_post_terms( $item_data['product_id'], 'product_cat' );
+				if ( is_wp_error( $product_categories1 ) ) {
+					$product_categories1 = array();
+				}
 				$product_category    = '';
 				$product_categories  = array();
 				if ( count( $product_categories1 ) > 0 ) {
@@ -648,6 +773,9 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDER_MANAGE {
 								break;
 							case 'product_tag':
 								$product_tags       = wp_get_post_terms( $item_data['product_id'], 'product_tag' );
+								if ( is_wp_error( $product_tags ) ) {
+									$product_tags = array();
+								}
 								$product_tags_array = array();
 								if ( count( $product_tags ) > 0 ) {
 									foreach ( $product_tags as $term ) {
@@ -690,11 +818,12 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDER_MANAGE {
 		$results   = array();
 		global $wpdb;
 		if ( $order_ids && is_array( $order_ids ) && count( $order_ids ) ) {
-			$order_ids = join( ',', $order_ids );
-			if ((get_option( 'woocommerce_feature_custom_order_tables_enabled' ) === 'yes' || get_option( 'woocommerce_custom_orders_table_enabled' ) === 'yes' ) && get_option( 'woocommerce_custom_orders_table_data_sync_enabled','no' ) === 'no'){
-				$fields       = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT meta_key FROM {$wpdb->prefix}wc_orders_meta Where  order_id IN ( %s )", $order_ids) );// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-			}else {
-				$fields = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT meta_key FROM {$wpdb->postmeta} Where  post_id IN ( %s )", $order_ids) );// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$order_ids    = array_map( 'absint', $order_ids );
+			$placeholders = implode( ',', array_fill( 0, count( $order_ids ), '%d' ) );
+			if ( vi_wot_hpos_enabled() ) {
+				$fields = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT meta_key FROM {$wpdb->prefix}wc_orders_meta WHERE order_id IN ( {$placeholders} )", $order_ids ) );// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			} else {
+				$fields = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT meta_key FROM {$wpdb->postmeta} WHERE post_id IN ( {$placeholders} )", $order_ids ) );// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			}
 			$order_fields = array(
 				array(
@@ -971,8 +1100,9 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDER_MANAGE {
 		$results   = array();
 		global $wpdb;
 		if ( $order_ids && is_array( $order_ids ) && count( $order_ids ) ) {
-			$order_ids = join( ',', $order_ids );
-			$fields    = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT meta_key FROM {$wpdb->prefix}woocommerce_order_itemmeta as table1  JOIN {$wpdb->prefix}woocommerce_order_items  as table2 ON table1.order_item_id = table2.order_item_id  Where table2.order_item_type ='line_item' AND table2.order_id  IN ( %s )",$order_ids) );// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$order_ids    = array_map( 'absint', $order_ids );
+			$placeholders = implode( ',', array_fill( 0, count( $order_ids ), '%d' ) );
+			$fields       = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT meta_key FROM {$wpdb->prefix}woocommerce_order_itemmeta as table1 JOIN {$wpdb->prefix}woocommerce_order_items as table2 ON table1.order_item_id = table2.order_item_id WHERE table2.order_item_type = 'line_item' AND table2.order_id IN ( {$placeholders} )", $order_ids ) );// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			if ( is_array( $fields ) && count( $fields ) ) {
 				$exclude_fields = array(
 					'Items',

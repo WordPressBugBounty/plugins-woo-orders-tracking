@@ -44,7 +44,10 @@ if ( ! class_exists( 'VI_WOO_ORDERS_TRACKING_ADMIN_CRON_UPDATE_TRACKING' ) ) {
 							if ( $this->next_schedule ) {
 								$gmt_offset = intval( get_option( 'gmt_offset' ) );
 								?>
-                                <div class="vi-ui positive message"><?php printf( wp_kses_post(__( 'Next schedule: <strong>%s</strong>', 'woo-orders-tracking' )), wp_kses_post(date_i18n( 'F j, Y g:i:s A', ( $this->next_schedule + HOUR_IN_SECONDS * $gmt_offset ) )) ); // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?></div>
+                                <div class="vi-ui positive message"><?php
+									/* translators: %s: next schedule date */
+									printf( wp_kses_post(__( 'Next schedule: <strong>%s</strong>', 'woo-orders-tracking' )), wp_kses_post(date_i18n( 'F j, Y g:i:s A', ( $this->next_schedule + HOUR_IN_SECONDS * $gmt_offset ) )) );
+									?></div>
 								<?php
 							} else {
 								?>

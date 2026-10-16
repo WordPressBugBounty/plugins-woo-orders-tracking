@@ -179,10 +179,14 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_DESIGN {
 			'section'  => 'vi_wot_orders_tracking_design_general',
 			'label'    => esc_html__( 'Date format', 'woo-orders-tracking' ),
 			'choices'  => array(
-				'j F, Y' => sprintf(esc_html__(   '%s ( j F, Y )', 'woo-orders-tracking' ), gmdate( 'j F, Y' )),//phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
-				'Y-m-d' => sprintf(esc_html__(   '%s ( Y-m-d )', 'woo-orders-tracking' ), gmdate( 'Y-m-d' )),//phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
-				'm/d/Y' => sprintf(esc_html__(   '%s ( m/d/Y)', 'woo-orders-tracking' ), gmdate( 'm/d/Y' )),//phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
-				'd/m/Y' => sprintf(esc_html__(   '%s ( d/m/Y )', 'woo-orders-tracking' ), gmdate( 'd/m/Y' )),//phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+				/* translators: %s: formatted example */
+				'j F, Y' => sprintf(esc_html__(   '%s ( j F, Y )', 'woo-orders-tracking' ), gmdate( 'j F, Y' )),
+				/* translators: %s: formatted example */
+				'Y-m-d' => sprintf(esc_html__(   '%s ( Y-m-d )', 'woo-orders-tracking' ), gmdate( 'Y-m-d' )),
+				/* translators: %s: formatted example */
+				'm/d/Y' => sprintf(esc_html__(   '%s ( m/d/Y)', 'woo-orders-tracking' ), gmdate( 'm/d/Y' )),
+				/* translators: %s: formatted example */
+				'd/m/Y' => sprintf(esc_html__(   '%s ( d/m/Y )', 'woo-orders-tracking' ), gmdate( 'd/m/Y' )),
 			)
 		) );
 		/*
@@ -201,9 +205,12 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_DESIGN {
 			'section'  => 'vi_wot_orders_tracking_design_general',
 			'label'    => esc_html__( 'Time format', 'woo-orders-tracking' ),
 			'choices'  => array(
-				'g:i a' => sprintf(esc_html__(   '%s ( g:i a )', 'woo-orders-tracking' ), gmdate( 'g:i a' )),//phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
-				'g:i A' => sprintf(esc_html__(   '%s ( g:i A )', 'woo-orders-tracking' ), gmdate( 'g:i A' )),//phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
-				'H:i' => sprintf(esc_html__(   '%s ( H:i)', 'woo-orders-tracking' ), gmdate( 'H:i' )),//phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+				/* translators: %s: formatted example */
+				'g:i a' => sprintf(esc_html__(   '%s ( g:i a )', 'woo-orders-tracking' ), gmdate( 'g:i a' )),
+				/* translators: %s: formatted example */
+				'g:i A' => sprintf(esc_html__(   '%s ( g:i A )', 'woo-orders-tracking' ), gmdate( 'g:i A' )),
+				/* translators: %s: formatted example */
+				'H:i' => sprintf(esc_html__(   '%s ( H:i)', 'woo-orders-tracking' ), gmdate( 'H:i' )),
 			)
 		) );
 		$wp_customize->add_setting( 'woo_orders_tracking_settings[timeline_track_info_datetime_format_locale]', array(

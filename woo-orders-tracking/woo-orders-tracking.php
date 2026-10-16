@@ -3,7 +3,7 @@
  * Plugin Name: Trakoo - Orders Tracking for WooCommerce
  * Plugin URI: https://villatheme.com/extensions/woocommerce-orders-tracking
  * Description: Easily import/manage your tracking numbers, add tracking numbers to PayPal and send email notifications to customers.
- * Version: 1.3.2
+ * Version: 1.3.3
  * Author: VillaTheme
  * Author URI: https://villatheme.com
  * License: GPL v2 or later
@@ -11,15 +11,17 @@
  * Text Domain: woo-orders-tracking
  * Domain Path: /languages
  * Copyright 2019-2026 VillaTheme.com. All rights reserved.
+ * Requires at least: 5.0
  * Requires Plugins: woocommerce
  * Tested up to: 7.1
- * WC tested up to: 11.0
- * Requires PHP: 7.0
+ * WC requires at least: 7.0
+ * WC tested up to: 11.2
+ * Requires PHP: 7.4
  **/
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-define( 'VI_WOO_ORDERS_TRACKING_VERSION', '1.3.2' );
+define( 'VI_WOO_ORDERS_TRACKING_VERSION', '1.3.3' );
 define( 'VI_WOO_ORDERS_TRACKING_PATH_FILE', __FILE__ );
 define( 'VI_WOO_ORDERS_TRACKING_DIR', WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'woo-orders-tracking' . DIRECTORY_SEPARATOR );
 define( 'VI_WOO_ORDERS_TRACKING_INCLUDES', VI_WOO_ORDERS_TRACKING_DIR . 'includes' . DIRECTORY_SEPARATOR );
@@ -61,7 +63,7 @@ if ( ! class_exists( 'VIWOT_WOO_ORDERS_TRACKING' ) ) {
 
 			$environment = new VillaTheme_Require_Environment( [
 					'plugin_name'     => 'Trakoo - Orders Tracking for WooCommerce',
-					'php_version'     => '7.0',
+					'php_version'     => '7.4',
 					'wp_version'      => '5.0',
 					'require_plugins' => [
 						[

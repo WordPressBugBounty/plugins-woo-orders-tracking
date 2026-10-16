@@ -506,31 +506,29 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_PAYPAL {
 		if ( ! $new_token && $transient_token ) {
 			$token = array( 'status' => 'success', 'data' => $transient_token );
 		} else {
-			$ch  = curl_init();// phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_init
-			$url = self::get_request_url( $sandbox );
-			$url .= '/v1/oauth2/token';
-			curl_setopt( $ch, CURLOPT_URL, $url );// phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_setopt
-			curl_setopt( $ch, CURLOPT_HEADER, false );// phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_setopt
-			curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );// phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_setopt
-			curl_setopt( $ch, CURLOPT_SSLVERSION, 6 ); // phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_setopt
-			curl_setopt( $ch, CURLOPT_POST, true );// phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_setopt
-			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );// phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_setopt
-			curl_setopt( $ch, CURLOPT_USERPWD, $client . ":" . $secret );// phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_setopt
-			curl_setopt( $ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials" );// phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_setopt
-
-			$result = curl_exec( $ch );// phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_exec
-			self::debug_log( var_export( $result, true ) );
-			if ( empty( $result ) ) {
+			$url     = self::get_request_url( $sandbox ) . '/v1/oauth2/token';
+			$request = VI_WOO_ORDERS_TRACKING_DATA::wp_remote_post(
+				$url,
+				array(
+					'headers' => array(
+						'Authorization' => 'Basic ' . base64_encode( $client . ':' . $secret ),
+						'Content-Type'  => 'application/x-www-form-urlencoded',
+					),
+					'body'    => 'grant_type=client_credentials',
+				)
+			);
+			self::debug_log( var_export( $request, true ) );
+			if ( isset( $request['status'] ) && 'error' === $request['status'] ) {
 				$token = array(
 					'status' => 'error',
-					'data'   => esc_html__( 'Your client ID or client secret is wrong', 'woo-orders-tracking' )
+					'data'   => $request['data'],
 				);
 			} else {
-				$json = vi_wot_json_decode( $result );
+				$json = vi_wot_json_decode( isset( $request['data'] ) ? $request['data'] : '' );
 				if ( ! empty( $json['access_token'] ) ) {
 					$token = array(
 						'status' => 'success',
-						'data'   => $json['access_token']
+						'data'   => $json['access_token'],
 					);
 					if ( ! empty( $json['expires_in'] ) ) {
 						set_transient( $transient_token_name, $json['access_token'], $json['expires_in'] );
@@ -542,7 +540,6 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_PAYPAL {
 					);
 				}
 			}
-			curl_close( $ch );// phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_close
 		}
 
 		return $token;

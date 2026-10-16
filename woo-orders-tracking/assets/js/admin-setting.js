@@ -706,7 +706,8 @@ jQuery(document).ready(function ($) {
             delay: 250,
             data: function (params) {
                 return {
-                    keyword: params.term
+                    keyword: params.term,
+                    nonce: vi_wot_admin_settings.search_page_nonce
                 };
             },
             processResults: function (data) {

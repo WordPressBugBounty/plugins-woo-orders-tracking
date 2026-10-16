@@ -259,12 +259,18 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDERS_TRACKING {
 														$item_name = isset( $billing_country[ $item_data_name ] ) ? $billing_country[ $item_data_name ] : $item_data_name;
 														?>
                                                         <option value="<?php echo esc_attr( $item ) ?>"
-                                                                selected><?php printf(esc_html__( 'Country %$1s %2$s' , 'woo-orders-tracking' ), esc_html($t), wp_kses_post($item_name)) // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?></option>
+                                                                selected><?php
+                                                                /* translators: %2$s: location name */
+                                                                printf(esc_html__( 'Country %$1s %2$s' , 'woo-orders-tracking' ), esc_html($t), wp_kses_post($item_name));
+                                                                ?></option>
 														<?php
 													} elseif ( $item_data_id === '_billing_city' && isset( $billing_city ) && is_array( $billing_city ) && count( $billing_city ) ) {
 														?>
                                                         <option value="<?php echo esc_attr( $item ) ?>"
-                                                                selected><?php printf(esc_html__( 'City %1$s %2$s', 'woo-orders-tracking' ),esc_html($t), wp_kses_post($item_data_name)) // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?></option>
+                                                                selected><?php
+                                                                /* translators: %1$s: prefix, %2$s: location name */
+                                                                printf(esc_html__( 'City %1$s %2$s', 'woo-orders-tracking' ),esc_html($t), wp_kses_post($item_data_name));
+                                                                ?></option>
 														<?php
 													}
 												}
@@ -374,12 +380,18 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDERS_TRACKING {
 														$item_name = isset( $shipping_country[ $item_data_name ] ) ? $shipping_country[ $item_data_name ] : $item_data_name;
 														?>
                                                         <option value="<?php echo esc_attr( $item ) ?>"
-                                                                selected><?php printf(esc_html__( 'Country %1$s %2$s', 'woo-orders-tracking' ) , esc_html($t), wp_kses_post($item_name)) // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?></option>
+                                                                selected><?php
+                                                                /* translators: %1$s: prefix, %2$s: location name */
+                                                                printf(esc_html__( 'Country %1$s %2$s', 'woo-orders-tracking' ) , esc_html($t), wp_kses_post($item_name));
+                                                                ?></option>
 														<?php
 													} elseif ( $item_data_id === '_shipping_city' && isset( $shipping_city ) && is_array( $shipping_city ) && count( $shipping_city ) ) {
 														?>
                                                         <option value="<?php echo esc_attr( $item ) ?>"
-                                                                selected><?php printf(esc_html__( 'City %1$s %2$s' , 'woo-orders-tracking' ) , esc_html($t), wp_kses_post($item_data_name)) // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?></option>
+                                                                selected><?php
+                                                                /* translators: %1$s: prefix, %2$s: location name */
+                                                                printf(esc_html__( 'City %1$s %2$s' , 'woo-orders-tracking' ) , esc_html($t), wp_kses_post($item_data_name));
+                                                                ?></option>
 														<?php
 													}
 												}
@@ -772,7 +784,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDERS_TRACKING {
 		$args['export_settings_filter-order-payment-method']   = isset( $settings['woo-orders-tracking-export']['filter-order-payment-method'] ) ? $this->stripslashes_deep( $settings['woo-orders-tracking-export']['filter-order-payment-method'] ) : array();
 		$args['export_settings_filter-order-shipping-method']  = isset( $settings['woo-orders-tracking-export']['filter-order-shipping-method'] ) ? $this->stripslashes_deep( $settings['woo-orders-tracking-export']['filter-order-shipping-method'] ) : array();
 		$args['export_settings_filter-order-sort-order']       = isset( $settings['woo-orders-tracking-export']['sort-order'] ) ? sanitize_text_field( stripslashes( $settings['woo-orders-tracking-export']['sort-order'] ) ) : '';
-		$args['export_settings_filter-order-sort-order-in']    = isset( $settings['woo-orders-tracking-export']['sort-order-in'] ) ? sanitize_text_field( stripslashes( $settings['woo-orders-tracking-export']['sort-order-in'] ) ) : '';
+		$args['export_settings_filter-order-sort-order-in']    = VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDER_MANAGE::sort_direction( isset( $settings['woo-orders-tracking-export']['sort-order-in'] ) ? $settings['woo-orders-tracking-export']['sort-order-in'] : '' );
 		if ( isset( $settings['woo-orders-tracking-export']['set-fields'] ) && is_array( $settings['woo-orders-tracking-export']['set-fields'] ) ) {
 			$set_fields = array();
 			foreach ( $settings['woo-orders-tracking-export']['set-fields'] as $set_field ) {
@@ -796,6 +808,9 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDERS_TRACKING {
 		if ( ! isset( $_POST['_vi_wot_export_nonce'] ) || ! wp_verify_nonce( $_POST['_vi_wot_export_nonce'], 'vi_wot_export_action_nonce' ) ) {
 			return;
 		}
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			return;
+		}
 		if ( $pagenow === 'admin.php' && isset( $_REQUEST['page'] ) && sanitize_text_field( $_REQUEST['page'] ) === 'woo-orders-tracking-export' ) {
 			if ( isset( $_POST['woo-orders-tracking-export-order-button-export'] ) ) {
 				$export_settings               = isset( $_POST['woo-orders-tracking-export'] ) ? $this->stripslashes_deep( $_POST['woo-orders-tracking-export'] ) : array();
@@ -804,7 +819,10 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDERS_TRACKING {
 				if ( empty( $data ) ) {
 					$this->error = esc_html__( 'No order found', 'woo-orders-tracking' );
 				} else {
-					$filename   = $data['filename'];
+					$filename   = sanitize_file_name( $data['filename'] );
+					if ( '' === $filename ) {
+						$filename = 'orders.csv';
+					}
 					$header_row = $data_rows = array();
 					if ( ! empty( $data['header_row'] ) ) {
 						foreach ( $data['header_row'] as $item_id => $item_value ) {
@@ -824,9 +842,9 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDERS_TRACKING {
 					header( 'Content-Disposition: attachment; filename=' . $filename );
 					header( 'Expires: 0' );
 					header( 'Pragma: public' );
-					fputcsv( $fh, $header_row );
+					fputcsv( $fh, $header_row, ',', '"', '\\' );
 					foreach ( $data_rows as $data_row ) {
-						fputcsv( $fh, $data_row );
+						fputcsv( $fh, $data_row, ',', '"', '\\' );
 					}
 					$csvFile = stream_get_contents( $fh );
 					fclose( $fh );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
@@ -850,11 +868,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDERS_TRACKING {
 			wp_enqueue_style( 'semantic-ui-form', VI_WOO_ORDERS_TRACKING_CSS . 'form.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 			wp_enqueue_style( 'semantic-ui-icon', VI_WOO_ORDERS_TRACKING_CSS . 'icon.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 			wp_enqueue_style( 'semantic-ui-segment', VI_WOO_ORDERS_TRACKING_CSS . 'segment.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
-			$wp_scripts = wp_scripts();
-			wp_enqueue_style( 'woo-orders-tracking-admin-ui-css',
-				'//ajax.googleapis.com/ajax/libs/jqueryui/' . $wp_scripts->registered['jquery-ui-core']->ver . '/themes/smoothness/jquery-ui.css',
-				false,
-				VI_WOO_ORDERS_TRACKING_VERSION);
+            wp_enqueue_style( 'jquery-ui-style' );
 			wp_enqueue_script( 'iris', admin_url( 'js/iris.min.js' ), array('jquery-ui-draggable','jquery-ui-slider','jquery-touch-punch' ), VI_WOO_ORDERS_TRACKING_VERSION, true );
 			wp_enqueue_script( 'jquery-ui-sortable' );
 			wp_enqueue_script( 'jquery-ui-datepicker' );
@@ -871,7 +885,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_EXPORT_ORDERS_TRACKING {
 				wp_enqueue_style( 'transition', VI_WOO_ORDERS_TRACKING_CSS . 'transition.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 				wp_enqueue_script( 'transition', VI_WOO_ORDERS_TRACKING_JS . 'transition.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
 			}
-			wp_enqueue_script( 'vi-wot-admin-export-js', VI_WOO_ORDERS_TRACKING_JS . 'admin-export' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
+			wp_enqueue_script( 'vi-wot-admin-export-js', VI_WOO_ORDERS_TRACKING_JS . 'admin-export' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, true );
 			wp_localize_script(
 				'vi-wot-admin-export-js',
 				'vi_wot_admin_export',

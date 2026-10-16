@@ -129,7 +129,8 @@ class VI_WOO_ORDERS_TRACKING_FRONTEND_ORDER_DETAILS {
 			$title             = esc_attr__( 'Click to track', 'woo-orders-tracking' );
 			if ( $tracking_status ) {
 				$container_class[] = 'tracking-number-container-' . $tracking_status;
-				$title             = sprintf( esc_attr__( 'Shipment status: %s', 'woo-orders-tracking' ), self::$settings->get_status_text_by_service_carrier( $current_tracking_data['status'] ) ); // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+				/* translators: %s: shipment status */
+				$title             = sprintf( esc_attr__( 'Shipment status: %s', 'woo-orders-tracking' ), self::$settings->get_status_text_by_service_carrier( $current_tracking_data['status'] ) );
 			}
 			?>
             <div class="<?php echo esc_attr( self::set( $container_class ) ) ?>"

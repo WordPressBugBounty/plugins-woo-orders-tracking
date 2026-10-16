@@ -24,7 +24,7 @@ if ( ! class_exists( 'VI_WOO_ORDERS_TRACKING_ADMIN_WEBHOOKS' ) ) {
 					wp_enqueue_script( 'transition', VI_WOO_ORDERS_TRACKING_JS . 'transition.min.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
 				}
 				wp_enqueue_style( 'woo-orders-tracking-webhooks', VI_WOO_ORDERS_TRACKING_CSS . 'webhooks' . $src_min . '.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
-				wp_enqueue_script( 'woo-orders-tracking-webhooks', VI_WOO_ORDERS_TRACKING_JS . 'webhooks' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
+				wp_enqueue_script( 'woo-orders-tracking-webhooks', VI_WOO_ORDERS_TRACKING_JS . 'webhooks' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, true );
 			}
 		}
 

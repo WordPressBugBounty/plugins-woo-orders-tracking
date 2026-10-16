@@ -21,7 +21,9 @@ if ( ! class_exists( 'VI_WOO_ORDERS_TRACKING_WIDGET' ) ) {
 				$title = apply_filters( 'widget_title', $instance['title'] );
 				echo wp_kses_post( $args['before_widget'] );
 				if ( $title ) {
-					echo wp_kses_post( $args['before_title'] . $title . $args['after_title'] );
+					echo wp_kses_post( $args['before_title'] );
+					echo esc_html( $title );
+					echo wp_kses_post( $args['after_title'] );
 				}
 			}
 			$settings              = VI_WOO_ORDERS_TRACKING_DATA::get_instance();

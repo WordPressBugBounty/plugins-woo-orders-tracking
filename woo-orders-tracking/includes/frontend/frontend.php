@@ -301,7 +301,7 @@ class VI_WOO_ORDERS_TRACKING_FRONTEND_FRONTEND {
 			?>
             <div class="vi-woo-orders-tracking-form-inputs vi-woo-orders-tracking-form-inputs-1">
 				<?php
-				echo VI_WOO_ORDERS_TRACKING_DATA::wp_kses_post( $input_html );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo wp_kses( $input_html, VI_WOO_ORDERS_TRACKING_DATA::get_allowed_html() );
 				?>
             </div>
             <div class="vi-woo-orders-tracking-form-message vi-woo-orders-tracking-hidden">
@@ -339,7 +339,7 @@ class VI_WOO_ORDERS_TRACKING_FRONTEND_FRONTEND {
 		        self::$tracking_info = ob_get_clean();
 	        }
         }
-		echo VI_WOO_ORDERS_TRACKING_DATA::wp_kses_post(self::$tracking_info);// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses( self::$tracking_info, VI_WOO_ORDERS_TRACKING_DATA::get_allowed_html() );
 
 		return ob_get_clean();
 	}
@@ -480,7 +480,7 @@ class VI_WOO_ORDERS_TRACKING_FRONTEND_FRONTEND {
                     </div>
 					<?php
 				}
-				echo apply_filters( 'woo_orders_tracking_timeline_html', VI_WOO_ORDERS_TRACKING_DATA::wp_kses_post($timeline_html), $status, $tracking_code, $carrier_name, $track_info );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo wp_kses( apply_filters( 'woo_orders_tracking_timeline_html', wp_kses( $timeline_html, VI_WOO_ORDERS_TRACKING_DATA::get_allowed_html() ), $status, $tracking_code, $carrier_name, $track_info ), VI_WOO_ORDERS_TRACKING_DATA::get_allowed_html() );
 				?>
             </div>
 			<?php

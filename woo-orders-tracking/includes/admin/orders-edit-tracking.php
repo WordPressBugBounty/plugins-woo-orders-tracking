@@ -27,16 +27,27 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_EDIT_TRACKING {
 		add_action( 'add_meta_boxes', array( $this, 'order_details_add_meta_boxes' ) );
 	}
 
+	private function get_order_edit_screen_ids() {
+		$screens = array( 'shop_order' );
+		if ( function_exists( 'wc_get_page_screen_id' ) ) {
+			$screens[] = wc_get_page_screen_id( 'shop-order' );
+		} else {
+			$screens[] = 'woocommerce_page_wc-orders';
+		}
+
+		return $screens;
+	}
+
 	public function admin_enqueue_script() {
 		$screen = get_current_screen();
-		if ( in_array($screen->id ?? '',['shop_order','woocommerce_page_wc-orders'])) {
+		if ( is_object( $screen ) && in_array( $screen->id, $this->get_order_edit_screen_ids(), true ) ) {
 			$src_min = WP_DEBUG ? '' : '.min';
 			wp_enqueue_style( 'vi-wot-admin-edit-order-css', VI_WOO_ORDERS_TRACKING_CSS . 'admin-edit-order' . $src_min . '.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 			if ( ! wp_script_is( 'select2' ) ) {
 				wp_enqueue_style( 'select2', VI_WOO_ORDERS_TRACKING_CSS . 'select2.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION );
 				wp_enqueue_script( 'select2', VI_WOO_ORDERS_TRACKING_JS . 'select2.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
 			}
-			wp_enqueue_script( 'vi-wot-admin-edit-order-js', VI_WOO_ORDERS_TRACKING_JS . 'admin-edit-order' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
+			wp_enqueue_script( 'vi-wot-admin-edit-order-js', VI_WOO_ORDERS_TRACKING_JS . 'admin-edit-order' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, true );
 			wp_enqueue_script( 'vi-wot-admin-edit-carrier-functions-js', VI_WOO_ORDERS_TRACKING_JS . '/carrier-functions' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
 			$shipping_carrier_default = $this->settings->get_params( 'shipping_carrier_default' );
 			wp_localize_script( 'vi-wot-admin-edit-order-js',
@@ -95,7 +106,8 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_EDIT_TRACKING {
 					$item_tracking_data    = vi_wot_json_decode( $item_tracking_data );
 					$current_tracking_data = array_pop( $item_tracking_data );
 					if ( $current_tracking_data['tracking_number'] ) {
-						$response['message_content'] = '<div>' . sprintf( esc_html__( 'Tracking number: %s', 'woo-orders-tracking' ), $current_tracking_data['tracking_number'] ) . '</div>'; // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+						/* translators: %s: tracking number */
+						$response['message_content'] = '<div>' . sprintf( esc_html__( 'Tracking number: %s', 'woo-orders-tracking' ), $current_tracking_data['tracking_number'] ) . '</div>';
 					}
 					if ( ! in_array( $current_tracking_data['tracking_number'], $paypal_added_trackings ) ) {
 						$carrier      = $this->settings->get_shipping_carrier_by_slug( $current_tracking_data['carrier_slug'] );
@@ -1081,7 +1093,10 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_EDIT_TRACKING {
                         <span><?php esc_html_e( 'Tracking number', 'woo-orders-tracking' ) ?></span>
                     </div>
                     <div class="<?php echo esc_attr( self::set( 'item-tracking-code-value' ) ) ?>"
-                         title="<?php echo sprintf(esc_attr__( "Tracking carrier %s", 'woo-orders-tracking' ), esc_attr($carrier_name))  // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?>">
+                         title="<?php
+                         /* translators: %s: carrier name */
+                         echo sprintf(esc_attr__( "Tracking carrier %s", 'woo-orders-tracking' ), esc_attr($carrier_name));
+                         ?>">
                         <a href="<?php echo esc_url( $tracking_url_show ) ?>"
                            target="_blank"><?php echo esc_html( $tracking_number ) ?></a>
                     </div>
@@ -1139,11 +1154,12 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_ORDERS_EDIT_TRACKING {
 		global $pagenow;
 		$page = isset($_GET['page']) ? wc_clean(wp_unslash($_GET['page'])):'';// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( $pagenow === 'post.php'|| $page === 'wc-orders' ) {
+			$screen_ids = $this->get_order_edit_screen_ids();
 			add_meta_box(
 				'vi_wotv_edit_order_tracking',
 				esc_html__( 'Tracking number', 'woo-orders-tracking' ),
 				array( $this, 'add_meta_box_callback' ),
-				$page === 'wc-orders'?'woocommerce_page_wc-orders' :'shop_order',
+				$page === 'wc-orders' ? $screen_ids[1] : 'shop_order',
 				'side',
 				'core'
 			);

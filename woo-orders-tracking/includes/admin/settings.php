@@ -237,7 +237,10 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
 			'setting-shipping-carriers-list-search-wrap',
 			'hidden'
 		) ) ) ?>">
-            <p><?php printf( wp_kses_post(__( 'Unable to find your needed shipping carrier? Please <a class="%s" href="#">click here</a> to add your own carrier.', 'woo-orders-tracking' )), esc_attr( self::set( array( 'setting-shipping-carriers-add-new-carrier-shortcut' ) ) ) ) // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?></p>
+            <p><?php
+				/* translators: %s: CSS class */
+				printf( wp_kses_post(__( 'Unable to find your needed shipping carrier? Please <a class="%s" href="#">click here</a> to add your own carrier.', 'woo-orders-tracking' )), esc_attr( self::set( array( 'setting-shipping-carriers-add-new-carrier-shortcut' ) ) ) );
+				?></p>
             <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/8NZwSnSWsIg?start=425"
                     title="YouTube video player" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -256,9 +259,15 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
 					?>
                     <div class="vi-ui positive message">
                         <div class="header">
-							<?php printf( wp_kses_post( __( 'Next schedule: <strong>%s</strong>', 'woo-orders-tracking' ) ), wp_kses_post(date_i18n( 'F j, Y g:i:s A', ( $this->schedule_send_emails + HOUR_IN_SECONDS * $gmt_offset ) )) );  // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?>
+							<?php
+							/* translators: %s: next schedule date */
+							printf( wp_kses_post( __( 'Next schedule: <strong>%s</strong>', 'woo-orders-tracking' ) ), wp_kses_post(date_i18n( 'F j, Y g:i:s A', ( $this->schedule_send_emails + HOUR_IN_SECONDS * $gmt_offset ) )) );
+							?>
                         </div>
-                        <p><?php printf( esc_html__( 'Order(s) to send next: %s', 'woo-orders-tracking' ), wp_kses_post(implode( ',', array_splice( $orders, 0, $this->settings->get_params( 'email_number_send' ) ) )) ); // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?></p>
+                        <p><?php
+							/* translators: %s: order ids */
+							printf( esc_html__( 'Order(s) to send next: %s', 'woo-orders-tracking' ), wp_kses_post(implode( ',', array_splice( $orders, 0, $this->settings->get_params( 'email_number_send' ) ) )) );
+							?></p>
                     </div>
 					<?php
 				}
@@ -709,7 +718,10 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
             <div class="vi-ui positive message">
                 <div class="header"><?php esc_html_e( 'Please follow these steps to get PayPal API Credentials', 'woo-orders-tracking' ) ?></div>
                 <ul class="list">
-                    <li><?php printf( wp_kses_post( __( 'Go to %s and login with your PayPal account', 'woo-orders-tracking' ) ), '<strong><a href="https://developer.paypal.com/developer/applications/" target="_blank">PayPal Developer</a></strong>' );  // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?></li>
+                    <li><?php
+						/* translators: %s: PayPal Developer URL */
+						printf( wp_kses_post( __( 'Go to %s and login with your PayPal account', 'woo-orders-tracking' ) ), '<strong><a href="https://developer.paypal.com/developer/applications/" target="_blank">PayPal Developer</a></strong>' );
+						?></li>
                     <li><?php echo wp_kses_post( __( 'Go to My Apps & Credentials and select the <strong>Live</strong> tab', 'woo-orders-tracking' ) )  ?></li>
                     <li><?php esc_html_e( 'Click on Create App button', 'woo-orders-tracking' ) ?></li>
                     <li><?php esc_html_e( 'Enter the name of your application and click Create App button', 'woo-orders-tracking' ); ?></li>
@@ -860,8 +872,14 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
         <div class="vi-ui positive small message">
             <div class="header"><?php esc_html_e( 'Shortcode', 'woo-orders-tracking' ); ?></div>
             <ul class="list">
-                <li><?php echo VI_WOO_ORDERS_TRACKING_DATA::wp_kses_post( sprintf( __( 'Branded tracking form shortcode %s. This only works if you use a tracking service. By default, tracking form is appended to the tracking page. If you want to change the tracking form\'s position, especially when the tracking page is built with an UX builder, this shortcode is very helpful.', 'woo-orders-tracking' ), '<span data-tooltip="Click to copy"><input type="text" class="wot-input-shortcode-field" readonly value="[vi_wot_form_track_order]"></span>' ) )  // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment , WordPress.Security.EscapeOutput.OutputNotEscaped ?></li>
-                <li><?php echo VI_WOO_ORDERS_TRACKING_DATA::wp_kses_post( sprintf( __( 'TrackingMore tracking form shortcode %s. You can still use this shortcode even if you do not use tracking service. More details about this at <a target="_blank" href="https://www.trackingmore.com/embed_box_float-en.html">Track Button</a>', 'woo-orders-tracking' ), '<span data-tooltip="Click to copy"><input type="text" class="wot-input-shortcode-field" readonly value="[vi_wot_tracking_more_form]"></span>' ) )  // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment , WordPress.Security.EscapeOutput.OutputNotEscaped ?></li>
+                <li><?php
+					/* translators: %s: shortcode field */
+					echo wp_kses( sprintf( __( 'Branded tracking form shortcode %s. This only works if you use a tracking service. By default, tracking form is appended to the tracking page. If you want to change the tracking form\'s position, especially when the tracking page is built with an UX builder, this shortcode is very helpful.', 'woo-orders-tracking' ), '<span data-tooltip="Click to copy"><input type="text" class="wot-input-shortcode-field" readonly value="[vi_wot_form_track_order]"></span>' ), VI_WOO_ORDERS_TRACKING_DATA::get_allowed_html() );
+					?></li>
+                <li><?php
+					/* translators: %s: shortcode field */
+					echo wp_kses( sprintf( __( 'TrackingMore tracking form shortcode %s. You can still use this shortcode even if you do not use tracking service. More details about this at <a target="_blank" href="https://www.trackingmore.com/embed_box_float-en.html">Track Button</a>', 'woo-orders-tracking' ), '<span data-tooltip="Click to copy"><input type="text" class="wot-input-shortcode-field" readonly value="[vi_wot_tracking_more_form]"></span>' ), VI_WOO_ORDERS_TRACKING_DATA::get_allowed_html() );
+					?></li>
             </ul>
         </div>
         <table class="form-table">
@@ -1070,7 +1088,10 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
                 <td>
                     <a class="vi-ui yellow button" target="_blank"
                        href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
-                    <p class="description"><?php printf( wp_kses_post(__( 'Using <a target="_blank" href="%s">Google Cloud Translation API</a> to translate timeline to a specific language', 'woo-orders-tracking' )), 'https://cloud.google.com/translate/docs/basic/translating-text' )  // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?></p>
+                    <p class="description"><?php
+						/* translators: %s: Google Cloud Translation API URL */
+						printf( wp_kses_post(__( 'Using <a target="_blank" href="%s">Google Cloud Translation API</a> to translate timeline to a specific language', 'woo-orders-tracking' )), 'https://cloud.google.com/translate/docs/basic/translating-text' );
+						?></p>
                 </td>
             </tr>
             <tr>
@@ -1082,8 +1103,14 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
                 <td>
                     <a class="vi-ui yellow button" target="_blank"
                        href="https://villatheme.com/extensions/woocommerce-orders-tracking/"><?php esc_html_e( 'Upgrade This Feature', 'woo-orders-tracking' ) ?></a>
-                    <p class="description"><?php printf( wp_kses_post(__( 'This functionality uses Cloud Translation - Basic API, please click <a target="_blank" href="%s">here</a> to read more about pricing', 'woo-orders-tracking' )), 'https://cloud.google.com/translate/pricing#cloud-translation---basic' )  // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?></p>
-                    <p class="description"><?php printf( wp_kses_post(__( 'To get API key, please read <a target="_blank" href="%s">https://cloud.google.com/docs/authentication/api-keys#creating_an_api_key</a> or watch our guiding video below', 'woo-orders-tracking' )), 'https://cloud.google.com/docs/authentication/api-keys#creating_an_api_key' )  // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?></p>
+                    <p class="description"><?php
+						/* translators: %s: Cloud Translation pricing URL */
+						printf( wp_kses_post(__( 'This functionality uses Cloud Translation - Basic API, please click <a target="_blank" href="%s">here</a> to read more about pricing', 'woo-orders-tracking' )), 'https://cloud.google.com/translate/pricing#cloud-translation---basic' );
+						?></p>
+                    <p class="description"><?php
+						/* translators: %s: API key documentation URL */
+						printf( wp_kses_post(__( 'To get API key, please read <a target="_blank" href="%s">https://cloud.google.com/docs/authentication/api-keys#creating_an_api_key</a> or watch our guiding video below', 'woo-orders-tracking' )), 'https://cloud.google.com/docs/authentication/api-keys#creating_an_api_key' );
+						?></p>
                     <div class="vi-ui accordion segment">
                         <div class="title"><i
                                     class="dropdown icon"></i><?php esc_html_e( 'How to get Google Cloud Translation API key?', 'woo-orders-tracking' ) ?>
@@ -1951,7 +1978,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
 				wp_enqueue_style( 'select2', VI_WOO_ORDERS_TRACKING_CSS . 'select2.min.css', '', VI_WOO_ORDERS_TRACKING_VERSION , false);
 				wp_enqueue_script( 'select2', VI_WOO_ORDERS_TRACKING_JS . 'select2.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, false );
 			}
-			wp_enqueue_script( 'vi-wot-admin-setting-js', VI_WOO_ORDERS_TRACKING_JS . 'admin-setting' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION , false);
+			wp_enqueue_script( 'vi-wot-admin-setting-js', VI_WOO_ORDERS_TRACKING_JS . 'admin-setting' . $src_min . '.js', array( 'jquery' ), VI_WOO_ORDERS_TRACKING_VERSION, true );
 			$countries                = new WC_Countries();
 			$this->shipping_countries = $countries->get_countries();
 			wp_localize_script(
@@ -1972,6 +1999,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
 					'i18n_shortcode_copied'         => esc_html__( 'Copied to clipboard!', 'woo-orders-tracking' ),
 					'i18n_active_carrier'           => esc_html__( 'Active', 'woo-orders-tracking' ),
 					'i18n_search_carrier'           => esc_attr__( 'Search carrier name', 'woo-orders-tracking' ),
+					'search_page_nonce'             => wp_create_nonce( 'woo_orders_tracking_search_page' ),
 				)
 			);
 		}
@@ -2012,6 +2040,7 @@ class VI_WOO_ORDERS_TRACKING_ADMIN_SETTINGS {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
+		check_ajax_referer( 'woo_orders_tracking_search_page', 'nonce' );
 		$keyword = isset( $_GET['keyword'] ) ? sanitize_text_field( $_GET['keyword'] ) : '';
 		if ( ! $keyword ) {
 			$keyword = isset( $_POST['keyword'] ) ? sanitize_text_field( $_POST['keyword'] ) : '';
